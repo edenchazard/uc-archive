@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+h1{
+    @apply text-3xl;
+}
+h2{
+    @apply text-2xl;
+}
+h3{
+    @apply text-xl;
+}
+h4{
+    @apply text-lg;
+}
+#breadcrumb nav ol {
+    @apply flex flex-row p-2;
+}
+
+#breadcrumb nav ol li{
+}
+
+#breadcrumb nav ol li::after{
+    content: '>';
+    @apply m-2;
+}
+
+#breadcrumb nav ol li:last-child::after{
+    content: none;
+}
+
+.main-article::before{
+    content: '[';
+}
+
+.main-article::after{
+    content: ']';
+}

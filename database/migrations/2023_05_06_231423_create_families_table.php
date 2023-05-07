@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `creatures_families` (
             $table->unsignedTinyInteger('rarity')->default(1);
             $table->boolean('inBasket')->default(1);
             $table->boolean('allowExalt')->default(1);
-            $table->unsignedTinyInteger('gender')->default(3);
+            $table->unsignedTinyInteger('gender')->default(2);
             $table->unsignedTinyInteger('uniqueRating')->default(0);
             $table->date('released')->useCurrent();
         });

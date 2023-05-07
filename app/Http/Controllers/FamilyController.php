@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Creature;
 use App\Models\Family;
+use App\Models\Creature;
+use App\Services\Formatting\CreatureFormattingService;
 use Illuminate\Http\Request;
+use App\Services\Creatures\CreatureUtils;
 
 class FamilyController extends Controller
 {
@@ -50,9 +52,36 @@ class FamilyController extends Controller
     {
         $family = Family::firstWhere('name', $name);
 
+        // I don't know if modifying the original property is a good idea tbh
+        // or if the formatter could be 'injected' into the blade template
+        $stages = $family->stages->all();
+    
+        array_walk($stages, function(Creature $creature) use ($family) {
+            [$long, $short] = array_map(fn(CreatureFormattingService $f) => $f->formatAll()->get(), [
+                new CreatureFormattingService($creature->longDescription, [
+                    'c:nickname' => $creature->name,
+                    'c:name' => $creature->name,
+                    'c:family' => $family->name
+                ]),
+                new CreatureFormattingService($creature->shortDescription)
+            ]);
+            $creature->longDescription = $long;
+            $creature->shortDescription = $short;
+        });
+
         $data = [
-            'stages' => $family->stages,
-            'familyData' => $family
+            'stages' => $stages,
+            'familyData' => $family,
+            'generalAttributes' => [
+                'Name' => $family->name,
+                'Rarity' => CreatureUtils::rarity($family->rarity),
+                'Released on' => $family->released,
+                'Unique rating' => $family->uniqueRating,
+                'Gender' => CreatureUtils::gender($family->gender)::friendlyName(),
+                'Noble/Exalt' => ($family->allowExalt ? 'Yes' : 'No'),
+                'Basket' => ($family->inBasket ? 'Yes' : 'No'),
+                'Artists' => ''
+            ]
         ];
     
         return view('creatures.family', $data);

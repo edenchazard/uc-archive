@@ -81,6 +81,11 @@ class FamilyController extends Controller
                 'Noble/Exalt' => ($family->allowExalt ? 'Yes' : 'No'),
                 'Basket' => ($family->inBasket ? 'Yes' : 'No'),
                 'Artists' => ''
+            ],
+            'page' => [
+                'title' => $family->name,
+                'route' => 'family',
+                'name' => $family->name
             ]
         ];
     

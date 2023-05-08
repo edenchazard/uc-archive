@@ -29,10 +29,11 @@
                     <section id='evolutionary-line'>
                         <ol class='flex flex-row flex-wrap items-stretch list-none gap-2 justify-center'>
                             @foreach ($stages as $creature)
-                                <li class="flex flex-row items-center">
+                                <li class="flex flex-col justify-between items-center">
                                     <span>{{ $creature->name }}</span>
                                     <img src='{{ asset("images/creatures/" . $familyData->name . "/" . strtolower($familyData->name . "_" . $creature->name . ".png")) }}' alt="{{ $creature->name }}" />
                                 </li>
+                                <li aria-hidden="true" role="presentation" class="flex flex-col items-center justify-center">→</li>
                             @endforeach
                         </ol>
                     </section>

@@ -4,9 +4,9 @@ use Exception;
 
 class CreatureGender {
     protected static array $mappings = [
-        Male::class,
-        Female::class,
-        Both::class
+        0 => Male::class,
+        1 => Female::class,
+        3 => Both::class
     ];
 
     public static function get(int $genderValue = 2): BaseGender {

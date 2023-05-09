@@ -43,19 +43,47 @@ class CreatureController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Resolve a creature by providing the family name and creature name
      *
      * @param  \App\Models\Creature  $creature
      * @return \Illuminate\Http\Response
      */
-    public function showByTaxonomy(string $family, string $name)
+    public function showByTaxonomy(string $familyName, string $creatureName)
     {
-        $creature = Creature::firstWhere('name', $name);//::firstWhere('family', $family);
-        return $creature;
+        // retrieve family id
+        $family = Family::firstWhere('name', $familyName);
+    
+        if(!$family) abort(404, "Family not found.");
+    
+        // get creature
+        $creature = Creature::with('consumable')->firstWhere([
+            'family_id' => $family->id,
+            'name' => $creatureName
+        ]);
+
+        if(!$creature) abort(404, "Creature not found.");
+
+        // get nearby creatures
+        $closestCreatures = Creature::with('family')->find([$creature->id - 1, $creature->id + 1]);
+        $data = [
+            'closestCreatures' => $closestCreatures,
+            'family' => $family,
+            'creature' => $creature,
+            'page' => [
+                'title' => "Creature: {$creature->name}",
+                'route' => 'creature',
+                'breadcrumb' => $creature->name
+            ]
+        ];
+
+        return view('creatures.creature', $data);
     }
 
     public function showById(int $id){
         $creature = Creature::find($id);
+
+        if(!$creature) abort(404, "Creature not found.");
+ 
         return $creature;
     }
 

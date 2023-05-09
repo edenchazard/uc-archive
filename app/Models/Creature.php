@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Creature extends Model
@@ -18,5 +19,9 @@ class Creature extends Model
 
     public function consumable(): HasOne {
         return $this->hasOne(Consumable::class, 'id', 'component');
+    }
+
+    public function trainingOptions(): HasMany {
+        return $this->hasMany(TrainingOption::class);
     }
 }

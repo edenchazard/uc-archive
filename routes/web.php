@@ -26,7 +26,7 @@ Route::prefix('creatures')->group(function() {
         /**
          * Create a new family
          */
-        Route::post('/new', 'store');
+        // Route::post('/new', 'store');
 
         /**
          * Show all families
@@ -43,7 +43,7 @@ Route::prefix('creatures')->group(function() {
                 /**
                  * Add a new creature to the family
                  */
-                Route::post('/new', 'store');
+                // Route::post('/new', 'store');
 
                 /**
                  * Show an individual creature.

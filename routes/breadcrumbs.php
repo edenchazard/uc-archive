@@ -23,8 +23,8 @@ Breadcrumbs::for('family', function (BreadcrumbTrail $trail, $family) {
     $trail->push($family, route('family', $family));
 });
 
-Breadcrumbs::for('creature', function (BreadcrumbTrail $trail, $creature) {
-    $trail->parent('family');
+/* Breadcrumbs::for('creature', function (BreadcrumbTrail $trail, $creature) {
+    $trail->parent('family', 'r');
     $trail->push($creature->name, route('category', $creature));
-});
+}); */
 ?>

@@ -20,11 +20,12 @@
                     </ul>
                 </nav>
             </header>
+            {{-- 
             @if (isset($page['route']))
                 <section id='breadcrumb' aria-label="Breadcrumb" class='bg-uc-ltbrown text-xs'>
                     {{ Breadcrumbs::render($page['route'], $page['name']) }}
                 </section>
-            @endif
+            @endif --}}
             <main class='bg-gradient-to-b from-uc-grad-begin to-uc-grad-end bg-uc-grad-end bg-[length:100%_526px] bg-no-repeat p-5'>
                 {{ $slot }}
             </main>

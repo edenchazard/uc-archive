@@ -41,13 +41,13 @@
         <h2 class="my-2 section-title">
             <a href='#visual-description'>Visual description</a>
         </h2>
-        {{$creature->shortDescription}}
+        <x-creature-formatted-block :text="$creature->shortDescription" :creature="$creature" />
     </section>
     <section id='lifestyle'>
         <h2 class="my-2 section-title">
             <a href='#lifestyle'>Lifestyle</a>
         </h2>
-        {{$creature->longDescription}}
+        <x-creature-formatted-block :text="$creature->longDescription" :creature="$creature" />
     </section>
     <section id='general'>
         <h2 class="my-2 section-title">
@@ -68,7 +68,9 @@
                         <td>{{ $option->title }}</td>
                         <td>{{ $option->energyCost }}</td>
                         <td>{{ $option->reward }}</td>
-                        <td>{{ $option->description }}</td>
+                        <td>
+                            <x-creature-formatted-block :text="$option->description" :creature="$creature" :additional="['*' => $creature->name]" />
+                        </td>
                     </tr>
                 @empty
                     None.

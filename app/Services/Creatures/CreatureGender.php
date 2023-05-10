@@ -9,15 +9,16 @@ class CreatureGender {
         3 => Both::class
     ];
 
-    public static function get(int $genderValue = 2): BaseGender {
+    public static function get(int $genderValue = 0): BaseGender {
         if(!array_key_exists($genderValue, self::$mappings))
             throw new Exception("BAD GENDER: $genderValue");
 
         return new self::$mappings[$genderValue];
     }
 
-    public function random() {
-        return self::$mappings[rand(0, 1)];
+    public static function random() {
+        $i = new self::$mappings[rand(0, 1)];
+        return $i;
     }
 
     public static function pronouns(): array {
@@ -45,7 +46,9 @@ class Female extends BaseGender {
     protected static array $pronouns = [
         'he' => 'she',
         'his' => 'her',
-        'him' => 'her'
+        'him' => 'her',
+        'himself' => 'herself',
+        'hisself' => 'herself'
     ];
 }
 
@@ -53,7 +56,9 @@ class Male extends BaseGender {
     protected static array $pronouns = [
         'he' => 'he',
         'his' => 'his',
-        'him' => 'him'
+        'him' => 'him',
+        'himself' => 'himself',
+        'hisself' => 'hisself'
     ];
 }
 

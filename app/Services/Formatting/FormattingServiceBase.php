@@ -18,7 +18,7 @@ abstract class FormattingServiceBase {
 
     public function applyReplacements(): FormattingServiceBase {
         $this->str = str_ireplace(
-            array_map(fn(string $str) => "{{{$str}}}", array_keys($this->replacements)), 
+            array_keys($this->replacements), 
             array_values($this->replacements), 
             $this->str
         );

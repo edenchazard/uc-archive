@@ -42,11 +42,11 @@
                 <div class='shrink creature-descriptions'>
                     <section>
                         <h4 class='font-medium'>Visual Description</h4>
-                        {!! $creature->shortDescription !!}
+                        <x-creature-formatted-block :text="$creature->shortDescription" :creature="$creature" />
                     </section>
                     <section class="mt-4">
                         <h4 class='font-medium'>Lifestyle</h4>
-                        {!! $creature->longDescription !!}
+                        <x-creature-formatted-block :text="$creature->longDescription" :creature="$creature" />
                     </section>
                 </div>
             </article>

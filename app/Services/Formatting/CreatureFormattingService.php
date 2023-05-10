@@ -6,21 +6,35 @@ use App\Services\Creatures\CreatureGender;
 class CreatureFormattingService extends FormattingServiceBase {
     protected array $pronouns = [];
 
-    public function __construct(protected string $str, protected array $replacements = [], int $gender = 0){
-        $this->pronouns = CreatureGender::get($gender)::pronounConversions();
+    public function __construct(protected string $str, protected array $replacements = [], $gender = null){
+        if($gender === null)
+            $gender = CreatureGender::random();
+
+        $this->pronouns = $gender->pronounConversions();
         parent::__construct($str, $replacements);
     }
 
     public function formatPronouns(): CreatureFormattingService {
-        $pronouns = CreatureGender::pronouns();
-
-        // generate a similar array but with the first letter caps'd to catch those!
-        $replacements = array_merge($pronouns, array_map('ucfirst', $pronouns));
+        // build our pronouns to search
+        $malePronouns = CreatureGender::get(0)::pronounConversions();
+        $femalePronouns = CreatureGender::get(1)::pronounConversions();
     
-        // everything we want to replace is prefixed with a #, so we add that in.
-        $searches = array_map(fn(string $str) => "#{$str}", $replacements);
+        // make matches for each possible pronoun
+        $searches = implode('|', [...array_values($malePronouns), ...array_values($femalePronouns)]);
 
-        $this->str = str_replace($searches, $replacements, $this->str);
+        // note we set this as case-insensitive, we'll determine caps when we
+        // actually replace the match later.
+        $regexp = "/#([$searches]+)/i";
+
+        $this->str = preg_replace_callback($regexp, function($match){
+            $matchedPronoun = $match[1];
+            // locate our replacement in the appropriate dictionary
+            $replacement = $this->pronouns[strtolower($matchedPronoun)];
+            // determine casing
+            $casing = ctype_upper($matchedPronoun[0]) ? 'strtoupper' : 'strtolower';
+            return $casing($replacement[0]) . substr($replacement, 1);
+        }, $this->str);
+    
         return $this;
     }
 

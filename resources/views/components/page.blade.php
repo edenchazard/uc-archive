@@ -8,17 +8,24 @@
     </head>
     <body class="antialiased bg-uc-blue font-sans font-normal font-base">
         <div class='max-w-5xl m-auto drop-shadow-[0px_0px_8px_rgba(200,204,179,0.9)]'>
-            <header class='drop-shadow-lg flex flex-row items-center justify-between bg-uc-mdbrown p-4'>
-                <div>
-                    UC Archive
+            <header>
+                <div
+                    id='banner'
+                    role='presentation'
+                    class="h-[232px] bg-[url('../../resources/css/images/bannerv2_clean.png')] bg-no-repeat bg-center">
                 </div>
-                <nav id='menu' class='grow'>
-                    <ul class='flex flex-row flex-wrap justify-end text-uc-dkbrown uppercase text-sm font-medium'>
-                        <li class='p-2'>Home</li>
-                        <li class='p-2'>Creatures</li>
-                        <li class='p-2'>Items</li>
-                    </ul>
-                </nav>
+                <div class='drop-shadow-lg flex flex-row items-center justify-between bg-uc-mdbrown p-4'>
+                    <div>
+                        UC Archive
+                    </div>
+                    <nav id='menu' class='grow'>
+                        <ul class='flex flex-row flex-wrap justify-end text-uc-dkbrown uppercase text-sm font-medium'>
+                            <li class='p-2'>Home</li>
+                            <li class='p-2'>Creatures</li>
+                            <li class='p-2'>Items</li>
+                        </ul>
+                    </nav>
+                </div>
             </header>
             {{-- 
             @if (isset($page['route']))

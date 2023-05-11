@@ -33,22 +33,26 @@
             <a href='#evolutions'>Evolutions</a>
         </h2>
         @foreach ($stages as $creature)
-            <article class='flex flex-wrap justify-center items-start gap-10 p-5 md:flex-nowrap md:flex-row' id='{{ $creature->name }}'>
-                <div class='flex flex-col items-center w-30'>
-                    <img src='{{ asset("images/creatures/" . $familyData->name . "/" . strtolower($familyData->name . "_" . $creature->name . ".png")) }}' alt="{{ $creature->name }}" />
-                    <h3>{{ $creature->name }}</h3>
-                    <a class='main-article' href='{{ route("creature", [$familyData->name, $creature->name]) }}' aria-labelledby="{{ $creature->name }}">article</a>
-                </div>
-                <div class='shrink creature-descriptions'>
+            <article class='flex flex-col justify-center items-start p-3 gap-2' id='{{ $creature->name }}'>
+                    <img
+                        src='{{ asset("images/creatures/" . $familyData->name . "/" . strtolower($familyData->name . "_" . $creature->name . ".png")) }}'
+                        alt="{{ $creature->name }}"
+                        class="self-start" />
+                    <div>
+                        <h3 class='inline font-medium'>{{ $creature->name }}</h3>
+                        <a
+                            class='main-article'
+                            href='{{ route("creature", [$familyData->name, $creature->name]) }}'
+                            aria-labelledby="{{ $creature->name }}">main article</a>
+                    </div>
                     <section>
                         <h4 class='font-medium'>Visual Description</h4>
                         <x-creature-formatted-block :text="$creature->shortDescription" :creature="$creature" />
                     </section>
-                    <section class="mt-4">
+                    <section>
                         <h4 class='font-medium'>Lifestyle</h4>
                         <x-creature-formatted-block :text="$creature->longDescription" :creature="$creature" />
                     </section>
-                </div>
             </article>
         @endforeach
     </section>

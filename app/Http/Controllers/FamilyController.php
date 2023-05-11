@@ -18,6 +18,18 @@ class FamilyController extends Controller
     public function index()
     {
         //
+        $families = Family::with('stages')->get();
+
+        $data = [
+            'groups' => $families->groupBy(fn($family) => $family->name[0]),
+            'page' => [
+                'title' => 'Families',
+                'route' => 'family',
+                'name' => 'All families'
+            ]
+        ];
+
+        return view('creatures.all-families', $data);
     }
 
     /**
@@ -38,8 +50,8 @@ class FamilyController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
-        return Family::create($data);
+        /* $data = $request->all();
+        return Family::create($data); */
     }
 
     /**
@@ -50,25 +62,12 @@ class FamilyController extends Controller
      */
     public function show(string $name)
     {
-        $family = Family::firstWhere('name', $name);
+        $family = Family::findByName($name);
 
-        // I don't know if modifying the original property is a good idea tbh
-        // or if the formatter could be 'injected' into the blade template
         $stages = $family->stages->all();
-    
-        array_walk($stages, function(Creature $creature) use ($family) {
-            [$long, $short] = array_map(fn(CreatureFormattingService $f) => $f->formatAll()->get(), [
-                new CreatureFormattingService($creature->longDescription, [
-                    'c:nickname' => $creature->name,
-                    'c:name' => $creature->name,
-                    'c:family' => $family->name
-                ]),
-                new CreatureFormattingService($creature->shortDescription)
-            ]);
-            $creature->longDescription = $long;
-            $creature->shortDescription = $short;
-        });
 
+        $gender = $family->gender > 1 ? CreatureUtils::gender()::random() : CreatureUtils::gender($family->gender);
+        array_walk($stages, fn($stage) => $stage->gender = $gender);
         $data = [
             'stages' => $stages,
             'familyData' => $family,

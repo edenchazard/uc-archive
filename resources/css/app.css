@@ -46,9 +46,6 @@ a {
 .creature-descriptions section p {
     @apply my-1 md:mx-3;
 }
-#evolutionary-line ol li:last-child {
-    display: none;
-}
 .section-title a {
     color: #000;
 }

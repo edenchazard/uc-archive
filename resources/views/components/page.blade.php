@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="motion-safe:scroll-smooth motion-reduce:scroll-auto">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{{ $page['title'] ?? 'Unnamed Page' }}</title>
         @vite('resources/css/app.css')
+        @stack('css')
+        @stack('scripts')
     </head>
     <body class="antialiased bg-uc-blue font-sans font-normal font-base">
         <div class='max-w-5xl m-auto drop-shadow-[0px_0px_8px_rgba(200,204,179,0.9)]'>

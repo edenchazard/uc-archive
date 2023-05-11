@@ -6,7 +6,7 @@
             class="text-center flex flex-col items-center">
             <img 
                 src='{{ asset("images/creatures/" . $creature->family->name . "/" . strtolower($creature->family->name . "_" . $creature->name . ".png")) }}'
-                alt="{{ $creature->name }}"
+                alt=""
                 class="max-w-10 max-h-10 self-center"/>
             <span>#{{$creature->id}}</span>
             <span>{{$creature->name}}</span>

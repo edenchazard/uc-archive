@@ -35,14 +35,6 @@ a {
 #breadcrumb nav ol li:last-child::after {
     content: none;
 }
-
-.main-article::before {
-    content: "[";
-}
-
-.main-article::after {
-    content: "]";
-}
 .creature-descriptions section p {
     @apply my-1 md:mx-3;
 }

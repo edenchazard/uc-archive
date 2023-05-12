@@ -32,10 +32,7 @@
                         class="self-start" />
                     <div>
                         <h3 class='inline font-medium'>{{ $creature->name }}</h3>
-                        <a
-                            class='main-article'
-                            href='{{ route("creature", [$familyData->name, $creature->name]) }}'
-                            aria-labelledby="{{ $creature->name }}">main article</a>
+                        <x-article-link :url='route("creature", [$familyData->name, $creature->name])' />
                     </div>
                     <section>
                         <h4 class='font-medium'>Visual Description</h4>

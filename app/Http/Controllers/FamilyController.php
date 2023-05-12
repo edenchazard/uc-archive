@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Family;
 use App\Models\Creature;
+use App\Services\Creatures\CreatureGender;
 use App\Services\Formatting\CreatureFormattingService;
 use Illuminate\Http\Request;
 use App\Services\Creatures\CreatureUtils;
@@ -66,17 +67,19 @@ class FamilyController extends Controller
 
         $stages = $family->stages->all();
 
-        $gender = $family->gender > 1 ? CreatureUtils::gender()::random() : CreatureUtils::gender($family->gender);
+        $gender = $family->gender > 1 ?  CreatureGender::random() : CreatureGender::get($family->gender);
+
         array_walk($stages, fn($stage) => $stage->gender = $gender);
+
         $data = [
             'stages' => $stages,
             'familyData' => $family,
             'generalAttributes' => [
                 'Name' => $family->name,
-                'Rarity' => CreatureUtils::rarity($family->rarity),
+                'rarity' => CreatureUtils::rarity($family->rarity),
                 'Released on' => $family->released,
                 'Unique rating' => $family->uniqueRating,
-                'Gender' => CreatureUtils::gender($family->gender)::friendlyName(),
+                'gender' => CreatureUtils::gender($family->gender)::friendlyName(),
                 'Noble/Exalt' => ($family->allowExalt ? 'Yes' : 'No'),
                 'Basket' => ($family->inBasket ? 'Yes' : 'No'),
                 'Artists' => ''

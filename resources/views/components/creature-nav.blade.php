@@ -5,7 +5,7 @@
             href='{{ route("creature", [$creature->family->name, $creature->name]) }}'
             class="text-center flex flex-col items-center">
             <img 
-                src='{{ asset("images/creatures/" . $creature->family->name . "/" . strtolower($creature->family->name . "_" . $creature->name . ".png")) }}'
+                src='{{ CreatureUtils::imageLink($creature) }}'
                 alt=""
                 class="max-w-10 max-h-10 self-center"/>
             <span>#{{$creature->id}}</span>

@@ -2,7 +2,7 @@
     @foreach ($family->stages as $creature)
         <li class="flex flex-col justify-between items-center">
             <span>{{ $creature->name }}</span>
-            <img src='{{ asset("images/creatures/" . $family->name . "/" . strtolower($family->name . "_" . $creature->name . ".png")) }}'
+            <img src='{{ CreatureUtils::imageLink($creature) }}'
                 alt="{{ $creature->name }}" 
                 class='creature-image' />
         </li>

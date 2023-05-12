@@ -1,6 +1,8 @@
 <?php
 namespace App\Services\Creatures;
 
+use App\Models\Creature;
+
 class CreatureUtils {
     /**
      * Tramslates rarity rating
@@ -39,7 +41,7 @@ class CreatureUtils {
     /**
      * Translates specialties
      */
-    public static function specialty(int $val){
+    public static function specialty(int $val): string{
         $mappings = [
             0 => '', //regular
             1 => 'noble',
@@ -49,6 +51,23 @@ class CreatureUtils {
         ];
 
         return $mappings[$val];
+    }
+
+    public static function imageLink(Creature $creature): string {
+        $exalted = false;
+        $prefixes = collect([]);
+    
+        if($exalted)
+            $prefixes->push("exalted");
+    
+        if(strtolower($creature->family->name) !== strtolower($creature->name))
+            $prefixes->push("{$creature->family->name}");
+
+        $prefixes = $prefixes->map(fn($prefix) => $prefix . '_');
+
+        $path = strtolower("/images/creatures/{$creature->family->name}/{$prefixes->join('_')}{$creature->name}.png");
+    
+        return asset($path);
     }
 }
 ?>

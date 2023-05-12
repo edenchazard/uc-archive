@@ -27,7 +27,7 @@
         @foreach ($stages as $creature)
             <article class='flex flex-col justify-center items-start p-3 gap-2' id='{{ $creature->name }}'>
                     <img
-                        src='{{ asset("images/creatures/" . $familyData->name . "/" . strtolower($familyData->name . "_" . $creature->name . ".png")) }}'
+                        src='{{ CreatureUtils::imageLink($creature) }}'
                         alt="{{ $creature->name }}"
                         class="self-start" />
                     <div>

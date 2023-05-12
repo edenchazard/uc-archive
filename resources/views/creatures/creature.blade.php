@@ -15,7 +15,7 @@
         </h2>
         <div class="flex flex-row flex-wrap gap-3 justify-center">
             <img
-                src='{{ asset("images/creatures/" . $family->name . "/" . strtolower($family->name . "_" . $creature->name . ".png")) }}'
+                src='{{ CreatureUtils::imageLink($creature) }}'
                 alt="{{ $creature->name }}"
                 class="self-center"/>
             {{-- to do convert stage to ordinal suffix --}}

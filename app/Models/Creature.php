@@ -8,6 +8,39 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * App\Models\Creature
+ *
+ * @property int $id
+ * @property string $name
+ * @property int $stage
+ * @property string $shortDescription
+ * @property string $longDescription
+ * @property int $requiredClicks
+ * @property int $component
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int $family_id
+ * @property-read \App\Models\Consumable|null $consumable
+ * @property-read \App\Models\Family|null $family
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\TrainingOption> $trainingOptions
+ * @property-read int|null $training_options_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Creature locate(string|int $family, string|int $creature)
+ * @method static \Illuminate\Database\Eloquent\Builder|Creature newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Creature newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Creature query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Creature whereComponent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Creature whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Creature whereFamilyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Creature whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Creature whereLongDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Creature whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Creature whereRequiredClicks($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Creature whereShortDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Creature whereStage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Creature whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Creature extends Model
 {
     use HasFactory;

@@ -18134,7 +18134,18 @@
      
 }
 
-        namespace Diglactic\Breadcrumbs { 
+        namespace App\Services\Creatures { 
+            /**
+     * 
+     *
+     */ 
+        class CreatureUtils {
+         
+    }
+     
+}
+
+    namespace Diglactic\Breadcrumbs { 
             /**
      * Breadcrumbs facade - allows easy access to the Manager instance.
      *
@@ -22651,6 +22662,7 @@ namespace  {
             class Validator extends \Illuminate\Support\Facades\Validator {}
             class View extends \Illuminate\Support\Facades\View {}
             class Vite extends \Illuminate\Support\Facades\Vite {}
+            class CreatureUtils extends \App\Services\Creatures\CreatureUtils {}
             class Breadcrumbs extends \Diglactic\Breadcrumbs\Breadcrumbs {}
             class Flare extends \Spatie\LaravelIgnition\Facades\Flare {}
      

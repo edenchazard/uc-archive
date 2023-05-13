@@ -31,7 +31,7 @@ Route::prefix('creatures')->group(function () {
         /**
          * Show all families
          */
-        Route::get('/all', 'index')->name('creatures');
+        Route::get('/', 'index')->name('creatures');
 
         Route::prefix('{family}')->where(['family', '[a-zA-Z]+'])->group(function () {
             /** 

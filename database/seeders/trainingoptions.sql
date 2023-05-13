@@ -1,5 +1,7 @@
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 
-INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `energyCost`, `reward`) VALUES
+INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `energy_cost`, `reward`) VALUES
 (1, 2, 'Play in the snow', 'Asmo pounces through the snow and makes ball-angels.', 2, '+1 creativity'),
 (2, 2, 'Sing a lullaby', 'Asmo sings a quiet lullaby for others to hear.', 2, '+1 charisma'),
 (3, 2, 'Toss Asmo like a snowball', 'Asmo is tossed through the air at #his target, puffing softly in the snow as #he falls.', 10, '+1 Launch, +1 speed, +1 willpower'),
@@ -416,7 +418,7 @@ INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `en
 (414, 73, 'Repair shoes', 'Luckie repairs some broken shoes.', 6, '+9 coins, +1 intelligence, +1 strength'),
 (415, 73, 'Make new shoes', 'Luckie crafts some new shoes.', 7, '+1 agility, +1 focus'),
 (416, 73, 'Gather gold', 'Luckie gathers some gold for #his stash.', 8, '+10 coins, +1 intelligence, +1 focus');
-INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `energyCost`, `reward`) VALUES
+INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `energy_cost`, `reward`) VALUES
 (417, 73, 'Dance', 'Luckie dances with #his friends.', 8, '+1 charisma, +1 agility'),
 (418, 73, 'Give good fortune', 'Luckie grants good fortune to somebody.', 9, '+1 Bless, +1 willpower'),
 (419, 73, 'Vanish', 'Luckie vanishes from plain sight.', 10, '+1 Vanish, +1 wisdom'),
@@ -885,7 +887,7 @@ INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `en
 (882, 141, 'Flutter', 'Squawk flutters off to another area of the branch.', 3, '+1 speed'),
 (883, 141, 'Eat crackers', 'Squawk eats a delicious cracker.', 4, '+1 wisdom'),
 (884, 141, 'Nap', 'Squawk takes a pleasant break from his activities.', 4, '+1 wisdom');
-INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `energyCost`, `reward`) VALUES
+INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `energy_cost`, `reward`) VALUES
 (885, 141, 'Seek attention', 'Squawk looks at you for some attention.', 7, '+1 intelligence, +1 charisma'),
 (886, 141, 'Preen', 'Squawk preens its feathers for a little bit.', 7, '+1 focus, +1 wisdom'),
 (887, 141, 'Waddle', 'Squawk focuses on moving down a branch and waddles down it.', 8, '+1 agility, +1 strength'),
@@ -1334,7 +1336,7 @@ INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `en
 (1330, 203, 'Faster and faster', '* tests just how fast #he can go.', 7, '+1 speed, +1 agility'),
 (1331, 203, 'Sleep', 'You sit down to read a book, and * quickly lays down #his head for a power nap.', 7, '+1 willpower, +1 focus'),
 (1332, 203, 'Study flower', '* lies down to study the intricate patterns of a flower.', 8, '+1 wisdom, +1 intelligence');
-INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `energyCost`, `reward`) VALUES
+INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `energy_cost`, `reward`) VALUES
 (1333, 203, 'Duelling time!', 'Talking a running start, * headbutts with another Faun.', 8, '+1 strength, +1 speed'),
 (1334, 203, 'Run', '* practices running.', 9, '+1 Run, +1 speed'),
 (1335, 204, 'Flex muscles', '* trains #his strength.', 4, '+1 strength'),
@@ -1765,7 +1767,7 @@ INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `en
 (1760, 273, 'Morning exercise', '* does some stretching exercises in the morning.', 4, '+1 agility'),
 (1761, 273, 'Morning run', '* gets up at the break of dawn and goes for a jog.', 6, '+1 strength, +1 speed'),
 (1762, 273, 'Talk to caretaker', '* and you talk about her unique outlook on life.', 6, '+1 intelligence, +1 willpower');
-INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `energyCost`, `reward`) VALUES
+INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `energy_cost`, `reward`) VALUES
 (1763, 273, 'Understand luck', '* sits in the sun while contemplating the nature of luck. ', 8, '+1 Meditate, +1 focus'),
 (1764, 273, 'Explain the nature of luck', '* explains the neutrality of luck to her friends.', 9, '+1 Philosophy, +1 wisdom'),
 (1765, 273, 'Cheer friends up', '* comes up with a fun activity to cheer up her friends if they''re feeling down.', 10, '+1 Charm, +1 charisma, +1 creativity'),
@@ -2142,7 +2144,7 @@ INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `en
 (2137, 346, 'Greet sun', '* wakes up at first light to greet the sun.', 3, '+1 willpower'),
 (2138, 346, 'Track the sun', '* follows the sun as is moves from East to West.', 5, '+1 focus'),
 (2139, 346, 'Spend time with caretaker', '* listens attentively as you tell #him a story.', 5, '+1 wisdom, +1 intelligence');
-INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `energyCost`, `reward`) VALUES
+INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `energy_cost`, `reward`) VALUES
 (2140, 346, 'Greet friends', 'Even from underwater * sees #his friends approach and #he quickly swims up to greet them.', 7, '+1 Spot, +1 charisma, +1 speed'),
 (2141, 346, 'Play with friends', '* and #his friends play water volleyball.', 7, '+1 agility, +1 creativity'),
 (2142, 346, 'Harmonize Chi', '* harmonizes #his Chi with the rising and setting of the sun.', 9, '+1 Chi, +1 focus, +1 wisdom'),
@@ -2526,7 +2528,7 @@ INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `en
 (2520, 410, 'Take a walk', 'You accompany * to a relaxing greenhouse.', 6, '+1 agility'),
 (2521, 410, 'What do you hear?', '* sits with you in the greenhouse, but seems restless, distracted by something.', 7, '+1 charisma'),
 (2522, 410, 'It seems to want something', '* prods at a little tree.', 8, '+1 speed');
-INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `energyCost`, `reward`) VALUES
+INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `energy_cost`, `reward`) VALUES
 (2523, 410, 'Is that it?', 'A few minutes later, you find * carefully picking up the little tree''s fallen needles.', 9, '+1 intelligence'),
 (2524, 410, 'That must be it', 'When you next look, *''s pushing the little tree''s heavy pot into the shade.', 10, '+1 Determination, +1 strength, +1 willpower'),
 (2525, 410, 'Understand', 'The tree had too much sun, * explains to you.', 10, '+1 Insight, +1 wisdom, +1 focus'),
@@ -2910,7 +2912,7 @@ INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `en
 (2903, 483, 'For you!', '* waits at shore, souvenirs in hand.', 6, '+1 strength'),
 (2904, 483, '...and you.', '* meets a group of creatures.', 7, '+1 charisma'),
 (2905, 483, 'Not grey', 'Fortuna wants something shiny!  * wonders where to find something like that.', 8, '+1 Friendship, +1 creativity');
-INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `energyCost`, `reward`) VALUES
+INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `energy_cost`, `reward`) VALUES
 (2906, 483, 'Maybe that one.', '* dives deep to search for shells.', 9, '+1 speed'),
 (2907, 483, 'Or definitely these.', '* realizes those aren''t shells; they''re actually gemstones!', 10, '+1 Identify, +1 intelligence'),
 (2908, 483, 'Shiny enough?', '* brings back aquamarine gems for the other creatures.', 11, '+15 coins, +1 wisdom, +1 willpower'),
@@ -3304,7 +3306,7 @@ INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `en
 (3296, 546, 'Where did you go?', '* darts off to see what you''re doing.', 7, '+1 focus'),
 (3297, 546, 'Oops', '* accidentally ends up in a cabinet.  #He''s not sure how #he got in there!', 8, '+1 Teleport, +1 agility'),
 (3298, 546, 'Oops, but better', '* reappears above your head while you wash dishes.', 9, '+1 Luck, +1 willpower');
-INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `energyCost`, `reward`) VALUES
+INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `energy_cost`, `reward`) VALUES
 (3299, 546, 'Inspiration', '* flitters back and hovers while you wash the dishes.  You suddenly think that maybe it''s time for an adventure.', 10, '+1 creativity'),
 (3300, 546, 'Idea!', '* bounces on your shoulder and the idea hits you.  Why not go visit the beach?', 11, '+1 wisdom, +1 strength'),
 (3301, 546, 'I want a floaty!', '* follows after you while you organize the trip.', 10, '+1 intelligence, +1 speed'),
@@ -3671,7 +3673,7 @@ INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `en
 (3662, 613, 'What a charmer!', '*''s caretaker finds it difficult to be strict with #him because * is just so cute!', 8, '+1 charisma'),
 (3663, 613, 'Splash Dash!', 'Giving rides to earthbound creatures becomes a particularly joyful experience for *.', 9, '+1 Burst of Speed, +1 speed'),
 (3664, 613, 'Back together again! Yay!', '* puts together the item #he recently took apart.', 11, '+1 Hard Work, +1 intelligence');
-INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `energyCost`, `reward`) VALUES
+INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `energy_cost`, `reward`) VALUES
 (3665, 613, 'I''ll help! Let me show you!', '* shows Kit the workings of the seaside and the undersea world.', 12, '+1 Instruct, +1 charisma, +1 wisdom'),
 (3666, 614, 'You missed a spot!', '* examines Kit and reminds him of the importance of meticulous grooming.', 5, '+1 focus'),
 (3667, 614, 'Let''s go faster and deeper!', '* encourages Kit to reach his full potential diving in the ocean depths.', 6, '+1 strength, +1 willpower'),
@@ -4034,7 +4036,7 @@ INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `en
 (4048, 682, 'Perfectly played', 'You look up and see that * somehow glued the table and chairs, with the breakfast cutlery perfectly set, to the ceiling! ', 6, '+1 Surprise, +1 intelligence'),
 (4049, 682, 'Let''s make do', 'You put anti-gravity measures on all your breakfast guests and instruct * to fly them to their place. Looks like you''ll be having breakfast upside down!', 7, '+1 Fly, +1 strength, +1 speed'),
 (4050, 683, 'Early morning', '* wakes up very early...', 6, '+1 willpower');
-INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `energyCost`, `reward`) VALUES
+INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `energy_cost`, `reward`) VALUES
 (4051, 683, 'Very quietly', '* flies through the house silently... Uhoh. Haven''t we seen #him do this before?', 6, '+1 agility'),
 (4052, 683, 'Set pr- ...wait', 'Flying into the kitchen, *... sits down? And takes out a stack of paper?', 7, '+1 focus, +1 wisdom'),
 (4053, 683, 'Write composition', '* is working on #his musical composition.', 7, '+1 creativity, +1 intelligence'),
@@ -4301,3 +4303,4 @@ INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `en
 (4314, 741, 'Must be serious business', 'You realize just what ends * is willing to go to for a prank as you watch her heft a box of gadgets twice her weight up to the attic to prepare.', 11, '+1 Hard Work, +1 strength, +1 willpower'),
 (4315, 741, 'Biggest prank ever', '* wants to know if you''ll help her pull off the biggest prank yet!', 12, '+1 Surprise, +1 creativity, +1 intelligence'),
 (4316, 754, 'Jump', '', 15, '+1 Thing, +1 Agility');
+COMMIT;

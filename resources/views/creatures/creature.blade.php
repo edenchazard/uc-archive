@@ -29,8 +29,8 @@
                             alt='{{ $pet->creature->consumable->name }}'
                             class="self-center"/>
                         Clicking {{$pet->creature->name}} would earn you the {{$pet->creature->consumable->name}} component.
-                        @if ($pet->creature->requiredClicks > 0)
-                            It requires {{$pet->creature->requiredClicks}} clicks to evolve.
+                        @if ($pet->creature->required_clicks > 0)
+                            It requires {{$pet->creature->required_clicks}} clicks to evolve.
                         @endif
                     </p>
                 </div>
@@ -41,13 +41,13 @@
         <h2 class="my-2 section-title">
             <a href='#visual-description'>Visual description</a>
         </h2>
-        <x-creature-formatted-block :text="$pet->creature->shortDescription" :pet="$pet" />
+        <x-creature-formatted-block :text="$pet->creature->short_description" :pet="$pet" />
     </section>
     <section id='lifestyle'>
         <h2 class="my-2 section-title">
             <a href='#lifestyle'>Lifestyle</a>
         </h2>
-        <x-creature-formatted-block :text="$pet->creature->longDescription" :pet="$pet" />
+        <x-creature-formatted-block :text="$pet->creature->long_description" :pet="$pet" />
     </section>
     <section id='general'>
         <h2 class="my-2 section-title">
@@ -66,7 +66,7 @@
                 @forelse ($pet->creature->trainingOptions as $option)
                     <tr class="flex flex-col odd:bg-[#add0eb] even:bg-uc-blue md:table-row">
                         <td>{{ $option->title }}</td>
-                        <td>{{ $option->energyCost }}</td>
+                        <td>{{ $option->energy_cost }}</td>
                         <td>{{ $option->reward }}</td>
                         <td>
                             <x-creature-formatted-block :text="$option->description" :pet="$pet" :additional="['*' => $pet->creature->name]" />

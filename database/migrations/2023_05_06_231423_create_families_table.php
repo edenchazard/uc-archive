@@ -16,18 +16,27 @@ return new class extends Migration
     {
         Schema::create('families', function (Blueprint $table) {
             $table->comment('Table for creature families.');
-            $table->id();
+
+            $table->unsignedSmallInteger('id')->autoIncrement();
+
             $table->string('name', 36);
-            $table->boolean('inBasket')->default(1);
-            $table->boolean('allowExalt')->default(1);
-            $table->boolean('hasAlts')->default(0);
+            $table->boolean('in_basket')->default(1);
+            $table->boolean('deny_exalt')->default(1);
+            $table->boolean('has_alts')->default(0);
             $table->unsignedTinyInteger('gender')->default(3);
             $table->unsignedTinyInteger('rarity')->default(1);
-            $table->unsignedTinyInteger('uniqueRating')->default(0);
-            $table->string('element', 15)->default('none');
+            $table->unsignedTinyInteger('unique_rating')->default(0);
+            $table->unsignedTinyInteger('element')->default(0);
             $table->date('released')->useCurrent();
-            $table->date('availabilityBegin')->default('1970-01-01');
-            $table->date('availabilityEnd')->default('1970-01-01');
+            $table->date('availability_begin')->default('1970-01-01');
+            $table->date('availability_end')->default('1970-01-01');
+
+            $skills = ['strength', 'agility', 'speed', 'intelligence', 'wisdom', 'charisma', 'creativity', 'willpower', 'focus'];
+
+            foreach ($skills as $skill) {
+                $table->unsignedTinyInteger("base_{$skill}")->default(0);
+            }
+
             $table->timestamps();
         });
     }

@@ -91,10 +91,10 @@ class FamilyController extends Controller
                 'Name' => $family->name,
                 'rarity' => CreatureUtils::rarity($family->rarity),
                 'Released on' => $family->released,
-                'Unique rating' => $family->uniqueRating,
+                'Unique rating' => $family->unique_rating,
                 'gender' => CreatureUtils::gender($family->gender)::friendlyName(),
-                'Noble/Exalt' => ($family->allowExalt ? 'Yes' : 'No'),
-                'Basket' => ($family->inBasket ? 'Yes' : 'No'),
+                'Noble/Exalt' => ($family->deny_exalt ? 'No' : 'Yes'),
+                'Basket' => ($family->in_basket ? 'Yes' : 'No'),
                 'Artists' => ''
             ],
             'page' => [

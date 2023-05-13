@@ -12,14 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('training_options', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedSmallInteger('creature_id');
+            $table->comment('Table for creature training options.');
+
+            $table->unsignedSmallInteger('id')->autoIncrement();
+            $table->unsignedSmallInteger('creature_id')->index();
             $table->string('title', 50);
             $table->text('description');
-            $table->tinyInteger('energyCost')->default(5);
+            $table->tinyInteger('energy_cost')->default(5);
             $table->string('reward', 100);
-            $table->index('creature_id');
             $table->timestamps();
+
+            //$table->foreign('creature_id')->references('id')->on('creatures')->restrictOnDelete()->cascadeOnUpdate();
         });
     }
 

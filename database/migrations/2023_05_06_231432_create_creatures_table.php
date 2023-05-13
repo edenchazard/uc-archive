@@ -17,19 +17,29 @@ return new class extends Migration
     {
         Schema::create('creatures', function (Blueprint $table) {
             $table->comment('Table for individual creatures themselves.');
-            $table->id();
+
+            $table->unsignedSmallInteger('id', true)->autoIncrement();
             $table->string("name", 20);
             $table->unsignedTinyInteger('stage')->default(1);
-            $table->text('shortDescription');
-            $table->text('longDescription');
-            $table->unsignedSmallInteger('requiredClicks');
-            $table->unsignedTinyInteger('component');
+            $table->text('short_description');
+            $table->text('long_description');
+            $table->unsignedSmallInteger('required_clicks');
+
+            $skills = ['strength', 'agility', 'speed', 'intelligence', 'wisdom', 'charisma', 'creativity', 'willpower', 'focus'];
+
+            foreach ($skills as $skill) {
+                $table->unsignedTinyInteger("max_{$skill}")->default(0);
+            }
+
+            $table->unsignedSmallInteger('family_id');
+            //    $table->foreign('family_id')->references('id')->on('families')->restrictOnDelete()->cascadeOnUpdate();
+            $table->unsignedTinyInteger('component_id')->index();
+            //    $table->foreign('component_id')->references('id')->on('consumables')->restrictOnDelete()->cascadeOnUpdate();
+
             $table->timestamps();
 
-            $table->foreignIdFor(Family::class);
             $table->unique(['stage', 'family_id']);
             $table->unique(['family_id', 'name']);
-            $table->index('component');
         });
     }
 

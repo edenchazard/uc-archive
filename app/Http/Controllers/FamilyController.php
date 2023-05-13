@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Family;
-use App\Models\UserPet;
 use App\Services\Creatures\CreatureGender;
 use Illuminate\Http\Request;
 use App\Services\Creatures\CreatureUtils;
@@ -19,10 +18,13 @@ class FamilyController extends Controller
     {
         $families = Family::with('stages')->get();
 
-        $wrappedFamilies = $families->map(
+        $wrappedFamilies =  $families->map(
             function ($family) {
                 $family->stages = $family->stages->map(
-                    fn ($stage) => $stage->wrap()
+                    function ($stage) use ($family) {
+                        $stage->setRelation('family', $family);
+                        return $stage->wrap();
+                    }
                 );
                 return $family;
             }

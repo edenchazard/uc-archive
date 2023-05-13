@@ -29,7 +29,7 @@
                                         <h3>{{$family->name}}</h3>
                                         <x-article-link :url='route("family", $family->name)' />
                                     </div>
-                                    <x-evolutionary-line :family="$family" />
+                                    <x-evolutionary-line :stages="$family->stages" />
                                 </li>
                             @endforeach
                         </ol>

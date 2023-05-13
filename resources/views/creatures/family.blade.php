@@ -2,7 +2,7 @@
     <section id="family-introduction">
         <h1>Family: {{$familyData->name}}</h1>
         <section id='evolutionary-line'>
-            <x-evolutionary-line :family='$familyData' class="justify-center" />
+            <x-evolutionary-line :stages='$stages' class="justify-center" />
         </section>
     </section>
     <section id='general'>
@@ -24,24 +24,24 @@
         <h2 class="my-2 section-title">
             <a href='#evolutions'>Evolutions</a>
         </h2>
-        @foreach ($stages as $creature)
-            <article class='flex flex-col justify-center items-start p-3 gap-2' id='{{ $creature->name }}'>
-                    <img
-                        src='{{ CreatureUtils::imageLink($creature) }}'
-                        alt="{{ $creature->name }}"
-                        class="self-start" />
-                    <div>
-                        <h3 class='inline font-medium'>{{ $creature->name }}</h3>
-                        <x-article-link :url='route("creature", [$familyData->name, $creature->name])' />
-                    </div>
-                    <section>
-                        <h4 class='font-medium'>Visual Description</h4>
-                        <x-creature-formatted-block :text="$creature->shortDescription" :creature="$creature" />
-                    </section>
-                    <section>
-                        <h4 class='font-medium'>Lifestyle</h4>
-                        <x-creature-formatted-block :text="$creature->longDescription" :creature="$creature" />
-                    </section>
+        @foreach ($stages as $stage)
+            <article class='flex flex-col justify-center items-start p-3 gap-2' id='{{ $stage->creature->name }}'>
+                <img
+                    src='{{ $stage->imageLink() }}'
+                    alt="{{ $stage->creature->name }}"
+                    class="self-start" />
+                <div>
+                    <h3 class='inline font-medium'>{{ $stage->creature->name }}</h3>
+                    <x-article-link :url='route("creature", [$familyData->name, $stage->creature->name])' />
+                </div>
+                <section>
+                    <h4 class='font-medium'>Visual Description</h4>
+                    <x-creature-formatted-block :text="$stage->creature->shortDescription" :creature="$stage->creature" />
+                </section>
+                <section>
+                    <h4 class='font-medium'>Lifestyle</h4>
+                    <x-creature-formatted-block :text="$stage->creature->longDescription" :creature="$stage->creature" />
+                </section>
             </article>
         @endforeach
     </section>

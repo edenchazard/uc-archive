@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Family;
-use App\Models\Creature;
+use App\Models\UserPet;
 use App\Services\Creatures\CreatureGender;
-use App\Services\Formatting\CreatureFormattingService;
 use Illuminate\Http\Request;
 use App\Services\Creatures\CreatureUtils;
 
@@ -18,11 +17,19 @@ class FamilyController extends Controller
      */
     public function index()
     {
-        //
         $families = Family::with('stages')->get();
 
+        $wrappedFamilies = $families->map(
+            function ($family) {
+                $family->stages = $family->stages->map(
+                    fn ($stage) => $stage->wrap()
+                );
+                return $family;
+            }
+        );
+
         $data = [
-            'groups' => $families->groupBy(fn($family) => $family->name[0]),
+            'groups' => $wrappedFamilies->groupBy(fn ($family) => $family->name[0]),
             'page' => [
                 'title' => 'Families',
                 'route' => 'family',
@@ -65,14 +72,18 @@ class FamilyController extends Controller
     {
         $family = Family::findByName($name);
 
-        $stages = $family->stages->all();
-
+        // Generate a single gender. If we ran this in the map, we'd get a
+        // different one every time and it breaks viewer immersion.
         $gender = $family->gender > 1 ?  CreatureGender::random() : CreatureGender::get($family->gender);
 
-        array_walk($stages, fn($stage) => $stage->gender = $gender);
+        // wrap each stage with a pet object so the we can apply some 
+        // attributes
+        $wrappedStages = $family->stages->map(
+            fn ($stage) => $stage->wrap(['gender' => $gender])
+        );
 
         $data = [
-            'stages' => $stages,
+            'stages' => $wrappedStages,
             'familyData' => $family,
             'generalAttributes' => [
                 'Name' => $family->name,
@@ -90,7 +101,7 @@ class FamilyController extends Controller
                 'name' => $family->name
             ]
         ];
-    
+
         return view('creatures.family', $data);
     }
 

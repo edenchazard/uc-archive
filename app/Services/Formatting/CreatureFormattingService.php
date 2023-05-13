@@ -47,7 +47,4 @@ class CreatureFormattingService extends FormattingServiceBase {
 
         return $this;
     }
-
-    public function formatImageLink(){}
 }
-?>

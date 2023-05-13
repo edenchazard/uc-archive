@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Creature;
 use App\Models\Family;
+use App\Models\UserPet;
 use Illuminate\Http\Request;
 use App\Services\Creatures\CreatureUtils;
 
@@ -53,26 +54,36 @@ class CreatureController extends Controller
     {
         // retrieve family id
         $family = Family::firstWhere('name', $familyName);
-    
-        if(!$family) abort(404, "Family not found.");
-    
+
+        if (!$family) abort(404, "Family not found.");
+
         // get creature
         $creature = Creature::with('consumable')->firstWhere([
             'family_id' => $family->id,
             'name' => $creatureName
         ]);
 
-        if(!$creature) abort(404, "Creature not found.");
+        if (!$creature) abort(404, "Creature not found.");
 
         $gender = $creature->family->gender > 1 ? CreatureUtils::gender()::random() : CreatureUtils::gender($creature->family->gender);
 
         // get nearby creatures
-        $closestCreatures = Creature::with('family')->find([$creature->id - 1, $creature->id + 1]);
-        $creature->gender = $gender;
+        $closestCreatures = Creature::with('family')->find([
+            $creature->id - 1,
+            $creature->id + 1
+        ]);
+
+        $wrappedClosestCreatures = $closestCreatures->map(
+            fn ($creature) => $creature->wrap()
+        );
+
+        // wrap a virtual user pet
+        $wrappedCreature = $creature->wrap(['gender' => $gender]);
+
         $data = [
-            'closestCreatures' => $closestCreatures,
+            'closestCreatures' => $wrappedClosestCreatures,
             'family' => $family,
-            'creature' => $creature,
+            'pet' => $wrappedCreature,
             'page' => [
                 'title' => "Creature: {$creature->name}",
                 'route' => 'creature',
@@ -83,11 +94,12 @@ class CreatureController extends Controller
         return view('creatures.creature', $data);
     }
 
-    public function showById(int $id){
+    public function showById(int $id)
+    {
         $creature = Creature::find($id);
 
-        if(!$creature) abort(404, "Creature not found.");
- 
+        if (!$creature) abort(404, "Creature not found.");
+
         return $creature;
     }
 

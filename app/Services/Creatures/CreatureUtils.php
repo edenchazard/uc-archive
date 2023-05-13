@@ -1,13 +1,16 @@
 <?php
+
 namespace App\Services\Creatures;
 
-use App\Models\Creature;
+use App\Models\UserPet;
 
-class CreatureUtils {
+class CreatureUtils
+{
     /**
      * Tramslates rarity rating
      */
-    public static function rarity(int $value): string {
+    public static function rarity(int $value): string
+    {
         $mappings = [
             13 =>  array('WTFBBQ!?', 0),
             12 =>  array('WTF?', 0),
@@ -31,8 +34,9 @@ class CreatureUtils {
     /**
      * Handles gender-y things.
      */
-    public static function gender(int $val = null){
-        if($val === null)
+    public static function gender(int $val = null)
+    {
+        if ($val === null)
             return CreatureGender::class;
 
         return CreatureGender::get($val);
@@ -41,7 +45,8 @@ class CreatureUtils {
     /**
      * Translates specialties
      */
-    public static function specialty(int $val): string{
+    public static function specialty(int $val): string
+    {
         $mappings = [
             0 => '', //regular
             1 => 'noble',
@@ -53,21 +58,22 @@ class CreatureUtils {
         return $mappings[$val];
     }
 
-    public static function imageLink(Creature $creature): string {
-        $exalted = false;
-        $prefixes = collect([]);
-    
-        if($exalted)
-            $prefixes->push("exalted");
-    
-        if(strtolower($creature->family->name) !== strtolower($creature->name))
-            $prefixes->push("{$creature->family->name}");
+    public static function imageLink(UserPet $pet): string
+    {
+        $creature = &$pet->creature;
+        $parts = collect([]);
 
-        $prefixes = $prefixes->map(fn($prefix) => $prefix . '_');
+        if ($pet->specialty > 0 && $pet->specialty <= 1)
+            $parts->push(self::specialty($pet->specialty));
 
-        $path = strtolower("/images/creatures/{$creature->family->name}/{$prefixes->join('_')}{$creature->name}.png");
-    
+        // creatures with their family name don't follow the same url format...
+        $parts->push($creature->family->name);
+
+        if ($creature->family->name !== $creature->name)
+            $parts->push($creature->name);
+
+        $path = strtolower("/images/creatures/{$creature->family->name}/{$parts->join('_')}.png");
+
         return asset($path);
     }
 }
-?>

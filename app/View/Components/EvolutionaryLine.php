@@ -11,7 +11,7 @@ class EvolutionaryLine extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public $family)
+    public function __construct(public $stages)
     {
         //
     }

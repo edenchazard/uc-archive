@@ -1,15 +1,15 @@
 <li
     aria-current="{{ $direction === 'current' }}">
-    @if ($creature)
+    @if ($pet)
         <a 
-            href='{{ route("creature", [$creature->family->name, $creature->name]) }}'
+            href='{{ route("creature", [$pet->creature->family->name, $pet->creature->name]) }}'
             class="text-center flex flex-col items-center">
             <img 
-                src='{{ CreatureUtils::imageLink($creature) }}'
+                src='{{ $pet->imageLink() }}'
                 alt=""
                 class="max-w-10 max-h-10 self-center"/>
-            <span>#{{$creature->id}}</span>
-            <span>{{$creature->name}}</span>
+            <span>#{{$pet->creature->id}}</span>
+            <span>{{$pet->creature->name}}</span>
             @if($direction === 'current')
                 <span class="font-bold">This creature</span>
             @else

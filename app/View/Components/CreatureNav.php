@@ -11,7 +11,7 @@ class CreatureNav extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $direction, public $creature)
+    public function __construct(public string $direction, public $pet)
     {
         //
     }

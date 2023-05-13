@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Creature;
+use App\Services\Creatures\CreatureUtils;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -31,9 +32,7 @@ return new class extends Migration
             $table->date('availability_begin')->default('1970-01-01');
             $table->date('availability_end')->default('1970-01-01');
 
-            $skills = ['strength', 'agility', 'speed', 'intelligence', 'wisdom', 'charisma', 'creativity', 'willpower', 'focus'];
-
-            foreach ($skills as $skill) {
+            foreach (CreatureUtils::getPossibleStats() as $skill) {
                 $table->unsignedTinyInteger("base_{$skill}")->default(0);
             }
 

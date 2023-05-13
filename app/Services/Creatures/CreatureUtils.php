@@ -7,6 +7,24 @@ use App\Models\UserPet;
 class CreatureUtils
 {
     /**
+     * @return \Illuminate\Support\Collection<int, string>
+     */
+    public static function getPossibleStats()
+    {
+        return collect([
+            'strength',
+            'agility',
+            'speed',
+            'intelligence',
+            'wisdom',
+            'charisma',
+            'creativity',
+            'willpower',
+            'focus'
+        ]);
+    }
+
+    /**
      * Tramslates rarity rating
      */
     public static function rarity(int $value): string

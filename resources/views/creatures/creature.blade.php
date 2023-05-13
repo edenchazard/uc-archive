@@ -49,33 +49,60 @@
         </h2>
         <x-creature-formatted-block :text="$pet->creature->long_description" :pet="$pet" />
     </section>
-    <section id='general'>
+    <section id='max-stats' class="mt-4">
         <h2 class="my-2 section-title">
-            <a href='#general'>Training options</a>
+            <a href='#max-stats'>Max Stats</a>
         </h2>
-        <table>
-            <thead>
-                <tr class='flex flex-col md:table-row'>
-                    <th>Title</th>
-                    <th>Energy Cost</th>
-                    <th>Reward</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($pet->creature->trainingOptions as $option)
-                    <tr class="flex flex-col odd:bg-[#add0eb] even:bg-uc-blue md:table-row">
-                        <td>{{ $option->title }}</td>
-                        <td>{{ $option->energy_cost }}</td>
-                        <td>{{ $option->reward }}</td>
-                        <td>
-                            <x-creature-formatted-block :text="$option->description" :pet="$pet" :additional="['*' => $pet->creature->name]" />
-                        </td>
+        @if ($pet->creature->getMaxStats() > 0)
+            <table class='w-full'>
+                <thead>
+                    <tr class='flex flex-col sm:table-row'>
+                        @foreach ([...$pet->creature->getStats()->keys(), 'Total'] as $stat)
+                            <th>{{ ucfirst($stat) }}</th>
+                        @endforeach
                     </tr>
-                @empty
-                    None.
-                @endforelse
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <tr class="flex flex-col sm:table-row">
+                        @foreach ([...$pet->creature->getStats(), $pet->creature->getMaxStats()] as $stat)
+                            <td class="odd:bg-[#add0eb] even:bg-uc-blue text-center">{{ $stat }}</td>
+                        @endforeach
+                    </tr>
+                </tbody>
+            </table>
+        @else
+            N/A
+        @endif
+    </section>
+    <section id='training-options'>
+        <h2 class="my-2 section-title">
+            <a href='#training-options'>Training options</a>
+        </h2>
+        @if ($pet->creature->trainingOptions->count() > 0)
+            <table>
+                <thead>
+                    <tr class='flex flex-col md:table-row'>
+                        <th>Title</th>
+                        <th>Energy Cost</th>
+                        <th>Reward</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($pet->creature->trainingOptions as $option)
+                        <tr class="flex flex-col odd:bg-[#add0eb] even:bg-uc-blue md:table-row">
+                            <td>{{ $option->title }}</td>
+                            <td>{{ $option->energy_cost }}</td>
+                            <td>{{ $option->reward }}</td>
+                            <td>
+                                <x-creature-formatted-block :text="$option->description" :pet="$pet" :additional="['*' => $pet->creature->name]" />
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @else
+            N/A
+        @endif
     </section>
 </x-page>

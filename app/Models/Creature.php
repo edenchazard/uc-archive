@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-
+use App\Services\Creatures\CreatureUtils;
 
 /**
  * App\Models\Creature
@@ -123,5 +123,23 @@ class Creature extends Model
             'nickname' => $this->name,
             ...$attrs
         ]))->setRelation('creature', $this);
+    }
+
+    /**
+     * Calculate the max possible stat value for this creature.
+     * @return int
+     */
+    public function getMaxStats(): int
+    {
+        return $this->getStats()->sum();
+    }
+
+    /**
+     * Get all stats in a single collection.
+     * @return \Illuminate\Database\Eloquent\Collection<string, int>
+     */
+    public function getStats()
+    {
+        return CreatureUtils::getPossibleStats()->flip()->map(fn ($val, $key) => $this["max_$key"]);
     }
 }

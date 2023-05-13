@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Family;
+use App\Services\Creatures\CreatureUtils;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -25,9 +26,7 @@ return new class extends Migration
             $table->text('long_description');
             $table->unsignedSmallInteger('required_clicks');
 
-            $skills = ['strength', 'agility', 'speed', 'intelligence', 'wisdom', 'charisma', 'creativity', 'willpower', 'focus'];
-
-            foreach ($skills as $skill) {
+            foreach (CreatureUtils::getPossibleStats() as $skill) {
                 $table->unsignedTinyInteger("max_{$skill}")->default(0);
             }
 

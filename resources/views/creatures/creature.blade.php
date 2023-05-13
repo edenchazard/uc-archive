@@ -41,13 +41,13 @@
         <h2 class="my-2 section-title">
             <a href='#visual-description'>Visual description</a>
         </h2>
-        <x-creature-formatted-block :text="$pet->creature->shortDescription" :creature="$pet->creature" />
+        <x-creature-formatted-block :text="$pet->creature->shortDescription" :pet="$pet" />
     </section>
     <section id='lifestyle'>
         <h2 class="my-2 section-title">
             <a href='#lifestyle'>Lifestyle</a>
         </h2>
-        <x-creature-formatted-block :text="$pet->creature->longDescription" :creature="$pet->creature" />
+        <x-creature-formatted-block :text="$pet->creature->longDescription" :pet="$pet" />
     </section>
     <section id='general'>
         <h2 class="my-2 section-title">
@@ -69,7 +69,7 @@
                         <td>{{ $option->energyCost }}</td>
                         <td>{{ $option->reward }}</td>
                         <td>
-                            <x-creature-formatted-block :text="$option->description" :creature="$pet->creature" :additional="['*' => $pet->creature->name]" />
+                            <x-creature-formatted-block :text="$option->description" :pet="$pet" :additional="['*' => $pet->creature->name]" />
                         </td>
                     </tr>
                 @empty

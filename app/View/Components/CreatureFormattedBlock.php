@@ -2,11 +2,11 @@
 
 namespace App\View\Components;
 
+use App\Models\UserPet;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use App\Services\Formatting\CreatureFormattingService;
-use App\Services\Creatures\CreatureUtils;
 
 
 class CreatureFormattedBlock extends Component
@@ -16,12 +16,12 @@ class CreatureFormattedBlock extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(string $text, $creature, array $additional = [])
+    public function __construct(string $text, UserPet $pet, array $additional = [])
     {
         $replacements = [
-            '{{c:nickname}}' => $creature->name,
-            '{{c:name}}' => $creature->name,
-            '{{c:family}}' => $creature->family->name,
+            '{{c:nickname}}' => $pet->nickname,
+            '{{c:name}}' => $pet->name,
+            '{{c:family}}' => $pet->creature->family->name,
             ...$additional
         ];
 
@@ -30,7 +30,7 @@ class CreatureFormattedBlock extends Component
             $replacements,
             // If the creature has a set gender, use that. Otherwise, if
             // not male or female, let's have a bit of fun and randomise the gender.
-            $creature->gender
+            $pet->gender
         ))->formatAll()->get();
     }
 

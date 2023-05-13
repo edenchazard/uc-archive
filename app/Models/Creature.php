@@ -68,6 +68,7 @@ class Creature extends Model
             'specialty' => 0,
             'variety' => 0,
             'creature_id' => $this->id,
+            'nickname' => $this->name,
             ...$attrs
         ]))->setRelation('creature', $this);
     }

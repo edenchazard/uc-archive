@@ -7,6 +7,7 @@ use App\Models\UserPet;
 class CreatureUtils
 {
     /**
+     * Returns a list of possible creature stats used in the application.
      * @return \Illuminate\Support\Collection<int, string>
      */
     public static function getPossibleStats()
@@ -25,7 +26,9 @@ class CreatureUtils
     }
 
     /**
-     * Tramslates rarity rating
+     * Translates rarity rating from number to string.
+     * @param int $value The rarity rating as a number.
+     * @return string
      */
     public static function rarity(int $value): string
     {
@@ -50,18 +53,24 @@ class CreatureUtils
     }
 
     /**
-     * Handles gender-y things.
+     * Translates an integer gender and returns the friendly name.
+     * @param int $val
+     * The gender as a number.
+     * Special case: If 3 (both) is passed, "both" will be returned.
+     * @return string
      */
-    public static function gender(int $val = null)
+    public static function gender(int $val): string
     {
-        if ($val === null)
-            return CreatureGender::class;
-
-        return CreatureGender::get($val);
+        // 3 (Both is a special case)
+        return strtolower(
+            $val === CreatureGender::both ? "both" : CreatureGender::get($val)->friendlyName()
+        );
     }
 
     /**
-     * Translates specialties
+     * Translates a specialty rating from number to string.
+     * @param int $val The specialty rating as a number.
+     * @return string
      */
     public static function specialty(int $val): string
     {
@@ -76,12 +85,17 @@ class CreatureUtils
         return $mappings[$val];
     }
 
+    /**
+     * Constructs an image url for a given pet.
+     * @param UserPet $pet The pet to make an image url from.
+     * @return string
+     */
     public static function imageLink(UserPet $pet): string
     {
         $creature = &$pet->creature;
         $parts = collect([]);
 
-        if ($pet->specialty > 0 && $pet->specialty <= 1)
+        if ($pet->specialty > 0 && $pet->specialty <= 2)
             $parts->push(self::specialty($pet->specialty));
 
         // creatures with their family name don't follow the same url format...

@@ -85,9 +85,9 @@ class Creature extends Model
      * 
      * If you want to resolve by creature id, you should use ::find instead.
      *
-     * @param family if a string is provided, the family name will be 
+     * @param family string|int If a string is provided, the family name will be 
      * inferred. If an integer is provided, it was assume that is the family id.
-     * @param creature if a string is provided, it will be assumed to be the
+     * @param creature string|int If a string is provided, it will be assumed to be the
      * creature's name. A number will be inferred as the stage in the family.
      */
     public function scopeLocate($query, string|int $family, string|int $creature)
@@ -113,6 +113,8 @@ class Creature extends Model
     /**
      * Wrap the creature around a fake User Pet container
      * and set its creature relation to this instance.
+     * @param string[] $attrs Attributes to inject.
+     * @return UserPet
      */
     public function wrap(array $attrs = []): UserPet
     {

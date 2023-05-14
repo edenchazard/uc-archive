@@ -76,13 +76,13 @@ class FamilyController extends Controller
 
         // Generate a single gender. If we ran this in the map, we'd get a
         // different one every time and it breaks viewer immersion.
-        $gender = $family->gender > 1 ?  CreatureGender::random() : CreatureGender::get($family->gender);
+        $gender = CreatureGender::get($family->gender);
 
         // wrap each stage with a pet object so the we can apply some 
         // attributes
-        $wrappedStages = $family->stages->map(
-            fn ($stage) => $stage->wrap(['gender' => $gender])
-        );
+        $wrappedStages = $family->stages->map(fn ($stage) => $stage->wrap([
+            'gender' => $gender
+        ]));
 
         $data = [
             'stages' => $wrappedStages,
@@ -92,7 +92,7 @@ class FamilyController extends Controller
                 'rarity' => CreatureUtils::rarity($family->rarity),
                 'Released on' => $family->released,
                 'Unique rating' => $family->unique_rating,
-                'gender' => CreatureUtils::gender($family->gender)::friendlyName(),
+                'gender' => CreatureUtils::gender($family->gender),
                 'Noble/Exalt' => ($family->deny_exalt ? 'No' : 'Yes'),
                 'Basket' => ($family->in_basket ? 'Yes' : 'No'),
                 'Artists' => ''

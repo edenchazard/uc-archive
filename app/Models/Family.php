@@ -77,6 +77,8 @@ class Family extends Model
 
     /**
      * Return a family by family name
+     * @param string $name The family name.
+     * @return Family
      */
     public static function findByName(string $name): Family
     {

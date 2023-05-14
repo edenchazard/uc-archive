@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Creature;
 use App\Models\Family;
 use App\Models\UserPet;
+use App\Services\Creatures\CreatureGender;
 use Illuminate\Http\Request;
 use App\Services\Creatures\CreatureUtils;
 
@@ -65,7 +66,7 @@ class CreatureController extends Controller
 
         if (!$creature) abort(404, "Creature not found.");
 
-        $gender = $creature->family->gender > 1 ? CreatureUtils::gender()::random() : CreatureUtils::gender($creature->family->gender);
+        $gender = CreatureGender::get($family->gender);
 
         // get nearby creatures
         $closestCreatures = Creature::with('family')->find([

@@ -43,6 +43,10 @@ class UserPet extends Model
         return $this->hasOne(Creature::class);
     }
 
+    /**
+     * Returns an image url for the pet.
+     * @return string
+     */
     public function imageLink(): string
     {
         return CreatureUtils::imageLink($this);

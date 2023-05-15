@@ -17,6 +17,7 @@ class CreatureGender
     protected static array $mappings = [
         0 => Male::class,
         1 => Female::class,
+        2 => Dual::class
         //3 => "Both"
     ];
 
@@ -131,6 +132,20 @@ final class Male extends BaseGender
             'him' => 'him',
             'himself' => 'himself',
             'hisself' => 'hisself'
+        ];
+    }
+}
+
+final class Dual extends BaseGender
+{
+    protected static function pronounReplacements(): array
+    {
+        return [
+            'he' => '?',
+            'his' => '?',
+            'him' => '?',
+            'himself' => '?',
+            'hisself' => '?'
         ];
     }
 }

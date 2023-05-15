@@ -80,15 +80,18 @@ abstract class FormattingServiceBase
      */
     public function fixParagraphs(): FormattingServiceBase
     {
-        $copy = trim($this->str);
+        $copy = $this->str;
 
-        // replace consecutive markers
-        $copy = str_replace('\r', '\n', $copy);
-        $copy = str_replace(str_repeat('\n', 2), '</p><p>', $copy);
-        // remove empty p tags
-        $copy = str_replace('<p></p>', '', '<p>' . $copy . '</p>');
+        // normalise carriage returns and bad newlines (literal \n and \r) with new lines
+        $copy = str_replace(['\r', '\n', "\r"], "\n", $copy);
+        // strip leading and trailing whitespaces
+        $paragraphs = array_map('trim', explode("\n", $copy));
+        // remove empty paragraphs
+        $paragraphs = array_filter($paragraphs, fn ($p) => $p !== '');
+        // surround with p tags
+        $paragraphs = array_map(fn ($p) => "<p>{$p}</p>", $paragraphs);
 
-        $this->str = $copy;
+        $this->str = implode($paragraphs);
         return $this;
     }
 }

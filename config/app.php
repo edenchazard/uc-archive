@@ -183,8 +183,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
-        'CreatureUtils' => 'App\Services\Creatures\CreatureUtils'
-
+        'CreatureUtils' => 'App\Services\Creatures\CreatureUtils',
+        'TextFormatter' => 'App\Services\TextFormatter\TextFormatter'
     ])->toArray(),
 
 ];

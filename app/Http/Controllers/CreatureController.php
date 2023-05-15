@@ -68,14 +68,10 @@ class CreatureController extends Controller
 
         $gender = CreatureGender::get($family->gender);
 
-        // get nearby creatures
-        $closestCreatures = Creature::with('family')->find([
-            $creature->id - 1,
-            $creature->id + 1
-        ]);
+        $closestCreatures = $creature->getAdjacentIds();
 
         $wrappedClosestCreatures = $closestCreatures->map(
-            fn ($creature) => $creature->wrap()
+            fn ($creature) => $creature ? $creature->wrap() : null
         );
 
         // wrap a virtual user pet

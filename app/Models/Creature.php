@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Services\Creatures\CreatureUtils;
+use DB;
 
 /**
  * App\Models\Creature
@@ -143,5 +144,42 @@ class Creature extends Model
     public function getStats()
     {
         return CreatureUtils::getPossibleStats()->flip()->map(fn ($val, $key) => $this["max_$key"]);
+    }
+
+    /**
+     * Returns the nearest previous and nearest next creatures adjacent to this
+     * creature in terms of id. Skips missing ids.
+     * @return \Illuminate\Database\Eloquent\Collection<string, Creature>
+     */
+    public function getAdjacentIds()
+    {
+        $adjacent =
+            fn (string $operator, string $order) =>
+            DB::table($this->table)
+                ->select(DB::raw("MAX(`id`)"))
+                ->where('id', $operator, $this->id)
+                ->groupBy('id')
+                ->orderBy('id', $order)
+                ->limit(1);
+
+        // get the highest max id before this id (previous)
+        // and the lowest max id after this id (next) 
+        $adjacents =
+            DB::table($this->table)
+            ->selectSub($adjacent('<', 'desc'), 'previous')
+            ->selectSub($adjacent('>', 'asc'), 'next')
+            ->first();
+
+        $creatures = Creature::with('family')->find([
+            $adjacents->previous,
+            $adjacents->next
+        ]);
+
+        // matches the ids up to what we got earlier,
+        // if there is no previous or next, null will be returned. 
+        return collect([
+            'previous' => $creatures->find($adjacents->previous),
+            'next' => $creatures->find($adjacents->next),
+        ]);
     }
 }

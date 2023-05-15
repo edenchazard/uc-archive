@@ -1,9 +1,9 @@
 <x-page :data='$page'>
     <aside aria-label="creatures by id order">
         <ul class="flex flex-row flex-wrap justify-between items-end">
-            <x-creature-nav :direction="'previous'" :pet='$closestCreatures[0]'></x-creature-nav>
+            <x-creature-nav :direction="'previous'" :pet='$closestCreatures["previous"]'></x-creature-nav>
             <x-creature-nav :direction="'current'" :pet='$pet'></x-creature-nav>
-            <x-creature-nav :direction="'next'" :pet='$closestCreatures[1]'></x-creature-nav>
+            <x-creature-nav :direction="'next'" :pet='$closestCreatures["next"]'></x-creature-nav>
         </ul>
     </aside>
     <section id='creature-introduction' class="my-2">
@@ -21,7 +21,7 @@
             {{-- to do convert stage to ordinal suffix --}}
             <div class="max-w-sm">
                 <div class="flex flex-col gap-2">
-                    <p><span class='font-bold'>{{ $pet->creature->name }}</span> is the {{$pet->creature->stage}} evolution of the {{$family->name}} family and {{ $pet->creature->id }} creature overall. Being a member of the {{$family->name}} family, its elemental type is {{$family->element}} with a rarity rating of {{$family->rarity}}.</p>
+                    <p><span class='font-bold'>{{ $pet->creature->name }}</span> is the {{TextFormatter::ordinal($pet->creature->stage)}} evolution of the {{$family->name}} family and {{ $pet->creature->id }} creature overall. Being a member of the {{$family->name}} family, its elemental type is {{$family->element}} with a rarity rating of {{$family->rarity}}.</p>
                     <p>It was released on <time>{{$family->released}}</time>.</p>
                     <p class="flex flex-wrap align-middle justify-center gap-3 flex-row sm:flex-nowrap py-3 sm:px-5">
                         <img

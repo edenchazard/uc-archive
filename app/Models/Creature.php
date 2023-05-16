@@ -156,16 +156,14 @@ class Creature extends Model
         $adjacent =
             fn (string $operator, string $order) =>
             DB::table($this->table)
-                ->select(DB::raw("MAX(`id`)"))
+                ->select('id')
                 ->where('id', $operator, $this->id)
-                ->groupBy('id')
                 ->orderBy('id', $order)
                 ->limit(1);
 
         // get the highest max id before this id (previous)
         // and the lowest max id after this id (next) 
-        $adjacents =
-            DB::table($this->table)
+        $adjacents = DB::query()
             ->selectSub($adjacent('<', 'desc'), 'previous')
             ->selectSub($adjacent('>', 'asc'), 'next')
             ->first();

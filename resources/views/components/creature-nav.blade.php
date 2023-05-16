@@ -16,5 +16,9 @@
                 {{ ucfirst($direction) }}
             @endif
         </a>
+        @elseif ($direction === 'next')
+            End
+        @elseif ($direction === 'previous')
+            Start
     @endif
 </li>

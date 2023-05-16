@@ -21,14 +21,15 @@
             {{-- to do convert stage to ordinal suffix --}}
             <div class="max-w-sm">
                 <div class="flex flex-col gap-2">
-                    <p><span class='font-bold'>{{ $pet->creature->name }}</span> is the {{TextFormatter::ordinal($pet->creature->stage)}} evolution of the {{$family->name}} family and {{ $pet->creature->id }} creature overall. Being a member of the {{$family->name}} family, its elemental type is {{$family->element}} with a rarity rating of {{$family->rarity}}.</p>
-                    <p>It was released on <time>{{$family->released}}</time>.</p>
+                    <p><span class='font-bold'>{{ $pet->creature->name }}</span> is the {{TextFormatter::ordinal($pet->creature->stage)}}{{  $pet->creature->required_clicks === 0 ? ' and final' : '' }} evolution of the {{$family->name}} family and {{ TextFormatter::ordinal($pet->creature->id) }} creature overall.</p>
+                    <p>Being a member of the {{$family->name}} family, its elemental type is {{ ucfirst($family->element()) }} with a rarity rating of {{ ucfirst($family->rarity()) }}{!! $family->unique_rating > 0 ? " <span class='font-bold'>(".ucfirst($family->uniqueRating()).")</span>" : '' !!}.</p>
+                    <p>It was released on <time>{{ $family->released() }}</time>.</p>
                     <p class="flex flex-wrap align-middle justify-center gap-3 flex-row sm:flex-nowrap py-3 sm:px-5">
                         <img
                             src='{{ asset(strtolower("images/components/" . $pet->creature->consumable->name .".png")) }}'
                             alt='{{ $pet->creature->consumable->name }}'
                             class="self-center"/>
-                        Clicking {{$pet->creature->name}} would earn you the {{$pet->creature->consumable->name}} component.
+                        Interacting with {{$pet->creature->name}} while exploring would earn you the {{$pet->creature->consumable->name}} component.
                         @if ($pet->creature->required_clicks > 0)
                             It requires {{$pet->creature->required_clicks}} clicks to evolve.
                         @endif

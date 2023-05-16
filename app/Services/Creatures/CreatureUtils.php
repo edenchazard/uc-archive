@@ -95,7 +95,7 @@ class CreatureUtils
     protected const uniqueRatings = [
         'normal',
         'exotic',
-        'retired'
+        'legendary'
     ];
 
     /**
@@ -117,7 +117,7 @@ class CreatureUtils
             /*      if (!isset(static::$$dictionary[$index]))
                 throw new Exception("$index not found in $dictionary"); */
 
-            return collect($dictionary[$index]);
+            return $dictionary[$index];
         }
     }
 
@@ -178,7 +178,7 @@ class CreatureUtils
      * Returns yes or no as to if the creature has basket availability.
      * @return string
      */
-    public static function basket(int $val): string
+    public static function basket(int|bool $val): string
     {
         return $val ? 'Yes' : 'No';
     }
@@ -187,7 +187,7 @@ class CreatureUtils
      * Returns yes or no as to if the creature can be exalted or nobled.
      * @return string
      */
-    public static function canExaltNoble(int $val): string
+    public static function canExaltNoble(int|bool $val): string
     {
         return !$val ? 'Yes' : 'No';
     }

@@ -51,4 +51,9 @@ class UserPet extends Model
     {
         return CreatureUtils::imageLink($this);
     }
+
+    public function specialty(): string
+    {
+        return CreatureUtils::specialty($this->specialty);
+    }
 }

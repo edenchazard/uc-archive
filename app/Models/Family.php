@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use CreatureUtils;
+use Date;
+use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Collection;
 
 
 /**
@@ -70,6 +72,14 @@ class Family extends Model
 
     protected $guarded = [];
 
+    /**
+     * @var array
+     */
+    protected $casts = [
+        'deny_exalt' => 'boolean',
+        'in_basket' => 'boolean'
+    ];
+
     public function stages(): HasMany
     {
         return $this->hasMany(Creature::class)->orderBy('stage', 'asc');
@@ -83,5 +93,44 @@ class Family extends Model
     public static function findByName(string $name): Family
     {
         return Family::firstWhere('name', $name);
+    }
+
+    public function rarity(): string
+    {
+        return CreatureUtils::rarity($this->rarity);
+    }
+
+    public function gender(): string
+    {
+        return CreatureUtils::gender($this->gender);
+    }
+
+    public function element(): string
+    {
+        return CreatureUtils::element($this->element);
+    }
+
+    public function specialty(): string
+    {
+        return CreatureUtils::specialty($this->specialty);
+    }
+
+    public function released(): string
+    {
+        return (new DateTime($this->released))->format('jS F o');
+    }
+
+    public function uniqueRating(): string
+    {
+        return CreatureUtils::unique($this->unique_rating);
+    }
+
+    /**
+     * Get all stats in a single collection.
+     * @return \Illuminate\Database\Eloquent\Collection<string, int>
+     */
+    public function getBaseStats()
+    {
+        return CreatureUtils::getPossibleStats()->flip()->map(fn ($val, $key) => $this["base_$key"]);
     }
 }

@@ -86,19 +86,9 @@ class FamilyController extends Controller
 
         $data = [
             'stages' => $wrappedStages,
-            'familyData' => $family,
-            'generalAttributes' => [
-                'Name' => $family->name,
-                'rarity' => CreatureUtils::rarity($family->rarity),
-                'Released on' => $family->released,
-                'Unique rating' => $family->unique_rating,
-                'gender' => CreatureUtils::gender($family->gender),
-                'Noble/Exalt' => ($family->deny_exalt ? 'No' : 'Yes'),
-                'Basket' => ($family->in_basket ? 'Yes' : 'No'),
-                'Artists' => ''
-            ],
+            'family' => $family,
             'page' => [
-                'title' => $family->name,
+                'title' => "Family: {$family->name}",
                 'route' => 'family',
                 'name' => $family->name
             ]

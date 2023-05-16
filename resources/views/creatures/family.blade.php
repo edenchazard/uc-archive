@@ -6,11 +6,19 @@
         </section>
         <div class="flex justify-center">
             <div class="max-w-sm">
-                <p>The <span class='font-bold'>{{ $family->name }}</span> family was released on <time>{{ $family->released() }}</time> with {{ count($stages) }} evolutions.</p>
-                <p>All members within this family are of the {{ ucfirst($family->element()) }} element with a rarity rating of {{ ucfirst($family->rarity()) }}{!! $family->unique_rating > 0 ? " <span class='font-bold'>(".ucfirst($family->uniqueRating()).")</span>" : '' !!}.
-                @if (!$family->deny_exalt)
-                    Noble versions would be {{ CreatureUtils::rarity($family->rarity + 1) }} and exalteds would be {{ ucfirst(CreatureUtils::rarity($family->rarity + 2)) }}.
+                <p>The <span class='font-bold'>{{ $family->name }}</span> family was released on <time>{{ $family->released() }}</time> with {{ count($stages) }} evolutions. 
+                @if ($family->gender <= 1)
+                    It was {{ $family->gender() }}-only.
+                @elseif ($family->gender === 3)
+                    It was available in both genders.
+                @else
+                    It had a unique gender, {{ $family->gender() }}.
                 @endif
+                </p>
+                <p>All members within this family are of the {{ ucfirst($family->element()) }} element with a rarity rating of {{ ucfirst($family->rarity()) }}{!! $family->unique_rating > 0 ? " <span class='font-bold'>(".ucfirst($family->uniqueRating()).")</span>" : '' !!}.
+                    @if (!$family->deny_exalt)
+                        Noble versions would be {{ CreatureUtils::rarity($family->rarity + 1) }} and exalteds would be {{ ucfirst(CreatureUtils::rarity($family->rarity + 2)) }}.
+                    @endif
                 </p>
                 <p>It could 
                     @if ($family->rarity <= 7)

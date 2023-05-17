@@ -180,4 +180,20 @@ class Creature extends Model
             'next' => $creatures->find($adjacents->next),
         ]);
     }
+
+    public function scopeJoinFamily($query, bool $selectFamilyTable = false)
+    {
+        $familyTable = (new Family)->getTable();
+        $creatureTable = (new static)->getTable();
+
+        $query = $query->join($familyTable, "$familyTable.id", '=', "$creatureTable.family_id");
+        if (!$selectFamilyTable) $query = $query->addSelect("$creatureTable.*");
+        return $query;
+    }
+
+    public function scopeOrderByFamilyName($query)
+    {
+        $familyTable = (new Family)->getTable();
+        return $query->orderBy("$familyTable.name");
+    }
 }

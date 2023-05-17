@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      gridTemplateColumns: {
+        'fill-auto': 'repeat(auto-fill, minmax(4em, 1fr))',
+      },
       colors: {
         'uc': {
           'blue': '#5ba0d6',

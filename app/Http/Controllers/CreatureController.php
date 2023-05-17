@@ -51,7 +51,7 @@ class CreatureController extends Controller
      * @param  \App\Models\Creature  $creature
      * @return \Illuminate\Http\Response
      */
-    public function showByTaxonomy(string $familyName, string $creatureName)
+    public function showFromFamily(string $familyName, string $creatureName)
     {
         // retrieve family id
         $family = Family::firstWhere('name', $familyName);

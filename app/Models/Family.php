@@ -5,6 +5,7 @@ namespace App\Models;
 use CreatureUtils;
 use Date;
 use DateTime;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -90,10 +91,10 @@ class Family extends Model
      * @param string $name The family name.
      * @return Family
      */
-    public static function findByName(string $name): Family
-    {
-        return Family::firstWhere('name', $name);
-    }
+    //public static function scopeFindName(Builder $query, string $name): Family
+    //{
+    // return $query->whereName('name', $name);
+    //}
 
     public function rarity(): string
     {

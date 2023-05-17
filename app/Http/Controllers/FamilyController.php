@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Family;
 use App\Services\Creatures\CreatureGender;
 use Illuminate\Http\Request;
-use App\Services\Creatures\CreatureUtils;
+use App\Models\Creature;
 
 class FamilyController extends Controller
 {
@@ -72,7 +72,38 @@ class FamilyController extends Controller
      */
     public function show(string $name)
     {
-        $family = Family::findByName($name);
+        $family = Family::with('stages')->whereName($name)->first();
+
+        /**
+         * Family not found, try to search for a creature with the specified 
+         * $name and redirects to the creature's page.
+         * If multiple matches such as "Egg" are found, a collection of results will be returned.
+         */
+        if (!$family) {
+            $results = Creature::with('family')
+                ->where((new Creature)->getTable() . ".name", $name)
+                ->joinFamily()
+                ->orderByFamilyName()
+                ->get();
+
+            // redirect if a single match, otherwise give the user options.
+            if ($results->count() === 1) {
+                $creature = $results->first();
+                return redirect(route('creature', [$creature->family->name, $creature->name]));
+            }
+
+            $data = [
+                'query' => $name,
+                'results' => $results->map(fn ($creature) => $creature->wrap()),
+                'page' => [
+                    'title' => "Search",
+                    'route' => '',
+                    'breadcrumb' => ''
+                ]
+            ];
+
+            return view('creatures.search', $data);
+        }
 
         // Generate a single gender. If we ran this in the map, we'd get a
         // different one every time and it breaks viewer immersion.

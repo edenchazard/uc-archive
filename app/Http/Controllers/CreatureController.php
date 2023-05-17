@@ -77,6 +77,16 @@ class CreatureController extends Controller
         // wrap a virtual user pet
         $wrappedCreature = $creature->wrap(['gender' => $gender]);
 
+        $alt_evos = collect();
+
+        if (!$family->deny_exalt) {
+            $alts = collect([1 => 'noble', 2 => 'exalted']);
+
+            $alt_evos = $alt_evos->merge($alts->flip()->map(function (int $v) use ($creature, $gender) {
+                return $creature->wrap(['specialty' => $v, 'gender' => $gender]);
+            }));
+        }
+
         $data = [
             'closestCreatures' => $wrappedClosestCreatures,
             'family' => $family,
@@ -85,7 +95,8 @@ class CreatureController extends Controller
                 'title' => "Creature: {$creature->name}",
                 'route' => 'creature',
                 'breadcrumb' => $creature->name
-            ]
+            ],
+            'alts' => $alt_evos
         ];
 
         return view('creatures.creature', $data);

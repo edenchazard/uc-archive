@@ -9,15 +9,12 @@
     <section id='creature-introduction' class="my-2">
         <h1>Creature: {{ $pet->creature->name }}</h1>
         <h2 class='italic text-sm'>
-            From the 
+            From the
             <a class='main-article' href='{{ route("family", [$family->name]) }}' aria-labelledby="{{ $pet->creature->name }}">{{$family->name}}</a>
             family
         </h2>
         <div class="flex flex-row flex-wrap gap-3 justify-center">
-            <img
-                src='{{ $pet->imageLink() }}'
-                alt="{{ $pet->creature->name }}"
-                class="self-center"/>
+            <img src='{{ $pet->imageLink() }}' alt="{{ $pet->creature->name }}" class="self-center" />
             {{-- to do convert stage to ordinal suffix --}}
             <div class="max-w-sm">
                 <div class="flex flex-col gap-2">
@@ -31,7 +28,7 @@
                             class="self-center"/>
                         Interacting with {{$pet->creature->name}} while exploring would earn you the {{$pet->creature->consumable->name}} component.
                         @if ($pet->creature->required_clicks > 0)
-                            It requires {{$pet->creature->required_clicks}} clicks to evolve.
+                        It requires {{$pet->creature->required_clicks}} clicks to evolve.
                         @endif
                     </p>
                 </div>
@@ -50,29 +47,46 @@
         </h2>
         <x-creature-formatted-block :text="$pet->creature->long_description" :pet="$pet" />
     </section>
+    <section id='variations' class="mt-4">
+        <h2 class="my-2 section-title">
+            <a href='#variations'>Variations</a>
+        </h2>
+        @if ($alts->isNotEmpty())
+            <div class="flex flex-wrap items-end gap-3">
+                @foreach (['normal' => $pet, ...$alts] as $altName => $alt)
+                    <div class="flex flex-col justify-between items-center">
+                        <img src="{{ $alt->imageLink() }}" alt="{{ ucfirst($altName) }}" />
+                        <span>{{ ucfirst($altName) }}</span>
+                    </div>
+                @endforeach
+            </div>
+        @else
+            N/A
+        @endif
+    </section>
     <section id='max-stats' class="mt-4">
         <h2 class="my-2 section-title">
             <a href='#max-stats'>Max Stats</a>
         </h2>
         @if ($pet->creature->getMaxStats() > 0)
-            <table class='w-full'>
-                <thead>
-                    <tr class='flex flex-col sm:table-row'>
-                        @foreach ([...$pet->creature->getStats()->keys(), 'Total'] as $stat)
-                            <th>{{ ucfirst($stat) }}</th>
-                        @endforeach
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="flex flex-col sm:table-row">
-                        @foreach ([...$pet->creature->getStats(), $pet->creature->getMaxStats()] as $stat)
-                            <td class="odd:bg-[#add0eb] even:bg-uc-blue text-center">{{ $stat }}</td>
-                        @endforeach
-                    </tr>
-                </tbody>
-            </table>
+        <table class='w-full'>
+            <thead>
+                <tr class='flex flex-col sm:table-row'>
+                    @foreach ([...$pet->creature->getStats()->keys(), 'Total'] as $stat)
+                    <th>{{ ucfirst($stat) }}</th>
+                    @endforeach
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="flex flex-col sm:table-row">
+                    @foreach ([...$pet->creature->getStats(), $pet->creature->getMaxStats()] as $stat)
+                        <td class="odd:bg-[#add0eb] even:bg-uc-blue text-center">{{ $stat }}</td>
+                    @endforeach
+                </tr>
+            </tbody>
+        </table>
         @else
-            N/A
+        N/A
         @endif
     </section>
     <section id='training-options'>
@@ -80,30 +94,30 @@
             <a href='#training-options'>Training options</a>
         </h2>
         @if ($pet->creature->trainingOptions->count() > 0)
-            <table>
-                <thead>
-                    <tr class='flex flex-col md:table-row'>
-                        <th>Title</th>
-                        <th>Energy Cost</th>
-                        <th>Reward</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($pet->creature->trainingOptions as $option)
-                        <tr class="flex flex-col odd:bg-[#add0eb] even:bg-uc-blue md:table-row">
-                            <td>{{ $option->title }}</td>
-                            <td>{{ $option->energy_cost }}</td>
-                            <td>{{ $option->reward }}</td>
-                            <td>
-                                <x-creature-formatted-block :text="$option->description" :pet="$pet" :additional="['*' => $pet->creature->name]" />
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+        <table>
+            <thead>
+                <tr class='flex flex-col md:table-row'>
+                    <th>Title</th>
+                    <th>Energy Cost</th>
+                    <th>Reward</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($pet->creature->trainingOptions as $option)
+                <tr class="flex flex-col odd:bg-[#add0eb] even:bg-uc-blue md:table-row">
+                    <td>{{ $option->title }}</td>
+                    <td>{{ $option->energy_cost }}</td>
+                    <td>{{ $option->reward }}</td>
+                    <td>
+                        <x-creature-formatted-block :text="$option->description" :pet="$pet" :additional="['*' => $pet->creature->name]" />
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
         @else
-            N/A
+        N/A
         @endif
     </section>
 </x-page>

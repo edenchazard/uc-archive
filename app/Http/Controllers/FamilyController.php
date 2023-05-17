@@ -6,6 +6,7 @@ use App\Models\Family;
 use App\Services\Creatures\CreatureGender;
 use Illuminate\Http\Request;
 use App\Models\Creature;
+use App\Models\UserPet;
 
 class FamilyController extends Controller
 {
@@ -109,13 +110,22 @@ class FamilyController extends Controller
         // different one every time and it breaks viewer immersion.
         $gender = CreatureGender::get($family->gender);
 
-        // wrap each stage with a pet object so the we can apply some 
-        // attributes
-        $wrappedStages = $family->stages->map(fn ($stage) => $stage->wrap([
-            'gender' => $gender
-        ]));
+        // create a separate list of alt evolution lists
+        $alt_evos = collect();
+
+        // determine if we should add noble/exalt variations to the list
+        if (!$family->deny_exalt) {
+            $alts = collect([1 => 'noble', 2 => 'exalted']);
+
+            $alt_evos = $alt_evos->merge($alts->flip()->map(function (int $v) use ($family, $gender) {
+                return $family->stages->map(fn (Creature $stage) => $stage->wrap(['specialty' => $v, 'gender' => $gender]));
+            }));
+        }
+
+        $wrappedStages = $family->stages->map(fn (Creature $stage) => $stage->wrap(['gender' => $gender]));
 
         $data = [
+            'alts' => $alt_evos,
             'stages' => $wrappedStages,
             'family' => $family,
             'page' => [

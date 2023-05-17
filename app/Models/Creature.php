@@ -65,6 +65,7 @@ class Creature extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $fillable = ['alts'];
 
     public function family(): BelongsTo
     {

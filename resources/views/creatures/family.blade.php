@@ -66,10 +66,16 @@
         </h2>
         @foreach ($stages as $stage)
             <article class='flex flex-col justify-center items-start p-3 gap-2' id='{{ $stage->creature->name }}'>
-                <img
-                    src='{{ $stage->imageLink() }}'
-                    alt="{{ $stage->creature->name }}"
-                    class="self-start" />
+                <div class='flex flex-wrap items-end gap-3'>
+                    @foreach (['normal' => $stage, ...$alts] as $altName => $alt)
+                        <div class="flex flex-col justify-between items-center">
+                            <img
+                                src='{{ ($alt[$loop->parent->index] ?? $stage)->imageLink() }}'
+                                alt="{{ ucfirst($altName) }}" />
+                            <span>{{ ucfirst($altName) }}</span>
+                        </div>
+                    @endforeach
+                </div>
                 <div>
                     <h3 class='inline font-medium'>{{ $stage->creature->name }}</h3>
                     <x-article-link :url='route("creature", [$family->name, $stage->creature->name])' />

@@ -5,7 +5,7 @@
             <x-evolutionary-line :stages='$stages' class="justify-center" />
         </section>
         <div class="flex justify-center">
-            <div class="max-w-sm">
+            <div class="max-w-sm flex flex-col gap-2">
                 <p>The <span class='font-bold'>{{ $family->name }}</span> family was released on <time>{{ $family->released() }}</time> with {{ count($stages) }} evolutions. 
                 @if ($family->gender <= 1)
                     It was {{ $family->gender() }}-only.
@@ -17,7 +17,7 @@
                 </p>
                 <p>All members within this family are of the {{ ucfirst($family->element()) }} element with a rarity rating of {{ ucfirst($family->rarity()) }}{!! $family->unique_rating > 0 ? " <span class='font-bold'>(".ucfirst($family->uniqueRating()).")</span>" : '' !!}.
                     @if (!$family->deny_exalt)
-                        Noble versions would be {{ CreatureUtils::rarity($family->rarity + 1) }} and exalteds would be {{ ucfirst(CreatureUtils::rarity($family->rarity + 2)) }}.
+                        Noble versions would be {{ ucfirst(CreatureUtils::rarity($family->rarity + 1)) }} and exalteds would be {{ ucfirst(CreatureUtils::rarity($family->rarity + 2)) }}.
                     @endif
                 </p>
                 <p>It could 
@@ -39,10 +39,7 @@
             </div>
         </div>
     </section>
-    <section id='base-stats' class="mt-4">
-        <h2 class="my-2 section-title">
-            <a href='#base-stats'>Base Stats</a>
-        </h2>
+    <x-content-section :title='"base stats"'>
         <table class='w-full'>
             <thead>
                 <tr class='flex flex-col sm:table-row'>
@@ -59,36 +56,33 @@
                 </tr>
             </tbody>
         </table>
-    </section>
-    <section id='evolutions' class="mt-4">
-        <h2 class="my-2 section-title">
-            <a href='#evolutions'>Evolutions</a>
-        </h2>
+    </x-content-section>
+    <x-content-section :title='"evolutions"'>
         @foreach ($stages as $stage)
-            <article class='flex flex-col justify-center items-start p-3 gap-2' id='{{ $stage->creature->name }}'>
-                <div class='flex flex-wrap items-end gap-3'>
-                    @foreach (['normal' => $stage, ...$alts] as $altName => $alt)
-                        <div class="flex flex-col justify-between items-center">
-                            <img
-                                src='{{ ($alt[$loop->parent->index] ?? $stage)->imageLink() }}'
-                                alt="{{ ucfirst($altName) }}" />
-                            <span>{{ ucfirst($altName) }}</span>
-                        </div>
-                    @endforeach
-                </div>
-                <div>
-                    <h3 class='inline font-medium'>{{ $stage->creature->name }}</h3>
-                    <x-article-link :url='route("creature", [$family->name, $stage->creature->name])' />
-                </div>
-                <section>
-                    <h4 class='font-medium'>Visual Description</h4>
-                    <x-creature-formatted-block :text="$stage->creature->short_description" :pet="$stage" />
-                </section>
-                <section>
-                    <h4 class='font-medium'>Lifestyle</h4>
-                    <x-creature-formatted-block :text="$stage->creature->long_description" :pet="$stage" />
-                </section>
-            </article>
+                <article class='flex flex-col justify-center items-start mt-5 gap-y-2' id='{{ $stage->creature->name }}'>
+                    <div class='flex flex-wrap items-end gap-3'>
+                        @foreach (['normal' => $stage, ...$alts] as $altName => $alt)
+                            <div class="flex flex-col justify-between items-center">
+                                <img
+                                    src='{{ ($alt[$loop->parent->index] ?? $stage)->imageLink() }}'
+                                    alt="{{ ucfirst($altName) }}" />
+                                <span>{{ ucfirst($altName) }}</span>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div>
+                        <h3 class='inline font-medium'>{{ $stage->creature->name }}</h3>
+                        <x-article-link :url='route("creature", [$family->name, $stage->creature->name])' />
+                    </div>
+                    <section>
+                        <h4 class='font-medium'>Visual Description</h4>
+                        <x-creature-formatted-block :text="$stage->creature->short_description" :pet="$stage" />
+                    </section>
+                    <section>
+                        <h4 class='font-medium'>Lifestyle</h4>
+                        <x-creature-formatted-block :text="$stage->creature->long_description" :pet="$stage" />
+                    </section>
+                </article>
         @endforeach
-    </section>
+    </x-content-section>
 </x-page>

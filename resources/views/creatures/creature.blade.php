@@ -35,22 +35,13 @@
             </div>
         </div>
     </section>
-    <section id='visual-description'>
-        <h2 class="my-2 section-title">
-            <a href='#visual-description'>Visual description</a>
-        </h2>
+    <x-content-section :title='"visual description"'>
         <x-creature-formatted-block :text="$pet->creature->short_description" :pet="$pet" />
-    </section>
-    <section id='lifestyle'>
-        <h2 class="my-2 section-title">
-            <a href='#lifestyle'>Lifestyle</a>
-        </h2>
+    </x-content-section>
+    <x-content-section :title='"lifestyle"'>
         <x-creature-formatted-block :text="$pet->creature->long_description" :pet="$pet" />
-    </section>
-    <section id='variations' class="mt-4">
-        <h2 class="my-2 section-title">
-            <a href='#variations'>Variations</a>
-        </h2>
+    </x-content-section >
+    <x-content-section :title='"variations"'>
         @if ($alts->isNotEmpty())
             <div class="flex flex-wrap items-end gap-3">
                 @foreach (['normal' => $pet, ...$alts] as $altName => $alt)
@@ -63,11 +54,8 @@
         @else
             N/A
         @endif
-    </section>
-    <section id='max-stats' class="mt-4">
-        <h2 class="my-2 section-title">
-            <a href='#max-stats'>Max Stats</a>
-        </h2>
+    </x-content-section>
+    <x-content-section :title='"Max Stats"'>
         @if ($pet->creature->getMaxStats() > 0)
         <table class='w-full'>
             <thead>
@@ -88,11 +76,8 @@
         @else
         N/A
         @endif
-    </section>
-    <section id='training-options'>
-        <h2 class="my-2 section-title">
-            <a href='#training-options'>Training options</a>
-        </h2>
+    </x-content-section>
+    <x-content-section :title='"training options"'>
         @if ($pet->creature->trainingOptions->count() > 0)
         <table>
             <thead>
@@ -119,5 +104,5 @@
         @else
         N/A
         @endif
-    </section>
+    </x-content-section>
 </x-page>

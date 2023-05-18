@@ -35,13 +35,3 @@ a {
 #breadcrumb nav ol li:last-child::after {
     content: none;
 }
-.creature-descriptions section p {
-    @apply my-1 md:mx-3;
-}
-.section-title a {
-    color: #000;
-}
-.section-title a::before {
-    @apply mr-1 text-uc-dkbrown;
-    content: "#";
-}

@@ -214,6 +214,9 @@ class CreatureUtils
         if ($pet->specialty > 0 && $pet->specialty <= 2)
             $parts->push(static::specialty($pet->specialty));
 
+        if ($pet->variety)
+            $parts->push($pet->variety);
+
         // creatures with their family name don't follow the same url format...
         $parts->push($creature->family->name);
 

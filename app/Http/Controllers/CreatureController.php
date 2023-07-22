@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alt;
 use App\Models\Creature;
 use App\Models\Family;
 use App\Models\UserPet;
@@ -85,6 +86,11 @@ class CreatureController extends Controller
             $alt_evos = $alt_evos->merge($alts->flip()->map(function (int $v) use ($creature, $gender) {
                 return $creature->wrap(['specialty' => $v, 'gender' => $gender]);
             }));
+        }
+
+        if ($family->alts->count() > 0) {
+            $alts = $family->alts->map(fn (Alt $alt) => $alt->name)->flip();
+            $alt_evos = $alt_evos->merge($alts->map(fn ($v, $altName) => $creature->wrap(['variety' => $altName])));
         }
 
         $data = [

@@ -86,6 +86,11 @@ class Family extends Model
         return $this->hasMany(Creature::class)->orderBy('stage', 'asc');
     }
 
+    public function alts(): HasMany
+    {
+        return $this->hasMany(Alt::class);
+    }
+
     /**
      * Return a family by family name
      * @param string $name The family name.

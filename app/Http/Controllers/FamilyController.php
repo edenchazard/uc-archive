@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alt;
 use App\Models\Family;
 use App\Services\Creatures\CreatureGender;
 use Illuminate\Http\Request;

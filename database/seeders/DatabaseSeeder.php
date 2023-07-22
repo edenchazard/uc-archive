@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
             ConsumableSeeder::class,
             FamilySeeder::class,
             CreatureSeeder::class,
-            TrainingOptionSeeder::class
+            TrainingOptionSeeder::class,
+            AltSeeder::class
         ]);
     }
 }

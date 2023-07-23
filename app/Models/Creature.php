@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Services\Creatures\CreatureUtils;
+use DB;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use App\Services\Creatures\CreatureUtils;
-use DB;
 
 /**
  * App\Models\Creature
@@ -59,13 +60,13 @@ use DB;
  * @method static \Illuminate\Database\Eloquent\Builder|Creature whereShortDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Creature whereStage($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Creature whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Creature joinFamily(bool $selectFamilyTable = false)
+ * @method static \Illuminate\Database\Eloquent\Builder|Creature orderByFamilyName()
  * @mixin \Eloquent
  */
 class Creature extends Model
 {
     use HasFactory;
-    protected $guarded = [];
-    protected $fillable = ['alts'];
 
     public function family(): BelongsTo
     {
@@ -80,71 +81,6 @@ class Creature extends Model
     public function trainingOptions(): HasMany
     {
         return $this->hasMany(TrainingOption::class);
-    }
-
-    /**
-     * Finds a creature by resolving family and creature name.
-     * 
-     * If you want to resolve by creature id, you should use ::find instead.
-     *
-     * @param family string|int If a string is provided, the family name will be 
-     * inferred. If an integer is provided, it was assume that is the family id.
-     * @param creature string|int If a string is provided, it will be assumed to be the
-     * creature's name. A number will be inferred as the stage in the family.
-     */
-    public function scopeLocate($query, string|int $family, string|int $creature)
-    {
-        $familyId = null;
-
-        if (gettype($family) === 'string')
-            $family = Family::findByName($family);
-
-        if (!$family) return null;
-
-        $familyId = $family->id;
-
-        // get creature
-        $conditions = [
-            'family_id' => $familyId
-        ];
-
-        $conditions[gettype($creature) === 'int' ? 'stage' : 'name'] = $creature;
-        $query->where($conditions);
-    }
-
-    /**
-     * Wrap the creature around a fake User Pet container
-     * and set its creature relation to this instance.
-     * @param string[] $attrs Attributes to inject.
-     * @return UserPet
-     */
-    public function wrap(array $attrs = []): UserPet
-    {
-        return (new UserPet([
-            'specialty' => 0,
-            'variety' => 0,
-            'creature_id' => $this->id,
-            'nickname' => $this->name,
-            ...$attrs
-        ]))->setRelation('creature', $this);
-    }
-
-    /**
-     * Calculate the max possible stat value for this creature.
-     * @return int
-     */
-    public function getMaxStats(): int
-    {
-        return $this->getStats()->sum();
-    }
-
-    /**
-     * Get all stats in a single collection.
-     * @return \Illuminate\Database\Eloquent\Collection<string, int>
-     */
-    public function getStats()
-    {
-        return CreatureUtils::getPossibleStats()->flip()->map(fn ($val, $key) => $this["max_$key"]);
     }
 
     /**
@@ -163,19 +99,19 @@ class Creature extends Model
                 ->limit(1);
 
         // get the highest max id before this id (previous)
-        // and the lowest max id after this id (next) 
+        // and the lowest max id after this id (next)
         $adjacents = DB::query()
             ->selectSub($adjacent('<', 'desc'), 'previous')
             ->selectSub($adjacent('>', 'asc'), 'next')
             ->first();
 
-        $creatures = Creature::with('family')->find([
+        $creatures = self::with('family')->find([
             $adjacents->previous,
-            $adjacents->next
+            $adjacents->next,
         ]);
 
         // matches the ids up to what we got earlier,
-        // if there is no previous or next, null will be returned. 
+        // if there is no previous or next, null will be returned.
         return collect([
             'previous' => $creatures->find($adjacents->previous),
             'next' => $creatures->find($adjacents->next),
@@ -184,17 +120,41 @@ class Creature extends Model
 
     public function scopeJoinFamily($query, bool $selectFamilyTable = false)
     {
-        $familyTable = (new Family)->getTable();
-        $creatureTable = (new static)->getTable();
+        $familyTable = (new Family())->getTable();
+        $creatureTable = (new static())->getTable();
 
-        $query = $query->join($familyTable, "$familyTable.id", '=', "$creatureTable.family_id");
-        if (!$selectFamilyTable) $query = $query->addSelect("$creatureTable.*");
+        $query = $query->join($familyTable, "{$familyTable}.id", '=', "{$creatureTable}.family_id");
+        if (! $selectFamilyTable) {
+            $query = $query->addSelect("{$creatureTable}.*");
+        }
         return $query;
     }
 
     public function scopeOrderByFamilyName($query)
     {
-        $familyTable = (new Family)->getTable();
-        return $query->orderBy("$familyTable.name");
+        $familyTable = (new Family())->getTable();
+        return $query->orderBy("{$familyTable}.name");
+    }
+
+    /**
+     * Get all stats in a single collection.
+     * @return \Illuminate\Database\Eloquent\Collection<string, int>
+     */
+    protected function statPoints(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => CreatureUtils::getPossibleStats()->flip()->map(fn ($val, $key) => $this["max_{$key}"])
+        );
+    }
+
+    /**
+     * Calculate the max possible stat value for this creature.
+     * @return int
+     */
+    protected function maxStatPoints(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->stat_points->sum()
+        );
     }
 }

@@ -10,7 +10,7 @@
         <h1>Creature: {{ $pet->creature->name }}</h1>
         <h2 class='italic text-sm'>
             From the
-            <a class='main-article' href='{{ route("family", [$family->name]) }}' aria-labelledby="{{ $pet->creature->name }}">{{$family->name}}</a>
+            <a class='main-article' href='{{ route("creatures.family.show", $family) }}' aria-labelledby="{{ $pet->creature->name }}">{{$family->name}}</a>
             family
         </h2>
         <div class="flex flex-row flex-wrap gap-3 justify-center">
@@ -36,10 +36,10 @@
         </div>
     </section>
     <x-content-section :title='"visual description"'>
-        <x-creature-formatted-block :text="$pet->creature->short_description" :pet="$pet" />
+        <x-creature-formatted-block :text="$pet->short_description_formatted" :pet="$pet" />
     </x-content-section>
     <x-content-section :title='"lifestyle"'>
-        <x-creature-formatted-block :text="$pet->creature->long_description" :pet="$pet" />
+        <x-creature-formatted-block :text="$pet->long_description_formatted" :pet="$pet" />
     </x-content-section >
     <x-content-section :title='"variations"'>
         @if ($alts->isNotEmpty())
@@ -56,18 +56,18 @@
         @endif
     </x-content-section>
     <x-content-section :title='"Max Stats"'>
-        @if ($pet->creature->getMaxStats() > 0)
+        @if ($pet->creature->max_stat_points > 0)
         <table class='w-full'>
             <thead>
                 <tr class='flex flex-col sm:table-row'>
-                    @foreach ([...$pet->creature->getStats()->keys(), 'Total'] as $stat)
+                    @foreach ([...$pet->creature->stat_points->keys(), 'Total'] as $stat)
                     <th>{{ ucfirst($stat) }}</th>
                     @endforeach
                 </tr>
             </thead>
             <tbody>
                 <tr class="flex flex-col sm:table-row">
-                    @foreach ([...$pet->creature->getStats(), $pet->creature->getMaxStats()] as $stat)
+                    @foreach ([...$pet->creature->stat_points, $pet->creature->max_stat_points] as $stat)
                         <td class="odd:bg-[#add0eb] even:bg-uc-blue text-center">{{ $stat }}</td>
                     @endforeach
                 </tr>
@@ -95,7 +95,7 @@
                     <td>{{ $option->energy_cost }}</td>
                     <td>{{ $option->reward }}</td>
                     <td>
-                        <x-creature-formatted-block :text="$option->description" :pet="$pet" :additional="['*' => $pet->creature->name]" />
+                        <x-creature-formatted-block :text="$option->format($pet)" />
                     </td>
                 </tr>
                 @endforeach

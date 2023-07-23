@@ -3,13 +3,11 @@
 namespace App\Models;
 
 use CreatureUtils;
-use Date;
 use DateTime;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-
 
 /**
  * App\Models\Family
@@ -65,6 +63,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Family whereReleased($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Family whereUniqueRating($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Family whereUpdatedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Alt> $alts
+ * @property-read int|null $alts_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Creature> $creatures
+ * @property-read int|null $creatures_count
  * @mixin \Eloquent
  */
 class Family extends Model
@@ -78,8 +80,16 @@ class Family extends Model
      */
     protected $casts = [
         'deny_exalt' => 'boolean',
-        'in_basket' => 'boolean'
+        'in_basket' => 'boolean',
     ];
+
+    /**
+     * Just an alias for stages, basically.
+     */
+    public function creatures(): HasMany
+    {
+        return $this->stages();
+    }
 
     public function stages(): HasMany
     {
@@ -93,7 +103,6 @@ class Family extends Model
 
     /**
      * Return a family by family name
-     * @param string $name The family name.
      * @return Family
      */
     //public static function scopeFindName(Builder $query, string $name): Family
@@ -137,6 +146,6 @@ class Family extends Model
      */
     public function getBaseStats()
     {
-        return CreatureUtils::getPossibleStats()->flip()->map(fn ($val, $key) => $this["base_$key"]);
+        return CreatureUtils::getPossibleStats()->flip()->map(fn ($val, $key) => $this["base_{$key}"]);
     }
 }

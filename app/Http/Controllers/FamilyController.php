@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Alt;
-use App\Models\Family;
-use App\Services\Creatures\CreatureGender;
-use Illuminate\Http\Request;
 use App\Models\Creature;
+use App\Models\Family;
 use App\Models\UserPet;
+use App\Services\Creatures\CreatureGender;
+use Illuminate\Database\Eloquent\Collection;
 
 class FamilyController extends Controller
 {
@@ -20,12 +19,12 @@ class FamilyController extends Controller
     {
         $families = Family::with('stages')->get();
 
-        $wrappedFamilies =  $families->map(
+        $wrappedFamilies = $families->map(
             function ($family) {
                 $family->stages = $family->stages->map(
                     function ($stage) use ($family) {
                         $stage->setRelation('family', $family);
-                        return $stage->wrap();
+                        return (new UserPet())->use($stage);
                     }
                 );
                 return $family;
@@ -37,75 +36,21 @@ class FamilyController extends Controller
             'page' => [
                 'title' => 'Families',
                 'route' => 'family',
-                'name' => 'All families'
-            ]
+                'name' => 'All families',
+            ],
         ];
 
-        return view('creatures.all-families', $data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        /* $data = $request->all();
-        return Family::create($data); */
+        return view('pages.creatures.index', $data);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Family  $name
      * @return \Illuminate\Http\Response
      */
-    public function show(string $name)
+    public function show(Family $family)
     {
-        $family = Family::with('stages')->whereName($name)->first();
-
-        /**
-         * Family not found, try to search for a creature with the specified 
-         * $name and redirects to the creature's page.
-         * If multiple matches such as "Egg" are found, a collection of results will be returned.
-         */
-        if (!$family) {
-            $results = Creature::with('family')
-                ->where((new Creature)->getTable() . ".name", $name)
-                ->joinFamily()
-                ->orderByFamilyName()
-                ->get();
-
-            // redirect if a single match, otherwise give the user options.
-            if ($results->count() === 1) {
-                $creature = $results->first();
-                return redirect(route('creature', [$creature->family->name, $creature->name]));
-            }
-
-            $data = [
-                'query' => $name,
-                'results' => $results->map(fn ($creature) => $creature->wrap()),
-                'page' => [
-                    'title' => "Search",
-                    'route' => '',
-                    'breadcrumb' => ''
-                ]
-            ];
-
-            return view('creatures.search', $data);
-        }
+        $family->loadMissing('stages');
 
         // Generate a single gender. If we ran this in the map, we'd get a
         // different one every time and it breaks viewer immersion.
@@ -115,15 +60,25 @@ class FamilyController extends Controller
         $alt_evos = collect();
 
         // determine if we should add noble/exalt variations to the list
-        if (!$family->deny_exalt) {
-            $alts = collect([1 => 'noble', 2 => 'exalted']);
+        if (! $family->deny_exalt) {
+            $alts = collect([
+                1 => 'noble',
+                2 => 'exalted',
+            ]);
 
             $alt_evos = $alt_evos->merge($alts->flip()->map(function (int $v) use ($family, $gender) {
-                return $family->stages->map(fn (Creature $stage) => $stage->wrap(['specialty' => $v, 'gender' => $gender]));
+                return $family->stages->map(fn (Creature $stage) => (new UserPet([
+                    'specialty' => $v,
+                    'gender' => $gender,
+                ]))->use($stage));
             }));
         }
 
-        $wrappedStages = $family->stages->map(fn (Creature $stage) => $stage->wrap(['gender' => $gender]));
+        $wrappedStages = $family->stages->map(
+            fn (Creature $stage) => (new UserPet([
+                'gender' => $gender,
+            ]))->use($stage)
+        );
 
         $data = [
             'alts' => $alt_evos,
@@ -132,44 +87,60 @@ class FamilyController extends Controller
             'page' => [
                 'title' => "Family: {$family->name}",
                 'route' => 'family',
-                'name' => $family->name
-            ]
+                'name' => $family->name,
+            ],
         ];
 
-        return view('creatures.family', $data);
+        return view('pages.creatures.family.show', $data);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Family  $family
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Family $family)
+    public function search()
     {
-        //
-    }
+        /**
+         * Family not found, try to search for a creature with the specified
+         * $name and redirects to the creature's page.
+         * If multiple matches such as "Egg" are found, a collection of results will be returned.
+         */
+        /** @var array{'query': string} $validation */
+        $validation = request()->validate([
+            'query' => [
+                'string',
+                'alpha:ascii',
+            ],
+        ]);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Family  $family
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Family $family)
-    {
-        //
-    }
+        $data = [];
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Family  $family
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Family $family)
-    {
-        //
+        if (isset($validation['query'])) {
+            /** @var Collection<int, Creature> $results */
+            $results = Creature::with('family')
+                ->where((new Creature())->getTable() . '.name', $validation['query'])
+                ->joinFamily()
+                ->orderByFamilyName()
+                ->get();
+
+            // redirect if a single match, otherwise give the user options.
+            if ($results->count() === 1) {
+                $creature = $results->first();
+                return to_route('creatures.family.creature.show', [$creature->family, $creature]);
+            }
+            $data = [
+                'query' => $validation['query'],
+                'results' => $results->map(fn ($creature) => $creature->wrap()),
+            ];
+        }
+
+        $data = [
+            'query' => null,
+            'results' => collect([]),
+            ...$data,
+            'page' => [
+                'title' => 'Search',
+                'route' => '',
+                'breadcrumb' => '',
+            ],
+        ];
+
+        return response()->view('pages.creatures.search', $data, 404);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\UserPet;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -11,8 +12,10 @@ class CreatureNav extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $direction, public $pet)
-    {
+    public function __construct(
+        public string $direction,
+        public UserPet $pet
+    ) {
         //
     }
 

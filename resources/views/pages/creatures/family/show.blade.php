@@ -6,7 +6,7 @@
         </section>
         <div class="flex justify-center">
             <div class="max-w-sm flex flex-col gap-2">
-                <p>The <span class='font-bold'>{{ $family->name }}</span> family was released on <time>{{ $family->released() }}</time> with {{ count($stages) }} evolutions. 
+                <p>The <span class='font-bold'>{{ $family->name }}</span> family was released on <time>{{ $family->released() }}</time> with {{ count($stages) }} evolutions.
                 @if ($family->gender <= 1)
                     It was {{ $family->gender() }}-only.
                 @elseif ($family->gender === 3)
@@ -20,7 +20,7 @@
                         Noble versions would be {{ ucfirst(CreatureUtils::rarity($family->rarity + 1)) }} and exalteds would be {{ ucfirst(CreatureUtils::rarity($family->rarity + 2)) }}.
                     @endif
                 </p>
-                <p>It could 
+                <p>It could
                     @if ($family->rarity <= 7)
                         only be found through exploration{{ $family->in_basket ? ' or in the basket' : '' }}.
                     @elseif ($family->rarity === 8)
@@ -72,7 +72,7 @@
                     </div>
                     <div>
                         <h3 class='inline font-medium'>{{ $stage->creature->name }}</h3>
-                        <x-article-link :url='route("creature", [$family->name, $stage->creature->name])' />
+                        <x-article-link :url='route("creatures.family.creature.show", [$family->name, $stage->creature->name])' />
                     </div>
                     <section>
                         <h4 class='font-medium'>Visual Description</h4>
@@ -80,7 +80,7 @@
                     </section>
                     <section>
                         <h4 class='font-medium'>Lifestyle</h4>
-                        <x-creature-formatted-block :text="$stage->creature->long_description" :pet="$stage" />
+                        <x-creature-formatted-block :text="$stage->long_description_formatted" :pet="$stage" />
                     </section>
                 </article>
         @endforeach

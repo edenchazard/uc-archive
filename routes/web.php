@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\CreatureController;
 use App\Http\Controllers\FamilyController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,38 +16,33 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return 'welcome';
 })->name('home');
 
-Route::prefix('creatures')->group(function () {
-    Route::controller(FamilyController::class)->group(function () {
+Route::prefix('creatures')->name('creatures.')->group(function () {
+    Route::get('/search', [FamilyController::class, 'search'])->name('search');
+
+    /**
+     * Show all families
+     */
+    Route::get('/', [FamilyController::class, 'index'])->name('index');
+    /**
+     * Specific family
+     */
+    Route::prefix('{family:name}')->name('family.')->group(function () {
+        Route::get('/', [FamilyController::class, 'show'])
+            ->name('show')
+            ->missing(fn ($query) => to_route('creatures.search', [
+                'query' => $query,
+            ]));
         /**
-         * Create a new family
+         * Show an individual creature.
          */
-        // Route::post('/new', 'store');
-
-        /**
-         * Show all families
-         */
-        Route::get('/', 'index')->name('creatures');
-
-        Route::prefix('{family}')->where(['family', '[a-zA-Z]+'])->group(function () {
-            /** 
-             * Show a family of creatures
-             */
-            Route::get('/', 'show')->name('family');
-
-            Route::controller(CreatureController::class)->group(function () {
-                /**
-                 * Add a new creature to the family
-                 */
-                // Route::post('/new', 'store');
-
-                /**
-                 * Show an individual creature.
-                 */
-                Route::get('/{creature}', 'showFromFamily')->where('creature', '[a-zA-Z]+')->name('creature');
-            });
-        });
+        Route::get('/{creature:name}', [CreatureController::class, 'show'])
+            ->name('creature.show')
+            ->scopeBindings()
+            ->missing(fn ($query) => to_route('creatures.search', [
+                'query' => $query,
+            ]));
     });
 });

@@ -22,10 +22,10 @@
                 <nav id='menu' class='grow'>
                     <ul class='flex flex-row flex-wrap justify-end text-uc-dkbrown uppercase text-sm font-medium'>
                         @foreach ([
-                            ['home', 'home'],
-                            ['creatures', 'Creatures']
+                            ['home', route('home')],
+                            ['creatures', route('creatures.index')]
                         ] as $route)
-                            <li class='p-2'><a href="{{ route($route[0]) }}">{{$route[1]}}</a></li>
+                            <li class='p-2'><a href="{{ $route[1] }}">{{$route[0]}}</a></li>
                         @endforeach
                     </ul>
                 </nav>
@@ -37,7 +37,7 @@
                     {{ Breadcrumbs::render($page['route'], $page['name']) }}
         </section>
         @endif --}}
-        <main class='bg-gradient-to-b from-uc-grad-begin to-uc-grad-end bg-uc-grad-end bg-[length:100%_526px] bg-no-repeat p-5'>
+        <main class='bg-gradient-to-b from-uc-grad-begin to-uc-grad-end bg-uc-grad-end bg-[length:100%_526px] bg-no-repeat sm:p-5'>
             {{ $slot }}
         </main>
     </div>

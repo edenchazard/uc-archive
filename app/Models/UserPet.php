@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Services\Formatting\CreatureFormattingService;
 use CreatureUtils;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -36,7 +38,14 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class UserPet extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+
+    protected $attributes = [
+        'specialty' => 0,
+        'variety' => 0,
+        'nickname' => 'Placeholder',
+    ];
 
     public function creature(): HasOne
     {
@@ -45,7 +54,6 @@ class UserPet extends Model
 
     /**
      * Returns an image url for the pet.
-     * @return string
      */
     public function imageLink(): string
     {
@@ -55,5 +63,54 @@ class UserPet extends Model
     public function specialty(): string
     {
         return CreatureUtils::specialty($this->specialty);
+    }
+
+    /**
+     * Simply a shorthand for setting the creature relationship and
+     * some common properties.
+     *
+     * @param Creature $creature The Creature model to use.
+     */
+    public function use(Creature $creature): self
+    {
+        $this->setRelation('creature', $creature);
+        $this->nickname = $this->creature->name;
+        return $this;
+    }
+
+    protected function shortDescriptionFormatted(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                return (new CreatureFormattingService(
+                    $this->creature->short_description,
+                    [
+                        '{{c:nickname}}' => $this->nickname,
+                        '{{c:name}}' => $this->creature->name,
+                        '{{c:family}}' => $this->creature->family->name,
+                    ],
+                    // If the creature has a set gender, use that. Otherwise, if
+                    // not male or female, let's have a bit of fun and randomise the gender.
+                    $this->gender
+                ))->formatAll()->get();
+            }
+        );
+    }
+
+    protected function longDescriptionFormatted(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                return (new CreatureFormattingService(
+                    $this->creature->long_description,
+                    [
+                        '{{c:nickname}}' => $this->nickname,
+                        '{{c:name}}' => $this->creature->name,
+                        '{{c:family}}' => $this->creature->family->name,
+                    ],
+                    $this->gender
+                ))->formatAll()->get();
+            }
+        );
     }
 }

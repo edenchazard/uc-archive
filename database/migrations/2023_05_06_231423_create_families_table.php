@@ -28,7 +28,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('rarity')->default(1);
             $table->unsignedTinyInteger('unique_rating')->default(0);
             $table->unsignedTinyInteger('element')->default(0);
-            $table->date('released')->useCurrent();
+            $table->date('released')->useCurrent()->nullable();
             $table->date('availability_begin')->default('1970-01-01');
             $table->date('availability_end')->default('1970-01-01');
 

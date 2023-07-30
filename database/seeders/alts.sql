@@ -2,13 +2,6 @@ SET AUTOCOMMIT = 0;
 START TRANSACTION;
 
 INSERT INTO `alts` (`family_id`, `name`, `enabled`) VALUES
-(170, 'green', 1),
-(170, 'seafoam', 1),
-(170, 'blue', 1),
-(31, 'mint', 1),
-(31, 'kiwi', 1),
-(31, 'rose', 1),
-(31, 'trick', 1),
 (2, 'candycane', 0),
 (7, 'iceprince', 0),
 (7, 'black', 0),

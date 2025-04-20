@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use App\Services\Creatures\CreatureUtils;
-use DB;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Collection;
 
 /**
  * App\Models\Creature
@@ -34,7 +35,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Consumable|null $consumable
- * @property-read \App\Models\Family|null $family
+ * @property-read \App\Models\Family $family
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\TrainingOption> $trainingOptions
  * @property-read int|null $training_options_count
  * @method static \Illuminate\Database\Eloquent\Builder|Creature locate(string|int $family, string|int $creature)
@@ -66,95 +67,90 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class Creature extends Model
 {
-    use HasFactory;
-
+    /**
+     * @return BelongsTo<Family,$this>
+     */
     public function family(): BelongsTo
     {
         return $this->belongsTo(Family::class);
     }
 
+    /**
+     * @return HasOne<Consumable,$this>
+     */
     public function consumable(): HasOne
     {
         return $this->hasOne(Consumable::class, 'id', 'component_id');
     }
 
+    /**
+     * @return HasMany<TrainingOption,$this>
+     */
     public function trainingOptions(): HasMany
     {
         return $this->hasMany(TrainingOption::class);
     }
 
     /**
-     * Returns the nearest previous and nearest next creatures adjacent to this
-     * creature in terms of id. Skips missing ids.
-     * @return \Illuminate\Database\Eloquent\Collection<string, Creature>
+     * @return HasOne<Creature,$this>
      */
-    public function getAdjacentIds()
+    public function canonicalNext(): HasOne
     {
-        $adjacent =
-            fn (string $operator, string $order) =>
-            DB::table($this->table)
-                ->select('id')
-                ->where('id', $operator, $this->id)
-                ->orderBy('id', $order)
-                ->limit(1);
-
-        // get the highest max id before this id (previous)
-        // and the lowest max id after this id (next)
-        $adjacents = DB::query()
-            ->selectSub($adjacent('<', 'desc'), 'previous')
-            ->selectSub($adjacent('>', 'asc'), 'next')
-            ->first();
-
-        $creatures = self::with('family')->find([
-            $adjacents->previous,
-            $adjacents->next,
-        ]);
-
-        // matches the ids up to what we got earlier,
-        // if there is no previous or next, null will be returned.
-        return collect([
-            'previous' => $creatures->find($adjacents->previous),
-            'next' => $creatures->find($adjacents->next),
-        ]);
+        return $this->hasOne(Creature::class)
+            ->where('id', '>', $this->id)
+            ->orderBy('id');
     }
 
-    public function scopeJoinFamily($query, bool $selectFamilyTable = false)
+    /**
+     * @return HasOne<Creature,$this>
+     */
+    public function canonicalPrevious(): HasOne
     {
-        $familyTable = (new Family())->getTable();
-        $creatureTable = (new static())->getTable();
-
-        $query = $query->join($familyTable, "{$familyTable}.id", '=', "{$creatureTable}.family_id");
-        if (! $selectFamilyTable) {
-            $query = $query->addSelect("{$creatureTable}.*");
-        }
-        return $query;
+        return $this->hasOne(Creature::class)
+            ->where('id', '<', $this->id)
+            ->orderBy('id', 'desc');
     }
 
-    public function scopeOrderByFamilyName($query)
+    /**
+     * @param Builder<self> $builder
+     */
+    public function scopeJoinFamily(Builder $builder, bool $selectFamilyTable = false): void
     {
         $familyTable = (new Family())->getTable();
-        return $query->orderBy("{$familyTable}.name");
+        $creatureTable = (new self())->getTable();
+
+        $builder
+          ->join($familyTable, "{$familyTable}.id", '=', "{$creatureTable}.family_id")
+          ->when(! $selectFamilyTable, fn ($q) => $q
+            ->addSelect("{$creatureTable}.*")
+        );
+    }
+
+    /**
+     * @param Builder<self> $builder
+     */
+    public function scopeOrderByFamilyName(Builder $builder): void
+    {
+        $familyTable = (new Family())->getTable();
+        $builder->orderBy("{$familyTable}.name");
     }
 
     /**
      * Get all stats in a single collection.
-     * @return \Illuminate\Database\Eloquent\Collection<string, int>
+     * @return Attribute<Collection<string,mixed>,never>
      */
     protected function statPoints(): Attribute
     {
-        return Attribute::make(
-            get: fn () => CreatureUtils::getPossibleStats()->flip()->map(fn ($val, $key) => $this["max_{$key}"])
-        );
+        return Attribute::get(fn () => CreatureUtils::getPossibleStats()->flip()->map(fn ($val, $key) => $this["max_{$key}"]));
     }
 
     /**
      * Calculate the max possible stat value for this creature.
-     * @return int
+     * @return Attribute<int,never>
      */
     protected function maxStatPoints(): Attribute
     {
-        return Attribute::make(
-            get: fn () => $this->stat_points->sum()
-        );
+        return Attribute::get(fn () => $this->stat_points->sum());
     }
+
 }

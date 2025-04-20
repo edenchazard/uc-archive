@@ -4,10 +4,11 @@ namespace App\Models;
 
 use App\Services\Formatting\CreatureFormattingService;
 use CreatureUtils;
+use Database\Factories\UserPetFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Models\UserPet
@@ -20,7 +21,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property int $gender
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Creature|null $creature
+ * @property-read \App\Models\Creature $creature
  * @method static \Database\Factories\UserPetFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|UserPet newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|UserPet newQuery()
@@ -37,6 +38,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class UserPet extends Model
 {
+    /** @use HasFactory<UserPetFactory> */
     use HasFactory;
 
     protected $guarded = [];
@@ -47,9 +49,12 @@ class UserPet extends Model
         'nickname' => 'Placeholder',
     ];
 
-    public function creature(): HasOne
+    /**
+     * @return BelongsTo<Creature,$this>
+     */
+    public function creature(): BelongsTo
     {
-        return $this->hasOne(Creature::class);
+        return $this->belongsTo(Creature::class);
     }
 
     /**
@@ -78,11 +83,13 @@ class UserPet extends Model
         return $this;
     }
 
+    /**
+     * @return Attribute<string,never>
+     */
     protected function shortDescriptionFormatted(): Attribute
     {
-        return Attribute::make(
-            get: function () {
-                return (new CreatureFormattingService(
+        return Attribute::get(fn () =>
+          (new CreatureFormattingService(
                     $this->creature->short_description,
                     [
                         '{{c:nickname}}' => $this->nickname,
@@ -92,16 +99,19 @@ class UserPet extends Model
                     // If the creature has a set gender, use that. Otherwise, if
                     // not male or female, let's have a bit of fun and randomise the gender.
                     $this->gender
-                ))->formatAll()->get();
-            }
+                ))
+                ->formatAll()
+                ->get()
         );
     }
 
+    /**
+     * @return Attribute<string,never>
+     */
     protected function longDescriptionFormatted(): Attribute
     {
-        return Attribute::make(
-            get: function () {
-                return (new CreatureFormattingService(
+        return Attribute::get(fn () =>
+          (new CreatureFormattingService(
                     $this->creature->long_description,
                     [
                         '{{c:nickname}}' => $this->nickname,
@@ -109,8 +119,9 @@ class UserPet extends Model
                         '{{c:family}}' => $this->creature->family->name,
                     ],
                     $this->gender
-                ))->formatAll()->get();
-            }
+                ))
+                ->formatAll()
+                ->get()
         );
     }
 }

@@ -1,13 +1,10 @@
-ARG PHP_VERSION=8.2
-ARG NODE_VERSION=18
-
 # grab composer 🎶
-FROM composer:latest as composer
+FROM composer:latest AS composer
 
 
 
 # NODE
-FROM node:${NODE_VERSION}-alpine as node-build
+FROM node:lts-slim AS node-build
 WORKDIR /app
 # node dependencies
 COPY package*.json .
@@ -20,7 +17,7 @@ RUN npm run build
 
 
 
-FROM php:${PHP_VERSION}-fpm-alpine3.18 AS final
+FROM php:8.4.6-fpm-alpine AS final
 
 # files be here
 WORKDIR /var/www/html

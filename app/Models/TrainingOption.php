@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Services\Formatting\CreatureFormattingService;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -29,21 +29,26 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|TrainingOption whereReward($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TrainingOption whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TrainingOption whereUpdatedAt($value)
- * @property-read \App\Models\Creature|null $creature
+ * @property-read \App\Models\Creature $creature
  * @mixin \Eloquent
  */
 class TrainingOption extends Model
 {
-    use HasFactory;
-
+    /**
+     * @return BelongsTo<Creature,$this>
+     */
     public function creature(): BelongsTo
     {
         return $this->belongsTo(Creature::class);
     }
 
-    public function format(UserPet $pet)
+    /**
+     * @return Attribute<string,never>
+     */
+    public function format(UserPet $pet): Attribute
     {
-        return (new CreatureFormattingService(
+        return Attribute::get(fn () =>
+          (new CreatureFormattingService(
             $this->description,
             [
                 '{{c:nickname}}' => $pet->nickname,
@@ -52,6 +57,9 @@ class TrainingOption extends Model
                 '*' => $pet->nickname,
             ],
             $this->gender
-        ))->formatAll()->get();
+          ))
+          ->formatAll()
+          ->get()
+        );
     }
 }

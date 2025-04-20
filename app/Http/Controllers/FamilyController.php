@@ -6,18 +6,20 @@ use App\Models\Creature;
 use App\Models\Family;
 use App\Models\UserPet;
 use App\Services\Creatures\CreatureGender;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class FamilyController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
-        $families = Family::with('stages')->get();
+        $families = Family::query()
+          ->with('stages')
+          ->get();
 
         $wrappedFamilies = $families->map(
             function ($family) {
@@ -31,24 +33,20 @@ class FamilyController extends Controller
             }
         );
 
-        $data = [
-            'groups' => $wrappedFamilies->groupBy(fn ($family) => $family->name[0]),
-            'page' => [
-                'title' => 'Families',
-                'route' => 'family',
-                'name' => 'All families',
-            ],
-        ];
-
-        return view('pages.creatures.index', $data);
+        return view('pages.creatures.index', [
+          'groups' => $wrappedFamilies->groupBy(fn ($family) => $family->name[0]),
+          'page' => [
+              'title' => 'Families',
+              'route' => 'family',
+              'name' => 'All families',
+          ],
+        ]);
     }
 
     /**
      * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function show(Family $family)
+    public function show(Family $family): View
     {
         $family->loadMissing('stages');
 
@@ -94,16 +92,16 @@ class FamilyController extends Controller
         return view('pages.creatures.family.show', $data);
     }
 
-    public function search()
+    public function search(): Response|RedirectResponse
     {
         /**
          * Family not found, try to search for a creature with the specified
          * $name and redirects to the creature's page.
          * If multiple matches such as "Egg" are found, a collection of results will be returned.
          */
-        /** @var array{'query': string} $validation */
         $validation = request()->validate([
             'query' => [
+                'nullable',
                 'string',
                 'alpha:ascii',
             ],
@@ -112,12 +110,12 @@ class FamilyController extends Controller
         $data = [];
 
         if (isset($validation['query'])) {
-            /** @var Collection<int, Creature> $results */
-            $results = Creature::with('family')
-                ->where((new Creature())->getTable() . '.name', $validation['query'])
-                ->joinFamily()
-                ->orderByFamilyName()
-                ->get();
+            $results = Creature::query()
+              ->with('family')
+              ->where('creatures.name', $validation['query'])
+              ->joinFamily()
+              ->orderByFamilyName()
+              ->get();
 
             // redirect if a single match, otherwise give the user options.
             if ($results->count() === 1) {
@@ -130,7 +128,9 @@ class FamilyController extends Controller
             ];
         }
 
-        $data = [
+        return response()->view(
+          'pages.creatures.search',
+          [
             'query' => null,
             'results' => collect([]),
             ...$data,
@@ -139,8 +139,8 @@ class FamilyController extends Controller
                 'route' => '',
                 'breadcrumb' => '',
             ],
-        ];
-
-        return response()->view('pages.creatures.search', $data, 404);
+          ],
+          404
+        );
     }
 }

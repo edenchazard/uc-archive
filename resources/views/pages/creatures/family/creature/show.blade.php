@@ -23,7 +23,7 @@
                     <p>It was released on <time>{{ $family->released() }}</time>.</p>
                     <p class="flex flex-wrap align-middle justify-center gap-3 flex-row sm:flex-nowrap py-3 sm:px-5">
                         <img
-                            src='{{ asset(strtolower("images/components/" . $pet->creature->consumable->name .".png")) }}'
+                            src='{{ asset(strtolower("images/components/{$pet->creature->consumable->name}.png")) }}'
                             alt='{{ $pet->creature->consumable->name }}'
                             class="self-center"/>
                         Interacting with {{$pet->creature->name}} while exploring would earn you the {{$pet->creature->consumable->name}} component.

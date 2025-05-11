@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Services\Creatures\CreatureUtils;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -67,6 +66,11 @@ use Illuminate\Support\Collection;
  */
 class Creature extends Model
 {
+    protected $appends = [
+        'stat_points',
+        'max_stat_points',
+    ];
+
     /**
      * @return BelongsTo<Family,$this>
      */
@@ -91,24 +95,20 @@ class Creature extends Model
         return $this->hasMany(TrainingOption::class);
     }
 
-    /**
-     * @return HasOne<Creature,$this>
-     */
-    public function canonicalNext(): HasOne
+    public function canonicalNext(): self|null
     {
-        return $this->hasOne(Creature::class)
+        return self::query()
             ->where('id', '>', $this->id)
-            ->orderBy('id');
+            ->orderBy('id')
+            ->first();
     }
 
-    /**
-     * @return HasOne<Creature,$this>
-     */
-    public function canonicalPrevious(): HasOne
+    public function canonicalPrevious(): self|null
     {
-        return $this->hasOne(Creature::class)
-            ->where('id', '<', $this->id)
-            ->orderBy('id', 'desc');
+      return self::query()
+          ->where('id', '<', $this->id)
+          ->orderBy('id')
+          ->first();
     }
 
     /**

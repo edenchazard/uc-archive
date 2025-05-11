@@ -18,16 +18,17 @@ class CreatureController extends Controller
     {
         $creature->loadMissing([
           'consumable',
-          'canonicalNext',
-          'canonicalPrevious',
         ]);
 
         $gender = CreatureGender::get($family->gender);
 
-        $wrappedClosestCreatures = collect([$creature->canonical_next, $creature->canonical_previous])
-          ->map(fn ($cr) => $cr ? (new UserPet())->use($cr) : null);
+        $wrappedClosestCreatures = collect([
+          'next' => $creature->canonicalNext(),
+          'previous' => $creature->canonicalPrevious(),
+        ])
+          ->map(fn (Creature|null $cr) => $cr ? (new UserPet())->use($cr) : null);
 
-        // wrap a user pet
+        // Wrap a user pet
         $wrappedCreature = (new UserPet([
             'gender' => $gender,
         ]))->use($creature);

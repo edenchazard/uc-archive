@@ -83,13 +83,9 @@ class UserPet extends Model
         return $this;
     }
 
-    /**
-     * @return Attribute<string,never>
-     */
-    protected function shortDescriptionFormatted(): Attribute
+    protected function shortDescriptionFormatted(): string
     {
-        return Attribute::get(fn () =>
-          (new CreatureFormattingService(
+        return  (new CreatureFormattingService(
                     $this->creature->short_description,
                     [
                         '{{c:nickname}}' => $this->nickname,
@@ -101,16 +97,12 @@ class UserPet extends Model
                     $this->gender
                 ))
                 ->formatAll()
-                ->get()
-        );
+                ->get();
     }
 
-    /**
-     * @return Attribute<string,never>
-     */
-    protected function longDescriptionFormatted(): Attribute
+    protected function longDescriptionFormatted(): string
     {
-        return Attribute::get(fn () =>
+        return
           (new CreatureFormattingService(
                     $this->creature->long_description,
                     [
@@ -121,7 +113,6 @@ class UserPet extends Model
                     $this->gender
                 ))
                 ->formatAll()
-                ->get()
-        );
+                ->get();
     }
 }

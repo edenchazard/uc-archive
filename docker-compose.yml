@@ -1,46 +1,54 @@
-name: uc-archive
 services:
-  laravel:
-    build:
-      context: .
-      dockerfile: .docker/nginx.prod.Dockerfile
-      args:
-        PHP_VERSION: 8.2
+  nginx:
+    image: nginxinc/nginx-unprivileged:1.28-alpine-slim
     ports:
-      - ${APP_PORT:-80}:8080
+      - 80:8080
     depends_on:
       - php
       - db
-    volumes:
-      - web_content:/var/www/html
     networks:
       - internal
-    restart: unless-stopped
+    volumes:
+      - .docker-contents/nginx.conf:/etc/nginx/conf.d/default.conf
+      - web_content:/var/www
 
   php:
     build:
       context: .
-      dockerfile: .docker/php.prod.Dockerfile
     volumes:
-      - web_content:/var/www/html
+      - ./app:/var/www/app
+      - ./config:/var/www/config
+      - ./routes:/var/www/routes
+      - ./settings:/var/www/settings
+      - ./database:/var/www/database
+      - ./public/images:/var/www/public/images
+      - ./storage:/var/www/storage
+      - ./lang:/var/www/lang
+      - ./resources:/var/www/resources
+      - ./composer.json:/var/www/composer.json
+      - ./composer.lock:/var/www/composer.lock
+      - ./package.json:/var/www/package.json
+      - ./package-lock.json:/var/www/package-lock.json
+      - ./vite.config.js:/var/www/vite.config.js
+      - ./tailwind.config.js:/var/www/tailwind.config.js
+      - ./.env:/var/www/.env
+      - .docker-contents/php.ini:/etc/php/8.4/fpm/php.ini
+      - appdata:/var/www/storage
+      - web_content:/var/www
     networks:
       - internal
-    restart: unless-stopped
 
   db:
-    image: mariadb:lts
-    environment:
-      #MYSQL_RANDOM_ROOT_PASSWORD: yes
-      MYSQL_ROOT_HOST: '%'
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_USER: ${DB_USERNAME}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_ROOT_PASSWORD: 'pass'
-    volumes:
-      - db_data:/var/lib/mysql
+    image: mariadb:10.9
     networks:
       - internal
-    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
 
 networks:
   internal:
@@ -48,3 +56,4 @@ networks:
 volumes:
   web_content:
   db_data:
+  appdata:

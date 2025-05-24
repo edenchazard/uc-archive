@@ -47,7 +47,6 @@ COPY --from=node-build /app/public/build ./public/build
 RUN chmod -R 770 ./storage ./bootstrap/cache
 RUN mkdir -p /var/www/storage/logs \
   && touch /var/www/storage/logs/laravel.log \
-  && rm -rf .env .env.* \
   && chown -R www-data:www-data .
 
 USER www-data

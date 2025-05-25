@@ -6,10 +6,8 @@ use App\Models\Creature;
 use App\Models\Family;
 use App\Models\UserPet;
 use App\Services\Creatures\CreatureGender;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class FamilyController extends Controller
@@ -103,6 +101,7 @@ class FamilyController extends Controller
          */
         $validation = request()->validate([
             'query' => [
+                'nullable',
                 'string',
                 'alpha:ascii',
             ],
@@ -111,22 +110,27 @@ class FamilyController extends Controller
         $data = [];
 
         if (isset($validation['query'])) {
-            /** @var Collection<int, Creature> $results */
             $results = Creature::query()
                 ->with('family')
-                ->where((new Creature())->getTable() . '.name', $validation['query'])
-                ->withAggregate('family AS family_name', DB::raw('name'))
+                ->withAggregate('family AS family_name', 'name')
+                ->where('name', $validation['query'])
                 ->orderBy('family_name')
-                ->get();
+                ->get()
+                ->map(fn (Creature $creature) => UserPet::factory()->mockCreature($creature)->make());
 
             // redirect if a single match, otherwise give the user options.
             if ($results->count() === 1) {
-                $creature = $results->first();
-                return to_route('creatures.family.creature.show', [$creature?->family, $creature]);
+                $userPet = $results->first();
+
+                return to_route('creatures.family.creature.show', [
+                    $userPet?->creature?->family,
+                    $userPet?->creature,
+                ]);
             }
+
             $data = [
                 'query' => $validation['query'],
-                'results' => $results->map(fn ($creature) => $creature->wrap()),
+                'results' => $results,
             ];
         }
 

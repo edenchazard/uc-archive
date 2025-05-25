@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Services\Creatures\CreatureUtils;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -119,23 +118,8 @@ class Creature extends Model
     }
 
     /**
-     * @param Builder<self> $query
-     */
-    public function scopeJoinFamily(Builder $query, bool $selectFamilyTable = false): void
-    {
-        $familyTable = (new Family())->getTable();
-        $creatureTable = (new self())->getTable();
-
-        $query = $query->join($familyTable, "{$familyTable}.id", '=', "{$creatureTable}.family_id");
-
-        if (! $selectFamilyTable) {
-            $query = $query->addSelect("{$creatureTable}.*");
-        }
-    }
-
-    /**
      * Get all stats in a single collection.
-     * @return Attribute<Collection<string, int>,never>
+     * @return Attribute<Collection<string,int>,never>
      */
     protected function statPoints(): Attribute
     {

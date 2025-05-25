@@ -10,6 +10,7 @@
   "require": {
     "php": "^8.4",
     "diglactic/laravel-breadcrumbs": "^10.0",
+    "fakerphp/faker": "^1.24",
     "guzzlehttp/guzzle": "^7.9",
     "laravel/framework": "12.15.0",
     "laravel/tinker": "^2.10",

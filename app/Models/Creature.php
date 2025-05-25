@@ -60,7 +60,6 @@ use Illuminate\Support\Collection;
  * @method static \Illuminate\Database\Eloquent\Builder|Creature whereShortDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Creature whereStage($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Creature whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Creature joinFamily(bool $selectFamilyTable = false)
  * @method static \Illuminate\Database\Eloquent\Builder|Creature orderByFamilyName()
  * @mixin \Eloquent
  */
@@ -132,15 +131,6 @@ class Creature extends Model
         if (! $selectFamilyTable) {
             $query = $query->addSelect("{$creatureTable}.*");
         }
-    }
-
-    /**
-     * @param Builder<self> $query
-     */
-    public function scopeOrderByFamilyName(Builder $query): void
-    {
-        $familyTable = (new Family())->getTable();
-        $query->orderBy("{$familyTable}.name");
     }
 
     /**

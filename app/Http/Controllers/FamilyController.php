@@ -9,6 +9,7 @@ use App\Services\Creatures\CreatureGender;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class FamilyController extends Controller
@@ -114,8 +115,8 @@ class FamilyController extends Controller
             $results = Creature::query()
                 ->with('family')
                 ->where((new Creature())->getTable() . '.name', $validation['query'])
-                ->joinFamily()
-                ->orderByFamilyName()
+                ->withAggregate('family AS family_name', DB::raw('name'))
+                ->orderBy('family_name')
                 ->get();
 
             // redirect if a single match, otherwise give the user options.

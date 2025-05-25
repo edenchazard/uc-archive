@@ -1,37 +1,59 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-@tailwind variants;
+@import 'tailwindcss';
 
-h1 {
+@theme {
+  --grid-template-columns-fill-auto: repeat(auto-fill, minmax(4em, 1fr));
+
+  --color-uc-blue: #5ba0d6;
+  --color-uc-ltbrown: #f7f4cc;
+  --color-uc-mdbrown: #dfd1a6;
+  --color-uc-dkbrown: #2e260f;
+  --color-uc-grad-begin: #599fd5;
+  --color-uc-grad-end: #abe4fe;
+  --color-uc-glow: rgba(200, 204, 179, 0.9);
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+
+  h1 {
     @apply text-3xl;
-}
-h2 {
+  }
+  h2 {
     @apply text-2xl;
-}
-h3 {
+  }
+  h3 {
     @apply text-xl;
-}
-h4 {
+  }
+  h4 {
     @apply text-lg;
-}
+  }
 
-a {
+  a {
     @apply text-uc-dkbrown;
-}
+  }
 
-#breadcrumb nav ol {
+  #breadcrumb nav ol {
     @apply flex flex-row p-2;
-}
+  }
 
-#breadcrumb nav ol li {
-}
+  #breadcrumb nav ol li {
+  }
 
-#breadcrumb nav ol li::after {
-    content: ">";
+  #breadcrumb nav ol li::after {
+    content: '>';
     @apply m-2;
+  }
+
+  #breadcrumb nav ol li:last-child::after {
+    content: none;
+  }
 }
 
-#breadcrumb nav ol li:last-child::after {
-    content: none;
+@layer utilities {
 }

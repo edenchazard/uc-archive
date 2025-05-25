@@ -37,7 +37,7 @@
                     {{ Breadcrumbs::render($page['route'], $page['name']) }}
         </section>
         @endif --}}
-        <main class='bg-gradient-to-b from-uc-grad-begin to-uc-grad-end bg-uc-grad-end bg-[length:100%_526px] bg-no-repeat sm:p-5'>
+        <main class='bg-linear-to-b from-uc-grad-begin to-uc-grad-end bg-uc-grad-end bg-size-[100%_526px] bg-no-repeat sm:p-5'>
             {{ $slot }}
         </main>
     </div>

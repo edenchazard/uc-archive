@@ -22,7 +22,6 @@ services:
       - ./package.json:/var/www/package.json
       - ./package-lock.json:/var/www/package-lock.json
       - ./vite.config.js:/var/www/vite.config.js
-      - ./tailwind.config.js:/var/www/tailwind.config.js
       - ./.env:/var/www/.env
       - ./node_modules:/var/www/node_modules
       - .docker-contents/php.ini:/etc/php/8.4/fpm/php.ini

@@ -18,7 +18,7 @@
                 <h2 id='{{$category}}'>
                     <a href='#{{$category}}' class='text-white'>{{$category}}</a>
                 </h2>
-                <a href="#list" aria-label="back to start of list" class='sticky p-1 bg-uc-mdbrown rounded-sm'>top</a>
+                <a href="#list" aria-label="back to start of list" class='sticky p-1 bg-uc-mdbrown rounded-xs'>top</a>
             </div>
             <ol class="list-none">
                 <li>

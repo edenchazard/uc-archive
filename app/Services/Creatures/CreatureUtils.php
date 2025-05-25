@@ -71,22 +71,6 @@ class CreatureUtils
     }
 
     /**
-     * Returns yes or no as to if the creature has basket availability.
-     */
-    public static function basket(int|bool $val): string
-    {
-        return $val ? 'Yes' : 'No';
-    }
-
-    /**
-     * Returns yes or no as to if the creature can be exalted or nobled.
-     */
-    public static function canExaltNoble(int|bool $val): string
-    {
-        return ! $val ? 'Yes' : 'No';
-    }
-
-    /**
      * Constructs an image url for a given pet.
      * @param UserPet $pet The pet to make an image url from.
      */

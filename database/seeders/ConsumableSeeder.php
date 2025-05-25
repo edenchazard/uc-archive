@@ -4,5 +4,5 @@ namespace Database\Seeders;
 
 class ConsumableSeeder extends SQLFileSeederBase
 {
-    protected string $file = "consumables.sql";
+    protected string $file = 'consumables.sql';
 }

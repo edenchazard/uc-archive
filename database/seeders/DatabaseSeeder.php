@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             FamilySeeder::class,
             CreatureSeeder::class,
             TrainingOptionSeeder::class,
-            AltSeeder::class
+            AltSeeder::class,
         ]);
     }
 }

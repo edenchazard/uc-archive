@@ -5,8 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class() extends Migration {
     private const ELEMENTS = [
         1 => 'Earth',
         2 => 'Air',
@@ -32,7 +31,7 @@ return new class extends Migration
         22 => 'Squee',
         23 => 'Poison',
         24 => 'Treeee',
-        25 => 'Electric'
+        25 => 'Electric',
     ];
 
     /**
@@ -40,19 +39,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-      Schema::table('families', function (Blueprint $table) {
-          $table->string('element')->nullable()->change();
-      });
+        Schema::table('families', function (Blueprint $table) {
+            $table->string('element')->nullable()->change();
+        });
 
-      Family::query()->each(function (Family $family) {
-          if (isset(self::ELEMENTS[$family->element])) {
-              $family->element = self::ELEMENTS[$family->element];
-              $family->save();
-          } else {
-              $family->element = null;
-              $family->save();
-          }
-      });
+        Family::query()->each(function (Family $family) {
+            if (isset(self::ELEMENTS[$family->element])) {
+                $family->element = self::ELEMENTS[$family->element];
+                $family->save();
+            } else {
+                $family->element = null;
+                $family->save();
+            }
+        });
     }
 
     /**

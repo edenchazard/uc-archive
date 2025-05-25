@@ -4,5 +4,5 @@ namespace Database\Seeders;
 
 class TrainingOptionSeeder extends SQLFileSeederBase
 {
-    protected string $file = "trainingoptions.sql";
+    protected string $file = 'trainingoptions.sql';
 }

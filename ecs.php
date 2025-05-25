@@ -11,6 +11,7 @@ return ECSConfig::configure()
         __DIR__ . '/tests',
         __DIR__ . '/routes',
         __DIR__ . '/config',
+        __DIR__ . '/database',
     ])
     ->withRules([
         ArraySyntaxFixer::class,

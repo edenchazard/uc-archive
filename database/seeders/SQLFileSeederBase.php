@@ -16,8 +16,9 @@ abstract class SQLFileSeederBase extends Seeder
      */
     public function run(): void
     {
-        if (!$this->file)
-            throw new Exception("no sql file specified.");
+        if (! $this->file) {
+            throw new Exception('no sql file specified.');
+        }
 
         $path = dirname(__DIR__) . "/seeders/{$this->file}";
         $sql = file_get_contents($path);

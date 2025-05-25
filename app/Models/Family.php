@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\ElementTypeEnum;
+use App\Enums\UniqueRatingEnum;
 use CreatureUtils;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
@@ -80,6 +81,7 @@ class Family extends Model
         'deny_exalt' => 'boolean',
         'in_basket' => 'boolean',
         'element' => ElementTypeEnum::class,
+        'unique_rating' => UniqueRatingEnum::class,
     ];
 
     /**
@@ -125,11 +127,6 @@ class Family extends Model
     public function released(): string
     {
         return (new DateTime($this->released))->format('jS F o');
-    }
-
-    public function uniqueRating(): string
-    {
-        return CreatureUtils::unique($this->unique_rating);
     }
 
     /**

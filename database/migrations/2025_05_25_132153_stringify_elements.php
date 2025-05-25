@@ -44,6 +44,8 @@ return new class() extends Migration {
         });
 
         Family::query()->each(function (Family $family) {
+            $family->mergeCasts(['element' => 'string']);
+
             if (isset(self::ELEMENTS[$family->element])) {
                 $family->element = self::ELEMENTS[$family->element];
                 $family->save();
@@ -51,6 +53,10 @@ return new class() extends Migration {
                 $family->element = null;
                 $family->save();
             }
+        });
+
+        Schema::table('families', function (Blueprint $table) {
+            $table->string('element')->nullable(false)->change();
         });
     }
 
@@ -65,7 +71,7 @@ return new class() extends Migration {
         });
 
         Schema::table('families', function (Blueprint $table) {
-            $table->unsignedTinyInteger('element')->nullable()->change();
+            $table->unsignedTinyInteger('element')->nullable(false)->change();
         });
     }
 };

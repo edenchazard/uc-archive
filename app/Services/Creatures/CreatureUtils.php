@@ -59,15 +59,6 @@ class CreatureUtils
     ];
 
     /**
-     * @var array<int, string>
-     */
-    protected const uniqueRatings = [
-        'normal',
-        'exotic',
-        'legendary',
-    ];
-
-    /**
      * Returns a list of possible creature stats used in the application.
      * @return \Illuminate\Support\Collection<int, string>
      */
@@ -122,14 +113,6 @@ class CreatureUtils
     public static function canExaltNoble(int|bool $val): string
     {
         return ! $val ? 'Yes' : 'No';
-    }
-
-    /**
-     * Translates a numeric unique rating to a string.
-     */
-    public static function unique(int $val): string
-    {
-        return static::getMapping(static::uniqueRatings, $val);
     }
 
     /**

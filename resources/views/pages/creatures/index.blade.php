@@ -27,7 +27,7 @@
                         <li class="my-10">
                             <div class="flex flex-row gap-2 items-center">
                                 <h3 class="text-lg">{{$family->name}}</h3>
-                                <x-article-link :url='route("creatures.family.show", $family->name)' />
+                                <x-article-link :url='route("creatures.family.show", $family)' />
                             </div>
                             <x-evolutionary-line :stages="$family->stages" />
                         </li>

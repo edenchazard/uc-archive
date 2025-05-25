@@ -24,7 +24,9 @@ class FamilyController extends Controller
                 $family->stages = $family->stages->map(
                     function ($stage) use ($family) {
                         $stage->setRelation('family', $family);
-                        return (new UserPet())->use($stage);
+                        return UserPet::factory()
+                            ->mockCreature($stage)
+                            ->make();
                     }
                 );
                 return $family;

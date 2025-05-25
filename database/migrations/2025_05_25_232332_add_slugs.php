@@ -1,18 +1,22 @@
 <?php
 
-use App\Models\Family;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class() extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
     public function up(): void
     {
+        Schema::table('creatures', function (Blueprint $table) {
+            $table->string('slug')->after('name')->index();
+        });
+
         Schema::table('families', function (Blueprint $table) {
-            $table->string('element')->change();
+            $table->string('slug')->after('name')->index();
         });
     }
 
@@ -21,8 +25,12 @@ return new class() extends Migration {
      */
     public function down(): void
     {
+        Schema::table('creatures', function (Blueprint $table) {
+            $table->dropColumn('slug');
+        });
+
         Schema::table('families', function (Blueprint $table) {
-            $table->unsignedTinyInteger('element')->change();
+            $table->dropColumn('slug');
         });
     }
 };

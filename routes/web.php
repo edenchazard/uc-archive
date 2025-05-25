@@ -29,7 +29,7 @@ Route::prefix('creatures')->name('creatures.')->group(function () {
     /**
      * Specific family
      */
-    Route::prefix('{family:name}')->name('family.')->group(function () {
+    Route::prefix('{family:slug}')->name('family.')->group(function () {
         Route::get('/', [FamilyController::class, 'show'])
             ->name('show')
             ->missing(fn ($query) => to_route('creatures.search', [
@@ -38,7 +38,7 @@ Route::prefix('creatures')->name('creatures.')->group(function () {
         /**
          * Show an individual creature.
          */
-        Route::get('/{creature:name}', [CreatureController::class, 'show'])
+        Route::get('/{creature:slug}', [CreatureController::class, 'show'])
             ->name('creature.show')
             ->scopeBindings()
             ->missing(fn ($query) => to_route('creatures.search', [

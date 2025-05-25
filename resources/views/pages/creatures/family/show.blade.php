@@ -72,7 +72,7 @@
                     </div>
                     <div>
                         <h3 class='inline font-medium'>{{ $stage->creature->name }}</h3>
-                        <x-article-link :url='route("creatures.family.creature.show", [$family->name, $stage->creature->name])' />
+                        <x-article-link :url='route("creatures.family.creature.show", [$family, $stage->creature])' />
                     </div>
                     <section>
                         <h4 class='font-medium'>Visual Description</h4>

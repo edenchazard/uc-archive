@@ -22,13 +22,15 @@ class CreatureController extends Controller
         $closestCreatures = $creature->getChronologicalAdjacents();
 
         $wrappedClosestCreatures = $closestCreatures->map(
-            fn ($cr) => $cr ? (new UserPet())->use($cr) : null
+            fn ($cr) => $cr ? UserPet::factory()->mockCreature($creature)->make() : null
         );
 
         // wrap a user pet
-        $wrappedCreature = (new UserPet([
-            'gender' => $gender,
-        ]))->use($creature);
+        $wrappedCreature = UserPet::factory()
+            ->mockCreature($creature)
+            ->make([
+                'gender' => $gender,
+            ]);
 
         $alt_evos = collect();
 
@@ -39,18 +41,22 @@ class CreatureController extends Controller
             ]);
 
             $alt_evos = $alt_evos->merge($alts->flip()->map(function (int $v) use ($creature, $gender) {
-                return (new UserPet([
-                    'specialty' => $v,
-                    'gender' => $gender,
-                ]))->use($creature);
+                return UserPet::factory()
+                    ->mockCreature($creature)
+                    ->make([
+                        'specialty' => $v,
+                        'gender' => $gender,
+                    ]);
             }));
         }
 
         if ($family->alts->count() > 0) {
             $alts = $family->alts->map(fn (Alt $alt) => $alt->name)->flip();
-            $alt_evos = $alt_evos->merge($alts->map(fn ($v, $altName) => (new UserPet([
-                'variety' => $altName,
-            ]))->use($creature)));
+            $alt_evos = $alt_evos->merge($alts->map(fn ($v, $altName) => UserPet::factory()
+                ->mockCreature($creature)
+                ->make([
+                    'variety' => $altName,
+                ])));
         }
 
         $data = [

@@ -73,19 +73,6 @@ class UserPet extends Model
     }
 
     /**
-     * Simply a shorthand for setting the creature relationship and
-     * some common properties.
-     *
-     * @param Creature $creature The Creature model to use.
-     */
-    public function use(Creature $creature): self
-    {
-        $this->setRelation('creature', $creature);
-        $this->nickname = $this->creature->name;
-        return $this;
-    }
-
-    /**
      * @return Attribute<string,never>
      */
     protected function shortDescription(): Attribute

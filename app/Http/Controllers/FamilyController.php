@@ -65,17 +65,21 @@ class FamilyController extends Controller
             ]);
 
             $alt_evos = $alt_evos->merge($alts->flip()->map(function (int $v) use ($family, $gender) {
-                return $family->stages->map(fn (Creature $stage) => (new UserPet([
-                    'specialty' => $v,
-                    'gender' => $gender,
-                ]))->use($stage));
+                return $family->stages->map(fn (Creature $stage) => UserPet::factory()
+                    ->mockCreature($stage)
+                    ->make([
+                        'specialty' => $v,
+                        'gender' => $gender,
+                    ]));
             }));
         }
 
         $wrappedStages = $family->stages->map(
-            fn (Creature $stage) => (new UserPet([
-                'gender' => $gender,
-            ]))->use($stage)
+            fn (Creature $stage) => UserPet::factory()
+                ->mockCreature($stage)
+                ->make([
+                    'gender' => $gender,
+                ])
         );
 
         $data = [

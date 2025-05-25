@@ -61,37 +61,6 @@ class CreatureUtils
     /**
      * @var array<int, string>
      */
-    protected const elements = [
-        1 => 'earth',
-        2 => 'air',
-        3 => 'spirit',
-        4 => 'water',
-        5 => 'fire',
-        6 => 'physical',
-        7 => 'unique',
-        8 => 'grass',
-        9 => 'sweet',
-        10 => 'metal',
-        11 => 'deity',
-        12 => 'moon',
-        13 => 'dream',
-        14 => 'luck',
-        15 => 'shimmer',
-        16 => 'awesomeness',
-        17 => 'tree',
-        18 => 'sparkly',
-        19 => 'love',
-        20 => 'special',
-        21 => 'wheeee',
-        22 => 'squee',
-        23 => 'poison',
-        24 => 'treeee',
-        25 => 'electric',
-    ];
-
-    /**
-     * @var array<int, string>
-     */
     protected const uniqueRatings = [
         'normal',
         'exotic',
@@ -137,14 +106,6 @@ class CreatureUtils
     public static function specialty(int $val): string
     {
         return static::getMapping(static::specialties, $val);
-    }
-
-    /**
-     * Translates an element number to string.
-     */
-    public static function element(int $val): string
-    {
-        return static::getMapping(static::elements, $val);
     }
 
     /**

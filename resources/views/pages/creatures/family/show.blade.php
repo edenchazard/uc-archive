@@ -15,7 +15,7 @@
                     It had a unique gender, {{ $family->gender() }}.
                 @endif
                 </p>
-                <p>All members within this family are of the {{ ucfirst($family->element()) }} element with a rarity rating of {{ ucfirst($family->rarity()) }}{!! $family->unique_rating > 0 ? " <span class='font-bold'>(".ucfirst($family->uniqueRating()).")</span>" : '' !!}.
+                <p>All members within this family are of the {{ ucfirst($family->element->value) }} element with a rarity rating of {{ ucfirst($family->rarity()) }}{!! $family->unique_rating > 0 ? " <span class='font-bold'>(".ucfirst($family->uniqueRating()).")</span>" : '' !!}.
                     @if (!$family->deny_exalt)
                         Noble versions would be {{ ucfirst(CreatureUtils::rarity($family->rarity + 1)) }} and exalteds would be {{ ucfirst(CreatureUtils::rarity($family->rarity + 2)) }}.
                     @endif

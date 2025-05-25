@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ElementTypeEnum;
 use CreatureUtils;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
@@ -78,6 +79,7 @@ class Family extends Model
     protected $casts = [
         'deny_exalt' => 'boolean',
         'in_basket' => 'boolean',
+        'element' => ElementTypeEnum::class,
     ];
 
     /**
@@ -113,11 +115,6 @@ class Family extends Model
     public function gender(): string
     {
         return CreatureUtils::gender($this->gender);
-    }
-
-    public function element(): string
-    {
-        return CreatureUtils::element($this->element);
     }
 
     public function specialty(): string

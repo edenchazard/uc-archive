@@ -6,7 +6,6 @@ use App\Enums\ElementTypeEnum;
 use App\Enums\RarityCategoryEnum;
 use App\Enums\UniqueRatingEnum;
 use CreatureUtils;
-use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
@@ -81,6 +80,7 @@ class Family extends Model
     protected $casts = [
         'deny_exalt' => 'boolean',
         'in_basket' => 'boolean',
+        'released' => 'datetime',
         'element' => ElementTypeEnum::class,
         'unique_rating' => UniqueRatingEnum::class,
         'rarity' => RarityCategoryEnum::class,
@@ -121,11 +121,6 @@ class Family extends Model
     public function specialty(): string
     {
         return CreatureUtils::specialty($this->specialty);
-    }
-
-    public function released(): string
-    {
-        return (new DateTime($this->released))->format('jS F o');
     }
 
     /**

@@ -6,7 +6,7 @@
         </section>
         <div class="flex justify-center">
             <div class="max-w-sm flex flex-col gap-2">
-                <p>The <span class='font-bold'>{{ $family->name }}</span> family was released on <time>{{ $family->released() }}</time> with {{ count($stages) }} evolutions.
+                <p>The <span class='font-bold'>{{ $family->name }}</span> family was released on <time>{{ $family->released->format('jS F o') }}</time> with {{ count($stages) }} evolutions.
                 @if ($family->gender <= 1)
                     It was {{ $family->gender() }}-only.
                 @elseif ($family->gender === 3)

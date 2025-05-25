@@ -68,6 +68,13 @@ use Illuminate\Support\Collection;
 class Creature extends Model
 {
     /**
+     * @var array<string,string>
+     */
+    protected $casts = [
+        'stage' => 'integer',
+    ];
+
+    /**
      * @return BelongsTo<Family,$this>
      */
     public function family(): BelongsTo

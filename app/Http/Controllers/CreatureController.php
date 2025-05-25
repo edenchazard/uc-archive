@@ -17,10 +17,9 @@ class CreatureController extends Controller
     public function show(Family $family, Creature $creature): View
     {
         $creature->loadMissing('consumable');
-
         $gender = CreatureGender::get($family->gender);
 
-        $closestCreatures = $creature->getAdjacentIds();
+        $closestCreatures = $creature->getChronologicalAdjacents();
 
         $wrappedClosestCreatures = $closestCreatures->map(
             fn ($cr) => $cr ? (new UserPet())->use($cr) : null

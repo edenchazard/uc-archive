@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Services\Creatures\CreatureUtils;
-use DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -35,7 +34,7 @@ use Illuminate\Support\Collection;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Consumable|null $consumable
- * @property-read \App\Models\Family|null $family
+ * @property-read \App\Models\Family $family
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\TrainingOption> $trainingOptions
  * @property-read int|null $training_options_count
  * @method static \Illuminate\Database\Eloquent\Builder|Creature locate(string|int $family, string|int $creature)
@@ -98,40 +97,25 @@ class Creature extends Model
         return $this->hasMany(TrainingOption::class);
     }
 
+    public function chronologicalPrevious(): ?self
+    {
+        return self::query()
+            ->where('id', '<', $this->id)
+            ->orderByDesc('id')
+            ->first();
+    }
+
     /**
      * Returns the nearest previous and nearest next creatures adjacent to this
      * creature in terms of id. Skips missing ids.
-     * @return Collection<string, Creature>
+     * @return Collection<string, $this|null>
      */
-    public function getAdjacentIds(): Collection
+    public function getChronologicalAdjacents(): Collection
     {
-        $adjacent =
-            fn (string $operator, string $order) =>
-            DB::table($this->table)
-                ->select('id')
-                ->where('id', $operator, $this->id)
-                ->orderBy('id', $order)
-                ->limit(1);
-
-        // get the highest max id before this id (previous)
-        // and the lowest max id after this id (next)
-        $adjacents = DB::query()
-            ->selectSub($adjacent('<', 'desc'), 'previous')
-            ->selectSub($adjacent('>', 'asc'), 'next')
-            ->first();
-
-        $creatures = self::query()
-            ->with('family')
-            ->find([
-                $adjacents->previous,
-                $adjacents->next,
-            ]);
-
-        // matches the ids up to what we got earlier,
-        // if there is no previous or next, null will be returned.
+        $baseQuery = self::query()->with('family');
         return collect([
-            'previous' => $creatures->find($adjacents->previous),
-            'next' => $creatures->find($adjacents->next),
+            'previous' => $baseQuery->clone()->where('id', '<', $this->id)->orderByDesc('id')->first(),
+            'next' => $baseQuery->clone()->where('id', '>', $this->id)->orderBy('id')->first(),
         ]);
     }
 

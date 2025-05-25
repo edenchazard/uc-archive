@@ -80,7 +80,7 @@
                     </section>
                     <section>
                         <h4 class='font-medium'>Lifestyle</h4>
-                        <x-creature-formatted-block :text="$stage->long_description_formatted" :pet="$stage" />
+                        <x-creature-formatted-block :text="$stage->long_description" :pet="$stage" />
                     </section>
                 </article>
         @endforeach

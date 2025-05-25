@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property int $gender
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Creature|null $creature
+ * @property-read \App\Models\Creature $creature
  * @method static \Database\Factories\UserPetFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|UserPet newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|UserPet newQuery()
@@ -88,7 +88,7 @@ class UserPet extends Model
     /**
      * @return Attribute<string,never>
      */
-    protected function shortDescriptionFormatted(): Attribute
+    protected function shortDescription(): Attribute
     {
         return Attribute::make(
             get: function () {
@@ -110,7 +110,7 @@ class UserPet extends Model
     /**
      * @return Attribute<string,never>
      */
-    protected function longDescriptionFormatted(): Attribute
+    protected function longDescription(): Attribute
     {
         return Attribute::make(
             get: function () {

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Database\Factories\UserPetFactory;
 
 /**
  * App\Models\UserPet
@@ -37,6 +38,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class UserPet extends Model
 {
+   /**
+    * @use HasFactory<UserPetFactory>
+    */
     use HasFactory;
 
     protected $guarded = [];
@@ -47,6 +51,9 @@ class UserPet extends Model
         'nickname' => 'Placeholder',
     ];
 
+    /**
+     * @return HasOne<Creature, $this>
+     */
     public function creature(): HasOne
     {
         return $this->hasOne(Creature::class);
@@ -78,6 +85,9 @@ class UserPet extends Model
         return $this;
     }
 
+    /**
+     * @return Attribute<string,never>
+     */
     protected function shortDescriptionFormatted(): Attribute
     {
         return Attribute::make(
@@ -97,6 +107,9 @@ class UserPet extends Model
         );
     }
 
+    /**
+     * @return Attribute<string,never>
+     */
     protected function longDescriptionFormatted(): Attribute
     {
         return Attribute::make(

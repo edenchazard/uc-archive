@@ -34,14 +34,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class TrainingOption extends Model
 {
-    use HasFactory;
-
+    /**
+     * @return BelongsTo<Creature, $this>
+     */
     public function creature(): BelongsTo
     {
         return $this->belongsTo(Creature::class);
     }
 
-    public function format(UserPet $pet)
+    public function format(UserPet $pet): string
     {
         return (new CreatureFormattingService(
             $this->description,

@@ -7,15 +7,14 @@ use App\Models\Creature;
 use App\Models\Family;
 use App\Models\UserPet;
 use App\Services\Creatures\CreatureGender;
+use Illuminate\View\View;
 
 class CreatureController extends Controller
 {
     /**
      * Resolve a creature by providing the family name and creature name
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function show(Family $family, Creature $creature)
+    public function show(Family $family, Creature $creature): View
     {
         $creature->loadMissing('consumable');
 

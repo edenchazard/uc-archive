@@ -7,15 +7,17 @@ use App\Models\Family;
 use App\Models\UserPet;
 use App\Services\Creatures\CreatureGender;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class FamilyController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $families = Family::with('stages')->get();
 
@@ -45,10 +47,8 @@ class FamilyController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function show(Family $family)
+    public function show(Family $family): View
     {
         $family->loadMissing('stages');
 
@@ -94,14 +94,13 @@ class FamilyController extends Controller
         return view('pages.creatures.family.show', $data);
     }
 
-    public function search()
+    public function search(): Response|RedirectResponse
     {
         /**
          * Family not found, try to search for a creature with the specified
          * $name and redirects to the creature's page.
          * If multiple matches such as "Egg" are found, a collection of results will be returned.
          */
-        /** @var array{'query': string} $validation */
         $validation = request()->validate([
             'query' => [
                 'string',
@@ -113,7 +112,8 @@ class FamilyController extends Controller
 
         if (isset($validation['query'])) {
             /** @var Collection<int, Creature> $results */
-            $results = Creature::with('family')
+            $results = Creature::query()
+                ->with('family')
                 ->where((new Creature())->getTable() . '.name', $validation['query'])
                 ->joinFamily()
                 ->orderByFamilyName()
@@ -122,7 +122,7 @@ class FamilyController extends Controller
             // redirect if a single match, otherwise give the user options.
             if ($results->count() === 1) {
                 $creature = $results->first();
-                return to_route('creatures.family.creature.show', [$creature->family, $creature]);
+                return to_route('creatures.family.creature.show', [$creature?->family, $creature]);
             }
             $data = [
                 'query' => $validation['query'],

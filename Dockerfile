@@ -4,15 +4,14 @@ FROM composer:latest AS composer
 FROM node:24.0-alpine3.21 AS node
 
 FROM php:8.4-fpm-alpine3.21 AS base
-RUN apk update && apk add curl-dev oniguruma-dev libxml2-dev icu-dev libstdc++ libgcc
+WORKDIR /var/www
+RUN apk update && apk add curl-dev oniguruma-dev libxml2-dev icu-dev
 RUN docker-php-ext-install curl mbstring xml pdo mysqli pdo_mysql intl
 
 FROM base AS dev
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
-
-WORKDIR /var/www
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY composer.json composer.lock artisan ./
@@ -29,14 +28,11 @@ COPY resources ./resources
 RUN composer install \
   --prefer-dist \
   --no-scripts \
-  --no-progress \
   --no-interaction \
-  --no-dev \
   --no-autoloader \
   && composer dump-autoload \
   --optimize \
-  --apcu \
-  --no-dev
+  --apcu
 
 COPY package.json package-lock.json ./
 RUN npm ci
@@ -48,6 +44,22 @@ RUN mkdir -p /var/www/storage/logs \
   && chown -R www-data:www-data .
 
 FROM base AS prod
-WORKDIR /var/www
-COPY --from=dev --chown=www-data:www-data /var/www .
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+COPY --from=dev /var/www .
+COPY composer.json composer.lock artisan ./
+RUN composer install \
+  --prefer-dist \
+  --no-scripts \
+  --no-progress \
+  --no-interaction \
+  --no-dev \
+  --no-autoloader \
+  && composer dump-autoload \
+  --optimize \
+  --apcu \
+  --no-dev
+
+RUN rm -rf /usr/bin/composer \
+  && chown -R www-data:www-data /var/www
+
 USER www-data

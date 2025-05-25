@@ -28,6 +28,30 @@ services:
       - appdata:/var/www/storage
       - web_content:/var/www
 
+  testapp:
+    build:
+      context: .
+      target: dev
+    networks:
+      - internal
+    volumes:
+      - ./app:/var/www/app
+      - ./config:/var/www/config
+      - ./routes:/var/www/routes
+      - ./settings:/var/www/settings
+      - ./database:/var/www/database
+      - ./public/images:/var/www/public/images
+      - ./storage:/var/www/storage
+      - ./lang:/var/www/lang
+      - ./resources:/var/www/resources
+      - ./composer.json:/var/www/composer.json
+      - ./composer.lock:/var/www/composer.lock
+      - ./package.json:/var/www/package.json
+      - ./package-lock.json:/var/www/package-lock.json
+      - ./vite.config.js:/var/www/vite.config.js
+      - ./.env:/var/www/.env
+      - ./tests:/var/www/tests
+      - ./phpstan.neon:/var/www/phpstan.neon
   nginx:
     image: nginxinc/nginx-unprivileged:1.28-alpine-slim
     ports:

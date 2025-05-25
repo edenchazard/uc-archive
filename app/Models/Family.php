@@ -4,10 +4,9 @@ namespace App\Models;
 
 use CreatureUtils;
 use DateTime;
-use Illuminate\Contracts\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
 /**
  * App\Models\Family
@@ -71,12 +70,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Family extends Model
 {
-    use HasFactory;
-
     protected $guarded = [];
 
     /**
-     * @var array
+     * @var array<string,string>
      */
     protected $casts = [
         'deny_exalt' => 'boolean',
@@ -85,30 +82,28 @@ class Family extends Model
 
     /**
      * Just an alias for stages, basically.
+     * @return HasMany<Creature, $this>
      */
     public function creatures(): HasMany
     {
         return $this->stages();
     }
 
+    /**
+     * @return HasMany<Creature, $this>
+     */
     public function stages(): HasMany
     {
         return $this->hasMany(Creature::class)->orderBy('stage', 'asc');
     }
 
+    /**
+     * @return HasMany<Alt, $this>
+     */
     public function alts(): HasMany
     {
         return $this->hasMany(Alt::class);
     }
-
-    /**
-     * Return a family by family name
-     * @return Family
-     */
-    //public static function scopeFindName(Builder $query, string $name): Family
-    //{
-    // return $query->whereName('name', $name);
-    //}
 
     public function rarity(): string
     {
@@ -142,9 +137,9 @@ class Family extends Model
 
     /**
      * Get all stats in a single collection.
-     * @return \Illuminate\Database\Eloquent\Collection<string, int>
+     * @return Collection<string, int>
      */
-    public function getBaseStats()
+    public function getBaseStats(): Collection
     {
         return CreatureUtils::getPossibleStats()->flip()->map(fn ($val, $key) => $this["base_{$key}"]);
     }

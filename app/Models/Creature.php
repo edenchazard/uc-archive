@@ -5,11 +5,12 @@ namespace App\Models;
 use App\Services\Creatures\CreatureUtils;
 use DB;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * App\Models\Creature
@@ -66,18 +67,25 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class Creature extends Model
 {
-    use HasFactory;
-
+    /**
+     * @return BelongsTo<Family,$this>
+     */
     public function family(): BelongsTo
     {
         return $this->belongsTo(Family::class);
     }
 
+    /**
+     * @return HasOne<Consumable,$this>
+     */
     public function consumable(): HasOne
     {
         return $this->hasOne(Consumable::class, 'id', 'component_id');
     }
 
+    /**
+     * @return HasMany<TrainingOption,$this>
+     */
     public function trainingOptions(): HasMany
     {
         return $this->hasMany(TrainingOption::class);
@@ -86,9 +94,9 @@ class Creature extends Model
     /**
      * Returns the nearest previous and nearest next creatures adjacent to this
      * creature in terms of id. Skips missing ids.
-     * @return \Illuminate\Database\Eloquent\Collection<string, Creature>
+     * @return Collection<string, Creature>
      */
-    public function getAdjacentIds()
+    public function getAdjacentIds(): Collection
     {
         $adjacent =
             fn (string $operator, string $order) =>
@@ -105,10 +113,12 @@ class Creature extends Model
             ->selectSub($adjacent('>', 'asc'), 'next')
             ->first();
 
-        $creatures = self::with('family')->find([
-            $adjacents->previous,
-            $adjacents->next,
-        ]);
+        $creatures = self::query()
+          ->with('family')
+          ->find([
+              $adjacents->previous,
+              $adjacents->next,
+          ]);
 
         // matches the ids up to what we got earlier,
         // if there is no previous or next, null will be returned.
@@ -118,27 +128,34 @@ class Creature extends Model
         ]);
     }
 
-    public function scopeJoinFamily($query, bool $selectFamilyTable = false)
+  /**
+     * @param Builder<self> $query
+     */
+    public function scopeJoinFamily(Builder $query, bool $selectFamilyTable = false): void
     {
         $familyTable = (new Family())->getTable();
-        $creatureTable = (new static())->getTable();
+        $creatureTable = (new self())->getTable();
 
         $query = $query->join($familyTable, "{$familyTable}.id", '=', "{$creatureTable}.family_id");
+
+
         if (! $selectFamilyTable) {
             $query = $query->addSelect("{$creatureTable}.*");
         }
-        return $query;
     }
 
-    public function scopeOrderByFamilyName($query)
+  /**
+     * @param Builder<self> $query
+     */
+    public function scopeOrderByFamilyName(Builder $query): void
     {
         $familyTable = (new Family())->getTable();
-        return $query->orderBy("{$familyTable}.name");
+        $query->orderBy("{$familyTable}.name");
     }
 
     /**
      * Get all stats in a single collection.
-     * @return \Illuminate\Database\Eloquent\Collection<string, int>
+     * @return Attribute<Collection<string, int>,never>
      */
     protected function statPoints(): Attribute
     {
@@ -149,7 +166,7 @@ class Creature extends Model
 
     /**
      * Calculate the max possible stat value for this creature.
-     * @return int
+     * @return Attribute<int,never>
      */
     protected function maxStatPoints(): Attribute
     {

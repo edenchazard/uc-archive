@@ -2,7 +2,6 @@
 
 namespace App\Services\Formatting;
 
-use App\Services\Formatting\FormattingServiceBase;
 use App\Services\Creatures\CreatureGender;
 
 class CreatureFormattingService extends FormattingServiceBase
@@ -14,10 +13,14 @@ class CreatureFormattingService extends FormattingServiceBase
      * (Optional) Gender to get pronoun conversions from.
      * If unspecified, a random gender will be chosen.
      */
-    public function __construct(protected string $str, protected array $replacements = [], $gender = null)
-    {
-        if ($gender === null)
+    public function __construct(
+        protected string $str,
+        protected array $replacements = [],
+        $gender = null
+    ) {
+        if ($gender === null) {
             $gender = CreatureGender::random();
+        }
 
         $this->pronouns = $gender->pronounConversions();
         parent::__construct($str, $replacements);
@@ -29,7 +32,7 @@ class CreatureFormattingService extends FormattingServiceBase
      * replaces them with our chosen replacements.
      * @return $this
      */
-    public function formatPronouns(): CreatureFormattingService
+    public function formatPronouns(): self
     {
         // build our pronouns to search
         $malePronouns = CreatureGender::get(0)::pronounConversions();
@@ -40,7 +43,7 @@ class CreatureFormattingService extends FormattingServiceBase
 
         // note we set this as case-insensitive, we'll determine caps when we
         // actually replace the match later.
-        $regexp = "/#([$searches]+)/i";
+        $regexp = "/#([{$searches}]+)/i";
 
         $this->str = preg_replace_callback($regexp, function ($match) {
             $matchedPronoun = $match[1];

@@ -6,7 +6,7 @@ use Exception;
 
 abstract class FormattingServiceBase
 {
-    /** @var $transformations
+    /** @var
      * an array of class methods or callables to apply. */
     protected array $transformations = [];
 
@@ -14,23 +14,25 @@ abstract class FormattingServiceBase
      * @param string $str The text to format.
      * @param array<string, string> $replacements Optional key and value replacements.
      */
-    public function __construct(protected string $str, protected array $replacements = [])
-    {
+    public function __construct(
+        protected string $str,
+        protected array $replacements = []
+    ) {
         $this->register(['applyReplacements', 'fixParagraphs']);
     }
 
     /**
      * Register a class method as new transformation.
-     * @param string|string[]|callable $transformation
      * @return $this
      */
-    public final function register(string|array|callable $transformations)
+    final public function register(string|array|callable $transformations)
     {
         $transformations = is_array($transformations) ? $transformations : [$transformations];
 
         foreach ($transformations as $transform) {
-            if (!method_exists(static::class, $transform) && !is_callable($transform))
+            if (! method_exists(static::class, $transform) && ! is_callable($transform)) {
                 throw new Exception("Transformation wasn't found on class and isn't a callable.");
+            }
 
             $this->transformations[] = $transform;
         }
@@ -42,9 +44,11 @@ abstract class FormattingServiceBase
      * Applies all of the transformations in array $transformations order.
      * @return $this
      */
-    public final function formatAll(): FormattingServiceBase
+    final public function formatAll(): self
     {
-        foreach ($this->transformations as $transform) $this->$transform();
+        foreach ($this->transformations as $transform) {
+            $this->{$transform}();
+        }
         return $this;
     }
 
@@ -52,7 +56,7 @@ abstract class FormattingServiceBase
      * Returns the text being formatted.
      * @return string
      */
-    public final function get()
+    final public function get()
     {
         return $this->str;
     }
@@ -61,7 +65,7 @@ abstract class FormattingServiceBase
      * Applies a case-insensitive search and replace on the text.
      * @return $this
      */
-    public function applyReplacements(): FormattingServiceBase
+    public function applyReplacements(): self
     {
         $this->str = str_ireplace(
             array_keys($this->replacements),
@@ -78,7 +82,7 @@ abstract class FormattingServiceBase
      * We'd ideally like to rewrite them with paragraphs.
      * @return $this
      */
-    public function fixParagraphs(): FormattingServiceBase
+    public function fixParagraphs(): self
     {
         $copy = $this->str;
 

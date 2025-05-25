@@ -8,7 +8,6 @@ class TextFormatter
 {
     /**
      * Suffixes the number with an ordinal.
-     * @param int $value
      * @return string|false
      */
     public static function ordinal(int $value)

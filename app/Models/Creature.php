@@ -4,13 +4,13 @@ namespace App\Models;
 
 use App\Services\Creatures\CreatureUtils;
 use DB;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Builder;
 
 /**
  * App\Models\Creature
@@ -114,11 +114,11 @@ class Creature extends Model
             ->first();
 
         $creatures = self::query()
-          ->with('family')
-          ->find([
-              $adjacents->previous,
-              $adjacents->next,
-          ]);
+            ->with('family')
+            ->find([
+                $adjacents->previous,
+                $adjacents->next,
+            ]);
 
         // matches the ids up to what we got earlier,
         // if there is no previous or next, null will be returned.
@@ -128,7 +128,7 @@ class Creature extends Model
         ]);
     }
 
-  /**
+    /**
      * @param Builder<self> $query
      */
     public function scopeJoinFamily(Builder $query, bool $selectFamilyTable = false): void
@@ -138,13 +138,12 @@ class Creature extends Model
 
         $query = $query->join($familyTable, "{$familyTable}.id", '=', "{$creatureTable}.family_id");
 
-
         if (! $selectFamilyTable) {
             $query = $query->addSelect("{$creatureTable}.*");
         }
     }
 
-  /**
+    /**
      * @param Builder<self> $query
      */
     public function scopeOrderByFamilyName(Builder $query): void

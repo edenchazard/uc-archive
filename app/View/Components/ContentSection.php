@@ -11,8 +11,12 @@ class ContentSection extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $title, public string|null $anchor = null, public bool $hideAnchor = false, public int $level = 2)
-    {
+    public function __construct(
+        public string $title,
+        public string|null $anchor = null,
+        public bool $hideAnchor = false,
+        public int $level = 2
+    ) {
         //
     }
 

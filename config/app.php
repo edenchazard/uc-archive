@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -184,7 +183,6 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
         'CreatureUtils' => 'App\Services\Creatures\CreatureUtils',
-        'TextFormatter' => 'App\Services\TextFormatter\TextFormatter'
+        'TextFormatter' => 'App\Services\TextFormatter\TextFormatter',
     ])->toArray(),
-
 ];

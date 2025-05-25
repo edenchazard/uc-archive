@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,12 +25,12 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         /* TODO remove later */
-        DB::listen(function($query) {
+        DB::listen(function ($query) {
             Log::info(
                 $query->sql,
                 [
                     'bindings' => $query->bindings,
-                    'time' => $query->time
+                    'time' => $query->time,
                 ]
             );
         });

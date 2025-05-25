@@ -4,11 +4,11 @@ namespace App\Models;
 
 use App\Services\Formatting\CreatureFormattingService;
 use CreatureUtils;
+use Database\Factories\UserPetFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Database\Factories\UserPetFactory;
 
 /**
  * App\Models\UserPet
@@ -38,9 +38,9 @@ use Database\Factories\UserPetFactory;
  */
 class UserPet extends Model
 {
-   /**
-    * @use HasFactory<UserPetFactory>
-    */
+    /**
+     * @use HasFactory<UserPetFactory>
+     */
     use HasFactory;
 
     protected $guarded = [];

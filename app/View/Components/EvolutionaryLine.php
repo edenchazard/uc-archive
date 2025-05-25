@@ -14,8 +14,9 @@ class EvolutionaryLine extends Component
      * Create a new component instance.
      * @param Collection<int,UserPet> $stages
      */
-    public function __construct(public Collection $stages)
-    {
+    public function __construct(
+        public Collection $stages
+    ) {
         //
     }
 

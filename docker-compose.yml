@@ -51,6 +51,7 @@ services:
       - ./vite.config.js:/var/www/vite.config.js
       - ./.env:/var/www/.env
       - ./tests:/var/www/tests
+      - ./ecs.php:/var/www/ecs.php
       - ./phpstan.neon:/var/www/phpstan.neon
   nginx:
     image: nginxinc/nginx-unprivileged:1.28-alpine-slim
@@ -67,6 +68,8 @@ services:
 
   db:
     image: mariadb:10.9
+    ports:
+      - 3306:3306
     networks:
       - internal
     environment:

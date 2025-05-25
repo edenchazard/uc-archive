@@ -9,6 +9,7 @@ use Illuminate\View\Component;
 class Page extends Component
 {
     public $page;
+
     /**
      * Create a new component instance.
      */

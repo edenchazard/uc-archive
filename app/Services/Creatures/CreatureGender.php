@@ -11,13 +11,15 @@ class CreatureGender
      * Doesn't indicate a specific gender, but rather that this is available
      * in both genders.
      */
-    public final const both = 3;
+    final public const both = 3;
 
-    /** @var array<int, BaseGender> */
+    /**
+     * @var array<int, BaseGender>
+     */
     protected static array $mappings = [
         0 => Male::class,
         1 => Female::class,
-        2 => Dual::class
+        2 => Dual::class,
         //3 => "Both"
     ];
 
@@ -26,7 +28,6 @@ class CreatureGender
      * @param int $gender
      * An integer to use that should reference a gender in the mappings.
      * If 3 (both) is passed, a random gender will be returned.
-     * @return BaseGender
      */
     public static function get(int $gender = 0): BaseGender
     {
@@ -34,19 +35,19 @@ class CreatureGender
             return self::random();
         }
 
-        if (!isset(self::$mappings[$gender]))
-            throw new Exception("BAD GENDER: $gender");
+        if (! isset(self::$mappings[$gender])) {
+            throw new Exception("BAD GENDER: {$gender}");
+        }
 
-        return new self::$mappings[$gender];
+        return new self::$mappings[$gender]();
     }
 
     /**
      * Returns an instance of a random gender from the mappings.
-     * @return BaseGender
      */
     public static function random(): BaseGender
     {
-        $i = new self::$mappings[rand(0, 1)];
+        $i = new self::$mappings[rand(0, 1)]();
         return $i;
     }
 
@@ -62,12 +63,12 @@ class CreatureGender
 
 abstract class BaseGender
 {
-    final const defaultPronouns = [
+    final public const defaultPronouns = [
         'he' => 'he',
         'his' => 'his',
         'him' => 'him',
         'himself' => 'himself',
-        'hisself' => 'hisself'
+        'hisself' => 'hisself',
     ];
 
     /**
@@ -76,19 +77,12 @@ abstract class BaseGender
     private string $friendlyName;
 
     /**
-     * Returns an array of pronouns and their replacements.
-     * @return array<string, string>
-     */
-    protected abstract static function pronounReplacements(): array;
-
-    /**
      * Returns a human-readable translation of the gender.
      * If friendlyName is specified as a property on the class
      * it will return that, otherwise the name will try to be
      * inferred from the class name.
-     * @return string
      */
-    public static final function friendlyName(): string
+    final public static function friendlyName(): string
     {
         return strtolower(
             property_exists(static::class, 'friendlyName')
@@ -101,11 +95,17 @@ abstract class BaseGender
      * Returns pronouns and their replacements.
      * @return array<string, string>
      */
-    public static final function pronounConversions(): array
+    final public static function pronounConversions(): array
     {
         // make them lowercase just for good measure
         return array_map('strtolower', static::pronounReplacements());
     }
+
+    /**
+     * Returns an array of pronouns and their replacements.
+     * @return array<string, string>
+     */
+    abstract protected static function pronounReplacements(): array;
 }
 
 final class Female extends BaseGender
@@ -117,7 +117,7 @@ final class Female extends BaseGender
             'his' => 'her',
             'him' => 'her',
             'himself' => 'herself',
-            'hisself' => 'herself'
+            'hisself' => 'herself',
         ];
     }
 }
@@ -131,7 +131,7 @@ final class Male extends BaseGender
             'his' => 'his',
             'him' => 'him',
             'himself' => 'himself',
-            'hisself' => 'hisself'
+            'hisself' => 'hisself',
         ];
     }
 }
@@ -145,7 +145,7 @@ final class Dual extends BaseGender
             'his' => '?',
             'him' => '?',
             'himself' => '?',
-            'hisself' => '?'
+            'hisself' => '?',
         ];
     }
 }

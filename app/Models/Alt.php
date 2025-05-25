@@ -28,7 +28,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Alt extends Model
 {
-
     /**
      * @return BelongsTo<Family, $this>
      */

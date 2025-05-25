@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\ElementTypeEnum;
+use App\Enums\RarityCategoryEnum;
 use App\Enums\UniqueRatingEnum;
 use CreatureUtils;
 use DateTime;
@@ -82,6 +83,7 @@ class Family extends Model
         'in_basket' => 'boolean',
         'element' => ElementTypeEnum::class,
         'unique_rating' => UniqueRatingEnum::class,
+        'rarity' => RarityCategoryEnum::class,
     ];
 
     /**
@@ -98,7 +100,9 @@ class Family extends Model
      */
     public function stages(): HasMany
     {
-        return $this->hasMany(Creature::class)->orderBy('stage', 'asc');
+        return $this
+            ->hasMany(Creature::class)
+            ->orderBy('stage');
     }
 
     /**
@@ -107,11 +111,6 @@ class Family extends Model
     public function alts(): HasMany
     {
         return $this->hasMany(Alt::class);
-    }
-
-    public function rarity(): string
-    {
-        return CreatureUtils::rarity($this->rarity);
     }
 
     public function gender(): string

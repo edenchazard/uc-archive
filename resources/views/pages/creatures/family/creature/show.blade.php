@@ -15,11 +15,10 @@
         </h2>
         <div class="flex flex-row flex-wrap gap-3 justify-center">
             <img src='{{ $pet->imageLink() }}' alt="{{ $pet->creature->name }}" class="self-center" />
-            {{-- to do convert stage to ordinal suffix --}}
             <div class="max-w-sm">
                 <div class="flex flex-col gap-2">
                     <p><span class='font-bold'>{{ $pet->creature->name }}</span> is the {{TextFormatter::ordinal($pet->creature->stage)}}{{  $pet->creature->required_clicks === 0 ? ' and final' : '' }} evolution of the {{$family->name}} family and {{ TextFormatter::ordinal($pet->creature->id) }} creature overall.</p>
-                    <p>Being a member of the {{$family->name}} family, its elemental type is {{ ucfirst($family->element->value) }} with a rarity rating of {{ ucfirst($family->rarity()) }}{!! $family->unique_rating ? " <span class='font-bold'>(".ucfirst($family->unique_rating->value).")</span>" : '' !!}.</p>
+                    <p>Being a member of the {{$family->name}} family, its elemental type is {{ $family->element->value }} with a rarity rating of {{ $family->rarity->friendlyName() }}{!! $family->unique_rating ? " <span class='font-bold'>(".$family->unique_rating->value.")</span>" : '' !!}.</p>
                     <p>It was released on <time>{{ $family->released() }}</time>.</p>
                     <p class="flex flex-wrap align-middle justify-center gap-3 flex-row sm:flex-nowrap py-3 sm:px-5">
                         <img

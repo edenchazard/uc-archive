@@ -22,7 +22,9 @@ return new class() extends Migration {
         });
 
         Family::query()->each(function (Family $family) {
-            $family->mergeCasts(['unique_rating' => 'string']);
+            $family->mergeCasts([
+                'unique_rating' => 'string',
+            ]);
 
             if (isset(self::RATINGS[$family->unique_rating])) {
                 $family->unique_rating = self::RATINGS[$family->unique_rating];

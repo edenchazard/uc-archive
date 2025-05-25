@@ -13,26 +13,6 @@ use App\Models\UserPet;
 class CreatureUtils
 {
     /**
-     * @var array<int, array<string, x>>
-     */
-    protected const rarities = [
-        13 => ['WTFBBQ!?', 0],
-        12 => ['WTF?', 0],
-        11 => ['seriously?', 0],
-        10 => ['exotic', 1],
-        9 => ['epic race', 0],
-        8 => ['exclusive', 5],
-        7 => ['rare', 2],
-        6 => ['limited', 4],
-        5 => ['scarce', 6],
-        4 => ['uncommon', 10],
-        3 => ['common', 20],
-        2 => ['plentiful', 26],
-        1 => ['abundant', 32],
-        0 => ['unknown', 0],
-    ];
-
-    /**
      * @var array<int, string>
      */
     protected const stats = [
@@ -65,15 +45,6 @@ class CreatureUtils
     public static function getPossibleStats()
     {
         return static::getMapping(static::stats);
-    }
-
-    /**
-     * Translates rarity rating from number to string.
-     * @param int $value The rarity rating as a number.
-     */
-    public static function rarity(int $value): string
-    {
-        return static::getMapping(static::rarities, $value)[0];
     }
 
     /**

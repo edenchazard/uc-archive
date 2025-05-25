@@ -15,17 +15,17 @@
                     It had a unique gender, {{ $family->gender() }}.
                 @endif
                 </p>
-                <p>All members within this family are of the {{ ucfirst($family->element->value) }} element with a rarity rating of {{ ucfirst($family->rarity()) }}{!! $family->unique_rating ? " <span class='font-bold'>(".ucfirst($family->unique_rating->value).")</span>" : '' !!}.
+                <p>All members within this family are of the {{ $family->element->value }} element with a rarity rating of {{ $family->rarity->friendlyName() }}{!! $family->unique_rating ? " <span class='font-bold'>(".ucfirst($family->unique_rating->value).")</span>" : '' !!}.
                     @if (!$family->deny_exalt)
-                        Noble versions would be {{ ucfirst(CreatureUtils::rarity($family->rarity + 1)) }} and exalteds would be {{ ucfirst(CreatureUtils::rarity($family->rarity + 2)) }}.
+                        Noble versions would be {{ RarityCategoryEnum::from($family->rarity->value + 1)->friendlyName() }} and exalteds would be {{ RarityCategoryEnum::from($family->rarity->value + 2)->friendlyName() }}.
                     @endif
                 </p>
                 <p>It could
-                    @if ($family->rarity <= 7)
+                    @if ($family->rarity->value <= 7)
                         only be found through exploration{{ $family->in_basket ? ' or in the basket' : '' }}.
-                    @elseif ($family->rarity === 8)
+                    @elseif ($family->rarity->value === 8)
                         only be obtained via limited means, such as from events, the shop or transmutation.
-                    @elseif ($family->rarity === 10)
+                    @elseif ($family->rarity->value === 10)
                         only be bought from the exotic shop with an exotic credit
                         @if ($family->unique_rating === 1)
                             at certain times of the year.

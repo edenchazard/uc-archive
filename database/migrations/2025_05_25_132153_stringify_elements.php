@@ -44,7 +44,9 @@ return new class() extends Migration {
         });
 
         Family::query()->each(function (Family $family) {
-            $family->mergeCasts(['element' => 'string']);
+            $family->mergeCasts([
+                'element' => 'string',
+            ]);
 
             if (isset(self::ELEMENTS[$family->element])) {
                 $family->element = self::ELEMENTS[$family->element];

@@ -1,5 +1,8 @@
 <?php
 
+use App\Enums\RarityCategoryEnum;
+use App\Services\Creatures\CreatureUtils;
+use App\Services\TextFormatter\TextFormatter;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
@@ -181,8 +184,8 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'Example' => App\Facades\Example::class,
-        'CreatureUtils' => 'App\Services\Creatures\CreatureUtils',
-        'TextFormatter' => 'App\Services\TextFormatter\TextFormatter',
+        'CreatureUtils' => CreatureUtils::class,
+        'TextFormatter' => TextFormatter::class,
+        'RarityCategoryEnum' => RarityCategoryEnum::class,
     ])->toArray(),
 ];

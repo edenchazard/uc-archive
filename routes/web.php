@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ComponentController;
 use App\Http\Controllers\CreatureController;
 use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\HomeController;
@@ -44,4 +45,8 @@ Route::prefix('creatures')->name('creatures.')->group(function () {
                 'query' => $query,
             ]));
     });
+});
+
+Route::prefix('/components')->name('components.')->group(function () {
+    Route::get('/', [ComponentController::class, 'index'])->name('index');
 });

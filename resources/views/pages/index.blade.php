@@ -5,4 +5,11 @@
     <h2>I have missing content!</h2>
     <p>Most content is lost to time, so if you have any missing content, please consider contributing to the archive.</p>
   </section>
+  <section>
+    <h2>Archives</h2>
+    <ol class="flex flex-col gap-3 list-disc list-inside">
+      <li><a href="{{ route('creatures.index') }}">Families</a></li>
+      <li><a href="{{ route('components.index') }}">Components</a></li>
+    </ol>
+  </section>
 </x-page>

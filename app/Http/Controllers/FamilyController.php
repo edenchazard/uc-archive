@@ -26,7 +26,8 @@ class FamilyController extends Controller
             ->map(fn ($creatures) => [
                 'family' => $creatures->first()?->creature->family,
                 'stages' => $creatures,
-            ]);
+            ])
+            ->sortBy('family.name');
 
         $data = [
             'groups' => $families->groupBy(fn ($family) => $family['family']?->name[0] ?? ''),

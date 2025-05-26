@@ -5,4 +5,4 @@ parameters:
         - routes
         - tests
 
-    level: 9
+    level: 10

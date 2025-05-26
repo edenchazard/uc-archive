@@ -4,6 +4,8 @@
 
 // Note: Laravel will automatically resolve `Breadcrumbs::` without
 // this import. This is nice for IDE syntax and refactoring.
+
+use App\Models\Family;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 // This import is also not required, and you could replace `BreadcrumbTrail $trail`
 //  with `$trail`. This is nice for IDE type checking and completion.
@@ -19,7 +21,7 @@ Breadcrumbs::for('all families', function (BreadcrumbTrail $trail) {
     $trail->push('Families', route('all families'));
 });
 
-Breadcrumbs::for('family', function (BreadcrumbTrail $trail, $family) {
+Breadcrumbs::for('family', function (BreadcrumbTrail $trail, Family $family) {
     $trail->parent('all families');
     $trail->push($family, route('family', $family));
 });

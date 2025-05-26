@@ -105,6 +105,8 @@ class FamilyController extends Controller
             ],
         ]);
 
+        assert(is_array($validation));
+
         $data = [];
 
         if (isset($validation['query'])) {

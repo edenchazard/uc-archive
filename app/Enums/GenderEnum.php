@@ -12,10 +12,7 @@ enum GenderEnum: int
 
     public function friendlyName(): string
     {
-        return Str::of($this->name)
-            ->replace('_', ' ')
-            ->title()
-            ->toString();
+        return Str::lower($this->name);
     }
 
     /**
@@ -48,6 +45,9 @@ enum GenderEnum: int
         };
     }
 
+    /**
+     * @return array<string>
+     */
     public static function pronouns(): array
     {
         return array_keys(self::Male->pronounConversions());

@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Enums\GenderEnum;
+use App\Enums\SpecialtyEnum;
 use App\Services\Formatting\CreatureFormattingService;
-use CreatureUtils;
 use Database\Factories\UserPetFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  *
  * @property int $id
  * @property int $creature_id
- * @property int $specialty
  * @property int $variety
  * @property string $nickname
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -50,10 +49,11 @@ class UserPet extends Model
      */
     protected $casts = [
         'gender' => GenderEnum::class,
+        'specialty' => SpecialtyEnum::class,
     ];
 
     protected $attributes = [
-        'specialty' => 0,
+        'specialty' => SpecialtyEnum::None,
         'variety' => 0,
         'nickname' => 'Placeholder',
     ];
@@ -64,11 +64,6 @@ class UserPet extends Model
     public function creature(): HasOne
     {
         return $this->hasOne(Creature::class);
-    }
-
-    public function specialty(): string
-    {
-        return CreatureUtils::specialty($this->specialty);
     }
 
     /**
@@ -125,8 +120,8 @@ class UserPet extends Model
                 $creature = $this->creature;
                 $parts = collect([]);
 
-                if ($this->specialty > 0 && $this->specialty <= 2) {
-                    $parts->push(CreatureUtils::specialty($this->specialty));
+                if ($this->specialty->value > 0 && $this->specialty->value <= 2) {
+                    $parts->push($this->specialty->friendlyName());
                 }
 
                 if ($this->variety) {

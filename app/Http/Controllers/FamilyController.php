@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\SpecialtyEnum;
 use App\Models\Creature;
 use App\Models\Family;
 use App\Models\UserPet;
@@ -49,17 +50,16 @@ class FamilyController extends Controller
         // determine if we should add noble/exalt variations to the list
         if (! $family->deny_exalt) {
             $alts = collect([
-                1 => 'noble',
-                2 => 'exalted',
-            ]);
-
-            $alt_evos = $alt_evos->merge($alts->flip()->map(function (int $v) use ($family) {
-                return $family->stages->map(fn (Creature $stage) => UserPet::factory()
+                SpecialtyEnum::Noble,
+                SpecialtyEnum::Exalted,
+            ])
+                ->map(fn ($specialty) => $family->stages->map(fn (Creature $stage) => UserPet::factory()
                     ->mockCreature($stage)
                     ->make([
-                        'specialty' => $v,
-                    ]));
-            }));
+                        'specialty' => $specialty,
+                    ])));
+
+            $alt_evos->merge($alts);
         }
 
         $wrappedStages = $family->stages->map(

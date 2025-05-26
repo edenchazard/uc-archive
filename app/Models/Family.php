@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Enums\ElementTypeEnum;
 use App\Enums\RarityCategoryEnum;
 use App\Enums\UniqueRatingEnum;
-use CreatureUtils;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -113,10 +112,5 @@ class Family extends Model
     public function alts(): HasMany
     {
         return $this->hasMany(Alt::class);
-    }
-
-    public function specialty(): string
-    {
-        return CreatureUtils::specialty($this->specialty);
     }
 }

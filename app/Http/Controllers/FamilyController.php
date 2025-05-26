@@ -11,29 +11,24 @@ use Illuminate\View\View;
 
 class FamilyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(): View
     {
-        $families = Family::with('stages')->get();
-
-        $wrappedFamilies = $families->map(
-            function ($family) {
-                $family->stages = $family->stages->map(
-                    function ($stage) use ($family) {
-                        $stage->setRelation('family', $family);
-                        return UserPet::factory()
-                            ->mockCreature($stage)
-                            ->make();
-                    }
-                );
-                return $family;
-            }
-        );
+        $families = Creature::query()
+            ->with('family')
+            ->get()
+            ->map(
+                fn (Creature $creature) => UserPet::factory()
+                    ->mockCreature($creature)
+                    ->make()
+            )
+            ->groupBy('creature.family.name')
+            ->map(fn ($creatures) => [
+                'family' => $creatures->first()?->creature->family,
+                'stages' => $creatures,
+            ]);
 
         $data = [
-            'groups' => $wrappedFamilies->groupBy(fn ($family) => $family->name[0]),
+            'groups' => $families->groupBy(fn ($family) => $family['family']?->name[0] ?? ''),
             'page' => [
                 'title' => 'Families',
                 'route' => 'family',
@@ -44,9 +39,6 @@ class FamilyController extends Controller
         return view('pages.creatures.index', $data);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Family $family): View
     {
         $family->loadMissing('stages');

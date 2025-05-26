@@ -8,15 +8,13 @@ use Illuminate\View\Component;
 
 class Page extends Component
 {
-    public $page;
-
     /**
      * Create a new component instance.
+     * @param array<string,mixed> $page
      */
-    public function __construct($data)
-    {
-        $this->page = $data;
-        //
+    public function __construct(
+        public array $page = []
+    ) {
     }
 
     /**

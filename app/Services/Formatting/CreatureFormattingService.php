@@ -18,7 +18,6 @@ class CreatureFormattingService extends FormattingServiceBase
     /**
      * Searches for pronoun tags (e.g. #he, #herself) in the text and
      * replaces them with our chosen replacements.
-     * @return $this
      */
     public function formatPronouns(): self
     {
@@ -33,7 +32,7 @@ class CreatureFormattingService extends FormattingServiceBase
         // actually replace the match later.
         $regexp = "/#([{$searches}]+)/i";
 
-        $this->str = preg_replace_callback($regexp, function ($match) {
+        $this->str = (string) preg_replace_callback($regexp, function ($match) {
             $matchedPronoun = $match[1];
             // locate our replacement in the appropriate dictionary
             $replacement = $this->gender->pronounConversions()[strtolower($matchedPronoun)];

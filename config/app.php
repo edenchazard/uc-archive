@@ -1,7 +1,8 @@
 <?php
 
+use App\Enums\GenderEnum;
 use App\Enums\RarityCategoryEnum;
-use App\Services\Creatures\CreatureUtils;
+use App\Enums\UniqueRatingEnum;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
@@ -183,7 +184,8 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        'CreatureUtils' => CreatureUtils::class,
         'RarityCategoryEnum' => RarityCategoryEnum::class,
+        'GenderEnum' => GenderEnum::class,
+        'UniqueRatingEnum' => UniqueRatingEnum::class,
     ])->toArray(),
 ];

@@ -8,11 +8,11 @@
             <div class="max-w-sm flex flex-col gap-2">
                 <p>The <span class='font-bold'>{{ $family->name }}</span> family was released on <time>{{ $family->released->format('jS F o') }}</time> with {{ count($stages) }} evolutions.
                 @if ($family->gender <= 1)
-                    It was {{ $family->gender() }}-only.
+                    It was {{ GenderEnum::from($family->gender)->friendlyName() }}-only.
                 @elseif ($family->gender === 3)
                     It was available in both genders.
                 @else
-                    It had a unique gender, {{ $family->gender() }}.
+                    It had a unique gender, {{ GenderEnum::from($family->gender)->friendlyName() }}.
                 @endif
                 </p>
                 <p>All members within this family are of the {{ $family->element->value }} element with a rarity rating of {{ $family->rarity->friendlyName() }}{!! $family->unique_rating ? " <span class='font-bold'>(".ucfirst($family->unique_rating->value).")</span>" : '' !!}.
@@ -27,13 +27,13 @@
                         only be obtained via limited means, such as from events, the shop or transmutation.
                     @elseif ($family->rarity->value === 10)
                         only be bought from the exotic shop with an exotic credit
-                        @if ($family->unique_rating === 1)
+                        @if ($family->unique_rating === UniqueRatingEnum::Exotic)
                             at certain times of the year.
-                        @elseif ($family->unique_rating === 2)
+                        @elseif ($family->unique_rating === UniqueRatingEnum::Legendary)
                             during its period of availability. After leaving the shop, it was retired permanently.
                         @endif
                     @elseif ($family->rarity === 11)
-                        only be obtained by transmuting it from the shop.
+                        only be obtained by transmuting it from the shop
                     @endif
                 </p>
             </div>

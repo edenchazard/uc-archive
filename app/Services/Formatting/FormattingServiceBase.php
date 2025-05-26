@@ -6,8 +6,11 @@ use Exception;
 
 abstract class FormattingServiceBase
 {
-    /** @var
-     * an array of class methods or callables to apply. */
+    /**
+     * an array of class methods or callables to apply.
+     *
+     * @var array<int,string|callable>
+     */
     protected array $transformations = [];
 
     /**
@@ -23,13 +26,16 @@ abstract class FormattingServiceBase
 
     /**
      * Register a class method as new transformation.
+     * @param string|array<int,string>|callable $transformations A class method name, array of class method names, or a callable.
      * @return $this
      */
-    final public function register(string|array|callable $transformations)
+    final public function register(string|array|callable $transformations): self
     {
         $transformations = is_array($transformations) ? $transformations : [$transformations];
 
         foreach ($transformations as $transform) {
+            assert(is_string($transform), 'Transformation must be a string or callable.');
+
             if (! method_exists(static::class, $transform) && ! is_callable($transform)) {
                 throw new Exception("Transformation wasn't found on class and isn't a callable.");
             }

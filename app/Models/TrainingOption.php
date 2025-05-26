@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $description
  * @property int $energy_cost
  * @property string $reward
+ * @property-read Creature $creature
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|TrainingOption newModelQuery()
@@ -28,7 +29,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|TrainingOption whereReward($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TrainingOption whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TrainingOption whereUpdatedAt($value)
- * @property-read \App\Models\Creature|null $creature
  * @mixin \Eloquent
  */
 class TrainingOption extends Model

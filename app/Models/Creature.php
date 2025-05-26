@@ -95,18 +95,10 @@ class Creature extends Model
         return $this->hasMany(TrainingOption::class);
     }
 
-    public function chronologicalPrevious(): ?self
-    {
-        return self::query()
-            ->where('id', '<', $this->id)
-            ->orderByDesc('id')
-            ->first();
-    }
-
     /**
      * Returns the nearest previous and nearest next creatures adjacent to this
      * creature in terms of id. Skips missing ids.
-     * @return Collection<string, $this|null>
+     * @return Collection<string,$this|null>
      */
     public function getChronologicalAdjacents(): Collection
     {

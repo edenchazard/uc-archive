@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Creature;
+use App\Services\Creatures\CreatureGender;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -29,9 +30,20 @@ class UserPetFactory extends Factory
      */
     public function mockCreature(Creature $creature): self
     {
+        static $remember = [];
+
+        $key = "gender-{$creature->family->name}";
+
+        if (! isset($remember[$key])) {
+            $remember[$key] = CreatureGender::get($creature->family->gender);
+        }
+
+        $defaultGender = $remember[$key];
+
         return $this
             ->state([
                 'nickname' => $creature->name,
+                'gender' => $defaultGender,
             ])
             ->afterMaking(fn ($self) => $self->setRelation('creature', $creature));
     }

@@ -6,7 +6,6 @@ use App\Models\Alt;
 use App\Models\Creature;
 use App\Models\Family;
 use App\Models\UserPet;
-use App\Services\Creatures\CreatureGender;
 use Illuminate\View\View;
 
 class CreatureController extends Controller
@@ -17,22 +16,21 @@ class CreatureController extends Controller
     public function show(Family $family, Creature $creature): View
     {
         $creature->loadMissing('consumable');
-        $gender = CreatureGender::get($family->gender);
+        $family->loadMissing('alts');
 
-        $closestCreatures = $creature->getChronologicalAdjacents();
+        $closestCreatures = $creature
+            ->getChronologicalAdjacents()
+            ->map(
+                fn ($closest) => $closest ? UserPet::factory()
+                    ->mockCreature($closest)
+                    ->make() : null
+            );
 
-        $wrappedClosestCreatures = $closestCreatures->map(
-            fn ($cr) => $cr ? UserPet::factory()->mockCreature($creature)->make() : null
-        );
-
-        // wrap a user pet
         $wrappedCreature = UserPet::factory()
             ->mockCreature($creature)
-            ->make([
-                'gender' => $gender,
-            ]);
+            ->make();
 
-        $alt_evos = collect();
+        $altEvolutions = collect();
 
         if (! $family->deny_exalt) {
             $alts = collect([
@@ -40,19 +38,20 @@ class CreatureController extends Controller
                 2 => 'exalted',
             ]);
 
-            $alt_evos = $alt_evos->merge($alts->flip()->map(function (int $v) use ($creature, $gender) {
-                return UserPet::factory()
-                    ->mockCreature($creature)
-                    ->make([
-                        'specialty' => $v,
-                        'gender' => $gender,
-                    ]);
-            }));
+            $altEvolutions = $altEvolutions->merge($alts
+                ->flip()
+                ->map(
+                    fn (int $v) => UserPet::factory()
+                        ->mockCreature($creature)
+                        ->make([
+                            'specialty' => $v,
+                        ])
+                ));
         }
 
-        if ($family->alts->count() > 0) {
+        if ($family->alts->isNotEmpty()) {
             $alts = $family->alts->map(fn (Alt $alt) => $alt->name)->flip();
-            $alt_evos = $alt_evos->merge($alts->map(fn ($v, $altName) => UserPet::factory()
+            $altEvolutions = $altEvolutions->merge($alts->map(fn ($v, $altName) => UserPet::factory()
                 ->mockCreature($creature)
                 ->make([
                     'variety' => $altName,
@@ -60,7 +59,7 @@ class CreatureController extends Controller
         }
 
         $data = [
-            'closestCreatures' => $wrappedClosestCreatures,
+            'closestCreatures' => $closestCreatures,
             'family' => $family,
             'pet' => $wrappedCreature,
             'page' => [
@@ -68,7 +67,7 @@ class CreatureController extends Controller
                 'route' => 'creature',
                 'breadcrumb' => $creature->name,
             ],
-            'alts' => $alt_evos,
+            'alts' => $altEvolutions,
         ];
 
         return view('pages.creatures.family.creature.show', $data);

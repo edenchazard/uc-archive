@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Creature;
 use App\Models\Family;
 use App\Models\UserPet;
-use App\Services\Creatures\CreatureGender;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
@@ -52,10 +51,6 @@ class FamilyController extends Controller
     {
         $family->loadMissing('stages');
 
-        // Generate a single gender. If we ran this in the map, we'd get a
-        // different one every time and it breaks viewer immersion.
-        $gender = CreatureGender::get($family->gender);
-
         // create a separate list of alt evolution lists
         $alt_evos = collect();
 
@@ -66,12 +61,11 @@ class FamilyController extends Controller
                 2 => 'exalted',
             ]);
 
-            $alt_evos = $alt_evos->merge($alts->flip()->map(function (int $v) use ($family, $gender) {
+            $alt_evos = $alt_evos->merge($alts->flip()->map(function (int $v) use ($family) {
                 return $family->stages->map(fn (Creature $stage) => UserPet::factory()
                     ->mockCreature($stage)
                     ->make([
                         'specialty' => $v,
-                        'gender' => $gender,
                     ]));
             }));
         }
@@ -79,9 +73,7 @@ class FamilyController extends Controller
         $wrappedStages = $family->stages->map(
             fn (Creature $stage) => UserPet::factory()
                 ->mockCreature($stage)
-                ->make([
-                    'gender' => $gender,
-                ])
+                ->make()
         );
 
         $data = [

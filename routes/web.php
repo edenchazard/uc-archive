@@ -2,20 +2,10 @@
 
 use App\Http\Controllers\ComponentController;
 use App\Http\Controllers\CreatureController;
+use App\Http\Controllers\ExplorationController;
 use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -49,4 +39,14 @@ Route::prefix('creatures')->name('creatures.')->group(function () {
 
 Route::prefix('/components')->name('components.')->group(function () {
     Route::get('/', [ComponentController::class, 'index'])->name('index');
+});
+
+Route::prefix('/exploration')->name('exploration.')->group(function () {
+    Route::get('/', [ExplorationController::class, 'index'])->name('index');
+
+    Route::prefix('/{explorationArea:slug}')->name('area.')->group(function () {
+        Route::get('/', [ExplorationController::class, 'show'])->name('show');
+
+        //Route::get('/stories/{explorationStory:slug}', [ExplorationController::class, 'show'])->name('story.show')
+    });
 });

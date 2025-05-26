@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\ConsumableTypeEnum;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Str;
 
 /**
@@ -32,6 +33,17 @@ class Consumable extends Model
     protected $casts = [
         'type' => ConsumableTypeEnum::class,
     ];
+
+    /**
+     * @return BelongsToMany<ExplorationArea,$this>
+     */
+    public function explorationAreas(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            ExplorationArea::class,
+            table: 'exploration_area_consumables'
+        );
+    }
 
     /**
      * @return Attribute<string,never>

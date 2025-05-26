@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\ElementTypeEnum;
+use App\Enums\GenderEnum;
 use App\Enums\RarityCategoryEnum;
 use App\Enums\UniqueRatingEnum;
 use CreatureUtils;
@@ -85,6 +86,7 @@ class Family extends Model
         'unique_rating' => UniqueRatingEnum::class,
         'rarity' => RarityCategoryEnum::class,
         'base_stats' => AsCollection::class,
+        //'gender' => GenderEnum::class,
     ];
 
     /**

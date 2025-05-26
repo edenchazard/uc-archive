@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\GenderEnum;
 use App\Models\Creature;
-use App\Services\Creatures\CreatureGender;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -35,7 +35,13 @@ class UserPetFactory extends Factory
         $key = "gender-{$creature->family->name}";
 
         if (! isset($remember[$key])) {
-            $remember[$key] = CreatureGender::get($creature->family->gender);
+            if ($creature->family->gender === 3) {
+                $remember[$key] = GenderEnum::from(rand(0, 1));
+            } elseif ($creature->family->gender === 2) {
+                $remember[$key] = GenderEnum::Dual;
+            } else {
+                $remember[$key] = GenderEnum::from($creature->family->gender);
+            }
         }
 
         $defaultGender = $remember[$key];

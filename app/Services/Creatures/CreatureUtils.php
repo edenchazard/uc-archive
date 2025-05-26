@@ -22,20 +22,6 @@ class CreatureUtils
     ];
 
     /**
-     * Translates an integer gender and returns the friendly name.
-     * @param int $val
-     * The gender as a number.
-     * Special case: If 3 (both) is passed, "both" will be returned.
-     */
-    public static function gender(int $val): string
-    {
-        // 3 (Both is a special case)
-        return strtolower(
-            $val === CreatureGender::both ? 'both' : CreatureGender::get($val)->friendlyName()
-        );
-    }
-
-    /**
      * Translates a specialty rating from number to string.
      * @param int $val The specialty rating as a number.
      */

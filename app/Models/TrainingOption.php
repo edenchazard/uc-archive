@@ -45,13 +45,15 @@ class TrainingOption extends Model
     {
         return (new CreatureFormattingService(
             $this->description,
+            $pet->gender,
             [
                 '{{c:nickname}}' => $pet->nickname,
                 '{{c:name}}' => $this->creature->name,
                 '{{c:family}}' => $this->creature->family->name,
                 '*' => $pet->nickname,
             ],
-            $this->gender
-        ))->formatAll()->get();
+        ))
+            ->formatAll()
+            ->get();
     }
 }

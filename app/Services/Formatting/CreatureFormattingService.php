@@ -2,27 +2,15 @@
 
 namespace App\Services\Formatting;
 
-use App\Services\Creatures\CreatureGender;
+use App\Enums\GenderEnum;
 
 class CreatureFormattingService extends FormattingServiceBase
 {
-    protected array $pronouns = [];
-
-    /**
-     * @param int|null $gender
-     * (Optional) Gender to get pronoun conversions from.
-     * If unspecified, a random gender will be chosen.
-     */
     public function __construct(
         protected string $str,
+        protected GenderEnum $gender,
         protected array $replacements = [],
-        $gender = null
     ) {
-        if ($gender === null) {
-            $gender = CreatureGender::random();
-        }
-
-        $this->pronouns = $gender->pronounConversions();
         parent::__construct($str, $replacements);
         $this->register('formatPronouns');
     }
@@ -35,8 +23,8 @@ class CreatureFormattingService extends FormattingServiceBase
     public function formatPronouns(): self
     {
         // build our pronouns to search
-        $malePronouns = CreatureGender::get(0)::pronounConversions();
-        $femalePronouns = CreatureGender::get(1)::pronounConversions();
+        $malePronouns = GenderEnum::Male->pronounConversions();
+        $femalePronouns = GenderEnum::Female->pronounConversions();
 
         // make matches for each possible pronoun
         $searches = implode('|', [...array_values($malePronouns), ...array_values($femalePronouns)]);
@@ -48,7 +36,7 @@ class CreatureFormattingService extends FormattingServiceBase
         $this->str = preg_replace_callback($regexp, function ($match) {
             $matchedPronoun = $match[1];
             // locate our replacement in the appropriate dictionary
-            $replacement = $this->pronouns[strtolower($matchedPronoun)];
+            $replacement = $this->gender->pronounConversions()[strtolower($matchedPronoun)];
             // determine casing
             $casing = ctype_upper($matchedPronoun[0]) ? 'strtoupper' : 'strtolower';
             return $casing($replacement[0]) . substr($replacement, 1);

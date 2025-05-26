@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\GenderEnum;
 use App\Services\Formatting\CreatureFormattingService;
 use CreatureUtils;
 use Database\Factories\UserPetFactory;
@@ -18,7 +19,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property int $specialty
  * @property int $variety
  * @property string $nickname
- * @property int $gender
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Creature $creature
@@ -44,6 +44,13 @@ class UserPet extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    /**
+     * @var array<string,string>
+     */
+    protected $casts = [
+        'gender' => GenderEnum::class,
+    ];
 
     protected $attributes = [
         'specialty' => 0,
@@ -73,15 +80,15 @@ class UserPet extends Model
             get: function () {
                 return (new CreatureFormattingService(
                     $this->creature->short_description,
+                    $this->gender,
                     [
                         '{{c:nickname}}' => $this->nickname,
                         '{{c:name}}' => $this->creature->name,
                         '{{c:family}}' => $this->creature->family->name,
                     ],
-                    // If the creature has a set gender, use that. Otherwise, if
-                    // not male or female, let's have a bit of fun and randomise the gender.
-                    $this->gender
-                ))->formatAll()->get();
+                ))
+                    ->formatAll()
+                    ->get();
             }
         );
     }
@@ -95,13 +102,15 @@ class UserPet extends Model
             get: function () {
                 return (new CreatureFormattingService(
                     $this->creature->long_description,
+                    $this->gender,
                     [
                         '{{c:nickname}}' => $this->nickname,
                         '{{c:name}}' => $this->creature->name,
                         '{{c:family}}' => $this->creature->family->name,
                     ],
-                    $this->gender
-                ))->formatAll()->get();
+                ))
+                    ->formatAll()
+                    ->get();
             }
         );
     }

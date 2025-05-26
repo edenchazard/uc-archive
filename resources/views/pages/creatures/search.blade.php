@@ -7,7 +7,7 @@
             @foreach ($results as $pet)
                 <li class='flex flex-col'>
                     <a class='flex flex-1 flex-col items-center text-center justify-between' href="{{ route('creatures.family.creature.show', [$pet->creature->family, $pet->creature]) }}">
-                        <img src='{{ $pet->imageLink() }}' class='' />
+                        <img src='{{ $pet->image_link }}' class='' />
                         {{ $pet->creature->family->name }} {{ $pet->creature->name }}
                     </a>
                 </li>

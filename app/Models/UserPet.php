@@ -59,14 +59,6 @@ class UserPet extends Model
         return $this->hasOne(Creature::class);
     }
 
-    /**
-     * Returns an image url for the pet.
-     */
-    public function imageLink(): string
-    {
-        return CreatureUtils::imageLink($this);
-    }
-
     public function specialty(): string
     {
         return CreatureUtils::specialty($this->specialty);
@@ -110,6 +102,38 @@ class UserPet extends Model
                     ],
                     $this->gender
                 ))->formatAll()->get();
+            }
+        );
+    }
+
+    /**
+     * @return Attribute<string,never>
+     */
+    protected function imageLink(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $creature = $this->creature;
+                $parts = collect([]);
+
+                if ($this->specialty > 0 && $this->specialty <= 2) {
+                    $parts->push(CreatureUtils::specialty($this->specialty));
+                }
+
+                if ($this->variety) {
+                    $parts->push($this->variety);
+                }
+
+                // creatures with their family name don't follow the same url format...
+                $parts->push($creature->family->name);
+
+                if ($creature->family->name !== $creature->name) {
+                    $parts->push($creature->name);
+                }
+
+                $path = strtolower("/images/creatures/{$creature->family->name}/{$parts->join('_')}.png");
+
+                return asset($path);
             }
         );
     }

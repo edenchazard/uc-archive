@@ -64,7 +64,7 @@
                         @foreach (['normal' => $stage, ...$alts] as $altName => $alt)
                             <div class="flex flex-col justify-between items-center">
                                 <img
-                                    src='{{ ($alt[$loop->parent->index] ?? $stage)->imageLink() }}'
+                                    src='{{ ($alt[$loop->parent->index] ?? $stage)->image_link }}'
                                     alt="{{ ucfirst($altName) }}" />
                                 <span>{{ ucfirst($altName) }}</span>
                             </div>

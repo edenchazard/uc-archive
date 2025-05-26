@@ -14,7 +14,7 @@
             family
         </h2>
         <div class="flex flex-row flex-wrap gap-3 justify-center">
-            <img src='{{ $pet->imageLink() }}' alt="{{ $pet->creature->name }}" class="self-center" />
+            <img src='{{ $pet->image_link }}' alt="{{ $pet->creature->name }}" class="self-center" />
             <div class="max-w-sm">
                 <div class="flex flex-col gap-2">
                     <p><span class='font-bold'>{{ $pet->creature->name }}</span> is the {{ Number::ordinal($pet->creature->stage) }}{{  $pet->creature->required_clicks === 0 ? ' and final' : '' }} evolution of the {{$family->name}} family and {{ Number::ordinal($pet->creature->id) }} creature overall.</p>
@@ -45,7 +45,7 @@
             <div class="flex flex-wrap items-end gap-3">
                 @foreach (['normal' => $pet, ...$alts] as $altName => $alt)
                     <div class="flex flex-col justify-between items-center">
-                        <img src="{{ $alt->imageLink() }}" alt="{{ ucfirst($altName) }}" />
+                        <img src="{{ $alt->image_link }}" alt="{{ ucfirst($altName) }}" />
                         <span>{{ ucfirst($altName) }}</span>
                     </div>
                 @endforeach

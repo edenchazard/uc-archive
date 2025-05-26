@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Creatures;
 
-use App\Models\UserPet;
-
 /**
  * Mainly for translating various database values for creatures
  * and families into their string names.
@@ -44,35 +42,6 @@ class CreatureUtils
     public static function specialty(int $val): string
     {
         return static::getMapping(static::specialties, $val);
-    }
-
-    /**
-     * Constructs an image url for a given pet.
-     * @param UserPet $pet The pet to make an image url from.
-     */
-    public static function imageLink(UserPet $pet): string
-    {
-        $creature = &$pet->creature;
-        $parts = collect([]);
-
-        if ($pet->specialty > 0 && $pet->specialty <= 2) {
-            $parts->push(static::specialty($pet->specialty));
-        }
-
-        if ($pet->variety) {
-            $parts->push($pet->variety);
-        }
-
-        // creatures with their family name don't follow the same url format...
-        $parts->push($creature->family->name);
-
-        if ($creature->family->name !== $creature->name) {
-            $parts->push($creature->name);
-        }
-
-        $path = strtolower("/images/creatures/{$creature->family->name}/{$parts->join('_')}.png");
-
-        return asset($path);
     }
 
     /**

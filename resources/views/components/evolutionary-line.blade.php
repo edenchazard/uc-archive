@@ -3,7 +3,7 @@
         @foreach ($stages as $pet)
             <div class="flex justify-center flex-1 row-start-1">
                 <a class='self-center' href="{{ route('creatures.family.creature.show', [$pet->creature->family, $pet->creature]) }}">
-                <img src='{{ $pet->imageLink() }}'
+                <img src='{{ $pet->image_link }}'
                     alt="{{ $pet->creature->name }}"
                     class='self-center creature-image' />
                 </a>

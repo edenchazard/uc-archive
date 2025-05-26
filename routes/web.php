@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CreatureController;
 use App\Http\Controllers\FamilyController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,9 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return 'welcome';
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::prefix('creatures')->name('creatures.')->group(function () {
     Route::get('/search', [FamilyController::class, 'search'])->name('search');

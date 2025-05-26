@@ -59,14 +59,14 @@
         <table class='w-full'>
             <thead>
                 <tr class='flex flex-col sm:table-row'>
-                    @foreach ([...$pet->creature->stat_points->keys(), 'Total'] as $stat)
-                    <th>{{ ucfirst($stat) }}</th>
+                    @foreach ([...$pet->creature->max_stats->keys(), 'Total'] as $stat)
+                        <th>{{ ucfirst($stat) }}</th>
                     @endforeach
                 </tr>
             </thead>
             <tbody>
                 <tr class="flex flex-col sm:table-row">
-                    @foreach ([...$pet->creature->stat_points, $pet->creature->max_stat_points] as $stat)
+                    @foreach ([...$pet->creature->max_stats, $pet->creature->max_stat_points] as $stat)
                         <td class="odd:bg-[#add0eb] even:bg-uc-blue text-center">{{ $stat }}</td>
                     @endforeach
                 </tr>

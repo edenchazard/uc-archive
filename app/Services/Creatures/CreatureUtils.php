@@ -15,21 +15,6 @@ class CreatureUtils
     /**
      * @var array<int, string>
      */
-    protected const stats = [
-        'strength',
-        'agility',
-        'speed',
-        'intelligence',
-        'wisdom',
-        'charisma',
-        'creativity',
-        'willpower',
-        'focus',
-    ];
-
-    /**
-     * @var array<int, string>
-     */
     protected const specialties = [
         0 => '', //regular
         1 => 'noble',
@@ -37,15 +22,6 @@ class CreatureUtils
         3 => 'exotic',
         4 => 'legendary',
     ];
-
-    /**
-     * Returns a list of possible creature stats used in the application.
-     * @return \Illuminate\Support\Collection<int, string>
-     */
-    public static function getPossibleStats()
-    {
-        return static::getMapping(static::stats);
-    }
 
     /**
      * Translates an integer gender and returns the friendly name.

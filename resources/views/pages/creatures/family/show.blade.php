@@ -43,14 +43,14 @@
         <table class='w-full'>
             <thead>
                 <tr class='flex flex-col sm:table-row'>
-                    @foreach ($family->getBaseStats()->keys() as $stat)
+                    @foreach ($family->base_stats->keys() as $stat)
                         <th>{{ ucfirst($stat) }}</th>
                     @endforeach
                 </tr>
             </thead>
             <tbody>
                 <tr class="flex flex-col sm:table-row">
-                    @foreach ($family->getBaseStats() as $stat)
+                    @foreach ($family->base_stats as $stat)
                         <td class="odd:bg-[#add0eb] even:bg-uc-blue text-center">{{ $stat }}</td>
                     @endforeach
                 </tr>

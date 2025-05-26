@@ -6,9 +6,9 @@ use App\Enums\ElementTypeEnum;
 use App\Enums\RarityCategoryEnum;
 use App\Enums\UniqueRatingEnum;
 use CreatureUtils;
+use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Collection;
 
 /**
  * App\Models\Family
@@ -84,6 +84,7 @@ class Family extends Model
         'element' => ElementTypeEnum::class,
         'unique_rating' => UniqueRatingEnum::class,
         'rarity' => RarityCategoryEnum::class,
+        'base_stats' => AsCollection::class,
     ];
 
     /**
@@ -121,14 +122,5 @@ class Family extends Model
     public function specialty(): string
     {
         return CreatureUtils::specialty($this->specialty);
-    }
-
-    /**
-     * Get all stats in a single collection.
-     * @return Collection<string, int>
-     */
-    public function getBaseStats(): Collection
-    {
-        return CreatureUtils::getPossibleStats()->flip()->map(fn ($val, $key) => $this["base_{$key}"]);
     }
 }

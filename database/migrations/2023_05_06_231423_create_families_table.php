@@ -28,10 +28,6 @@ return new class() extends Migration {
             $table->date('availability_begin')->default('1970-01-01');
             $table->date('availability_end')->default('1970-01-01');
 
-            foreach (CreatureUtils::getPossibleStats() as $skill) {
-                $table->unsignedTinyInteger("base_{$skill}")->default(0);
-            }
-
             $table->timestamps();
         });
     }

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Services\Creatures\CreatureUtils;
+use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -69,6 +69,7 @@ class Creature extends Model
      */
     protected $casts = [
         'stage' => 'integer',
+        'max_stats' => AsCollection::class,
     ];
 
     /**
@@ -110,24 +111,13 @@ class Creature extends Model
     }
 
     /**
-     * Get all stats in a single collection.
-     * @return Attribute<Collection<string,int>,never>
-     */
-    protected function statPoints(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => CreatureUtils::getPossibleStats()->flip()->map(fn ($val, $key) => $this["max_{$key}"])
-        );
-    }
-
-    /**
      * Calculate the max possible stat value for this creature.
      * @return Attribute<int,never>
      */
     protected function maxStatPoints(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->stat_points->sum()
+            get: fn () => $this->max_stats->sum()
         );
     }
 }

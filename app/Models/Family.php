@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Enums\ElementTypeEnum;
-use App\Enums\GenderEnum;
 use App\Enums\RarityCategoryEnum;
 use App\Enums\UniqueRatingEnum;
 use CreatureUtils;
@@ -82,11 +81,11 @@ class Family extends Model
         'deny_exalt' => 'boolean',
         'in_basket' => 'boolean',
         'released' => 'datetime',
+        'gender' => 'integer',
         'element' => ElementTypeEnum::class,
         'unique_rating' => UniqueRatingEnum::class,
         'rarity' => RarityCategoryEnum::class,
         'base_stats' => AsCollection::class,
-        //'gender' => GenderEnum::class,
     ];
 
     /**
@@ -114,11 +113,6 @@ class Family extends Model
     public function alts(): HasMany
     {
         return $this->hasMany(Alt::class);
-    }
-
-    public function gender(): string
-    {
-        return CreatureUtils::gender($this->gender);
     }
 
     public function specialty(): string

@@ -1,11 +1,11 @@
 <section>
-    <h{{ $level }} class="my-2 section-title" id="{{ $anchor ?? str_replace([' '], '-', strtolower($title)) }}">
+    <h{{ $level }} class="my-2 section-title" id="{{ $anchor ?? Str::slug($title) }}">
         @if($hideAnchor)
-            {{ implode(array_map('ucfirst', explode(' ', $title))) }}
+            {{ Str::title($title) }}
         @else
-            <a 
+            <a
                 class="text-black before:text-uc-dkbrown before:content-['#'] before:mr-1"
-                href='#{{ $anchor ?? str_replace([' '], '-', strtolower($title)) }}'>{{ implode(' ', array_map('ucfirst', explode(' ', $title))) }}</a>
+                href='#{{ $anchor ?? Str::slug($title) }}'>{{ Str::title($title) }}</a>
         @endif
     </h{{ $level }}>
     <div class='ml-5 mr-2'>

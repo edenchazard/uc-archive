@@ -8,7 +8,7 @@ WORKDIR /var/www
 RUN apk update && apk add curl-dev oniguruma-dev libxml2-dev icu-dev
 RUN docker-php-ext-install mbstring pdo mysqli pdo_mysql intl
 
-FROM base AS production
+FROM base AS dev
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
@@ -26,27 +26,12 @@ COPY package.json package-lock.json ./
 COPY vite.config.js ./
 
 RUN [ "npm", "ci" ]
-RUN [ "npm", "run", "build" ]
 
 COPY composer.json composer.lock artisan ./
-RUN composer install \
-  --prefer-dist \
-  --no-scripts \
-  --no-progress \
-  --no-interaction \
-  --no-dev \
-  --no-autoloader \
-  && composer dump-autoload \
-  --optimize \
-  --apcu \
-  --no-dev
+RUN composer install --prefer-dist --no-scripts --no-progress --no-interaction --no-autoloader \
+  && composer dump-autoload --optimize --apcu
 
-RUN rm -rf /usr/bin/composer /usr/local/bin/node /usr/local/lib/node_modules /usr/local/bin/npm \
-  && chown -R www-data:www-data /var/www \
-  && chmod -R 555 .
-
-RUN chmod -R 770 storage bootstrap/cache \
-  && mkdir -p /var/www/storage/logs \
-  && touch /var/www/storage/logs/laravel.log
-
-USER www-data
+RUN chmod -R 770 ./storage ./bootstrap/cache
+RUN mkdir -p /var/www/storage/logs \
+  && touch /var/www/storage/logs/laravel.log \
+  && chown -R www-data:www-data .

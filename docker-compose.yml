@@ -2,7 +2,7 @@ services:
   app:
     build:
       context: .
-      target: dev
+      dockerfile: Dockerfile.dev
     ports:
       - 5173:5173
     networks:
@@ -23,7 +23,6 @@ services:
       - ./package-lock.json:/var/www/package-lock.json
       - ./vite.config.js:/var/www/vite.config.js
       - ./.env:/var/www/.env
-      - ./node_modules:/var/www/node_modules
       - .docker-contents/php.ini:/etc/php/8.4/fpm/php.ini
       - appdata:/var/www/storage
       - web_content:/var/www
@@ -31,7 +30,7 @@ services:
   testapp:
     build:
       context: .
-      target: dev
+      dockerfile: Dockerfile.dev
     networks:
       - internal
     volumes:

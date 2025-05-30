@@ -13,7 +13,7 @@ services:
       - ./routes:/var/www/routes
       - ./settings:/var/www/settings
       - ./database:/var/www/database
-      - ./public/images:/var/www/public/images
+      - ./public:/var/www/public
       - ./storage:/var/www/storage
       - ./lang:/var/www/lang
       - ./resources:/var/www/resources

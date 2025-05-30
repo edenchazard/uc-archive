@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ConsumableTypeEnum;
 use App\Models\ExplorationArea;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\View\View;
 
 class ExplorationController extends Controller
@@ -25,9 +28,13 @@ class ExplorationController extends Controller
 
     public function show(ExplorationArea $explorationArea): View
     {
+
         $explorationArea->loadMissing([
-            'consumables',
-            'explorationStories',
+            'consumables' => fn (BelongsToMany $q) => $q
+                ->orderByRaw("type = '" . ConsumableTypeEnum::RareComponent->value . "'")
+                ->orderBy('name'),
+            'explorationStories' => fn (HasMany $q) => $q
+                ->orderBy('title'),
         ]);
 
         return view('pages.exploration.show', [

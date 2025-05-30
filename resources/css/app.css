@@ -2,7 +2,6 @@
 
 @theme {
   --grid-template-columns-fill-auto: repeat(auto-fill, minmax(4em, 1fr));
-
   --color-uc-blue: #5ba0d6;
   --color-uc-ltbrown: #f7f4cc;
   --color-uc-mdbrown: #dfd1a6;
@@ -42,18 +41,12 @@
     @apply flex flex-row p-2;
   }
 
-  #breadcrumb nav ol li {
-  }
-
   #breadcrumb nav ol li::after {
     content: '>';
     @apply m-2;
   }
 
   #breadcrumb nav ol li:last-child::after {
-    content: none;
+    @apply content-none;
   }
-}
-
-@layer utilities {
 }

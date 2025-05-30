@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="motion-safe:scroll-smooth motion-reduce:scroll-auto">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $page['title'] ?? 'Unnamed Page' }}</title>
+    <title>{{ $page['title'] ? "{$page['title']} | UC Archive" : 'UC Archive' }}</title>
     @vite('resources/css/app.css')
     @stack('css')
     @stack('scripts')

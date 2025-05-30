@@ -1,4 +1,4 @@
-<x-page :data='$page'>
+<x-page :page='$page'>
     <aside aria-label="creatures by id order">
         <ul class="flex flex-row flex-wrap justify-between items-end">
             <x-creature-nav :direction="'previous'" :pet='$closestCreatures["previous"]'></x-creature-nav>

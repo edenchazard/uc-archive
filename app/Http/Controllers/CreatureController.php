@@ -58,7 +58,7 @@ class CreatureController extends Controller
                 ])));
         }
 
-        $data = [
+        return view('pages.creatures.family.creature.show', [
             'closestCreatures' => $closestCreatures,
             'family' => $family,
             'pet' => $wrappedCreature,
@@ -68,8 +68,6 @@ class CreatureController extends Controller
                 'breadcrumb' => $creature->name,
             ],
             'alts' => $altEvolutions,
-        ];
-
-        return view('pages.creatures.family.creature.show', $data);
+        ]);
     }
 }

@@ -1,4 +1,4 @@
-<x-page :data='$page'>
+<x-page :page='$page'>
     <section id='list' class='flex gap-x-10 items-center'>
         Jump to section:
         <nav class="tracking-wider line text-xl leading-10">
@@ -45,7 +45,6 @@
 <script type="module">
     document.querySelector('#show-images').addEventListener('change', function() {
         const action = this.checked ? 'add' : 'remove';
-        console.log(action);
         document.querySelectorAll('.creature-image').forEach(img => {
             const action = this.classList[action]('display');
         });

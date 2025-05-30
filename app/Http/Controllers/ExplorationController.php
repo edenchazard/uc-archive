@@ -33,7 +33,7 @@ class ExplorationController extends Controller
         return view('pages.exploration.show', [
             'explorationArea' => $explorationArea,
             'page' => [
-                'title' => $explorationArea->name,
+                'title' => "Exploration: {$explorationArea->name}",
                 'route' => 'exploration.area.show',
                 'name' => $explorationArea->name,
             ],

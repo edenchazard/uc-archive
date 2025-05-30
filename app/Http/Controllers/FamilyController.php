@@ -29,16 +29,14 @@ class FamilyController extends Controller
             ])
             ->sortBy('family.name');
 
-        $data = [
+        return view('pages.creatures.index', [
             'groups' => $families->groupBy(fn ($family) => $family['family']?->name[0] ?? ''),
             'page' => [
                 'title' => 'Families',
                 'route' => 'family',
                 'name' => 'All families',
             ],
-        ];
-
-        return view('pages.creatures.index', $data);
+        ]);
     }
 
     public function show(Family $family): View
@@ -69,7 +67,7 @@ class FamilyController extends Controller
                 ->make()
         );
 
-        $data = [
+        return view('pages.creatures.family.show', [
             'alts' => $alt_evos,
             'stages' => $wrappedStages,
             'family' => $family,
@@ -78,9 +76,7 @@ class FamilyController extends Controller
                 'route' => 'family',
                 'name' => $family->name,
             ],
-        ];
-
-        return view('pages.creatures.family.show', $data);
+        ]);
     }
 
     public function search(): Response|RedirectResponse
@@ -127,7 +123,7 @@ class FamilyController extends Controller
             ];
         }
 
-        $data = [
+        return response()->view('pages.creatures.search', [
             'query' => null,
             'results' => collect([]),
             ...$data,
@@ -136,8 +132,6 @@ class FamilyController extends Controller
                 'route' => '',
                 'breadcrumb' => '',
             ],
-        ];
-
-        return response()->view('pages.creatures.search', $data, 404);
+        ], 404);
     }
 }

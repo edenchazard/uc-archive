@@ -1,4 +1,4 @@
-<x-page :data='$page'>
+<x-page :page='$page'>
     <section>
         <h1>Components</h1>
         <ul>

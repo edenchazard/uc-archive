@@ -1,4 +1,4 @@
-<x-page :data='$page'>
+<x-page :page='$page'>
     <section id="results">
         <h1>Search</h1>
         @if ($results->first())

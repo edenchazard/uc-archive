@@ -1,4 +1,4 @@
-<x-page :data='$page'>
+<x-page :page='$page'>
     <section>
         <h1>Exploration Areas</h1>
         <ul class="grid grid-cols-[repeat(auto-fill,minmax(10rem,1fr))] gap-5">

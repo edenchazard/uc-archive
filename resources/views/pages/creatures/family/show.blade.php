@@ -76,11 +76,11 @@
                     </div>
                     <section>
                         <h4 class='font-medium'>Visual Description</h4>
-                        <x-creature-formatted-block :text="$stage->creature->short_description" :pet="$stage" />
+                        <x-formatted-block :text="$stage->creature->short_description" />
                     </section>
                     <section>
                         <h4 class='font-medium'>Lifestyle</h4>
-                        <x-creature-formatted-block :text="$stage->long_description" :pet="$stage" />
+                        <x-formatted-block :text="$stage->long_description" />
                     </section>
                 </article>
         @endforeach

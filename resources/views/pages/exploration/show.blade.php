@@ -1,7 +1,7 @@
 <x-page>
     <section>
         <h1>{{ Breadcrumbs::pageTitle() }}</h1>
-        <p>{{ $explorationArea->description }}</p>
+        <x-formatted-block :text="$explorationArea->description" />
     </section>
 
     <x-content-section :title='"Materials"'>
@@ -22,7 +22,7 @@
             @foreach ($explorationArea->explorationStories as $story)
                 <li class="">
                     <span class="font-semibold">{{ $story->title }}</span>
-                    <p>{{ $story->story }}</p>
+                    <x-formatted-block :text="$story->formatted_story" />
                 </li>
             @endforeach
         </ol>

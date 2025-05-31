@@ -4,7 +4,7 @@ namespace App\Services\Formatting;
 
 use Exception;
 
-abstract class FormattingServiceBase
+class FormattingService
 {
     /**
      * an array of class methods or callables to apply.

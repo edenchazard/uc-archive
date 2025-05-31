@@ -4,7 +4,7 @@ namespace App\Services\Formatting;
 
 use App\Enums\GenderEnum;
 
-class CreatureFormattingService extends FormattingServiceBase
+class CreatureFormattingService extends FormattingService
 {
     public function __construct(
         protected string $str,

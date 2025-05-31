@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class CreatureFormattedBlock extends Component
+class FormattedBlock extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class CreatureFormattedBlock extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.creature-formatted-block');
+        return view('components.formatted-block');
     }
 }

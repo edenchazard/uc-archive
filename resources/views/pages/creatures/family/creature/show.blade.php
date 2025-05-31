@@ -35,10 +35,10 @@
         </div>
     </section>
     <x-content-section :title='"visual description"'>
-        <x-creature-formatted-block :text="$pet->short_description" :pet="$pet" />
+        <x-formatted-block :text="$pet->short_description" />
     </x-content-section>
     <x-content-section :title='"lifestyle"'>
-        <x-creature-formatted-block :text="$pet->long_description" :pet="$pet" />
+        <x-formatted-block :text="$pet->long_description" />
     </x-content-section >
     <x-content-section :title='"variations"'>
         @if ($alts->isNotEmpty())
@@ -94,7 +94,7 @@
                     <td>{{ $option->energy_cost }}</td>
                     <td>{{ $option->reward }}</td>
                     <td>
-                        <x-creature-formatted-block :text="$option->format($pet)" />
+                        <x-formatted-block :text="$option->format($pet)" />
                     </td>
                 </tr>
                 @endforeach

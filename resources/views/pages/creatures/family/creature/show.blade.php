@@ -19,7 +19,11 @@
                 <div class="flex flex-col gap-2">
                     <p><span class='font-bold'>{{ $pet->creature->name }}</span> is the {{ Number::ordinal($pet->creature->stage) }}{{  $pet->creature->required_clicks === 0 ? ' and final' : '' }} evolution of the {{$family->name}} family and {{ Number::ordinal($pet->creature->id) }} creature overall.</p>
                     <p>Being a member of the {{$family->name}} family, its elemental type is {{ $family->element->value }} with a rarity rating of {{ $family->rarity->friendlyName() }}{!! $family->unique_rating ? " <span class='font-bold'>(".$family->unique_rating->value.")</span>" : '' !!}.</p>
-                    <p>It was released on <time>{{ $family->released->format('jS F o') }}</time>.</p>
+                    @if ($family->released)
+                        <p>It was released on <time>{{ $family->released->format('jS F o') }}</time>.</p>
+                    @else
+                        <p>Its release date is unknown.</p>
+                    @endif
                     <p class="flex flex-wrap align-middle justify-center gap-3 flex-row sm:flex-nowrap py-3 sm:px-5">
                         <img
                             src='{{ $pet->creature->consumable->image_link }}'

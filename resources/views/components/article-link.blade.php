@@ -1,1 +1,1 @@
-<a href='{{ $url }}' class='before:content-["["] after:content-["]"]'>{{ $text ?? 'main article' }}</a>
+<a href='{{ $url }}' class='before:content-["["] after:content-["]"] text-nowrap'>{{ $text ?? 'main article' }}</a>

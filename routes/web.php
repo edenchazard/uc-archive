@@ -3,6 +3,7 @@
 use App\Http\Controllers\ComponentController;
 use App\Http\Controllers\CreatureController;
 use App\Http\Controllers\ExplorationController;
+use App\Http\Controllers\ExplorationStoryController;
 use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -46,7 +47,6 @@ Route::prefix('/exploration')->name('exploration.')->group(function () {
 
     Route::prefix('/{explorationArea:slug}')->name('area.')->group(function () {
         Route::get('/', [ExplorationController::class, 'show'])->name('show');
-
-        //Route::get('/stories/{explorationStory:slug}', [ExplorationController::class, 'show'])->name('story.show')
+        Route::get('/{explorationStory:slug}', [ExplorationStoryController::class, 'show'])->name('story.show');
     });
 });

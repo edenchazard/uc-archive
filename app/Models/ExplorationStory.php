@@ -25,6 +25,30 @@ class ExplorationStory extends Model
     }
 
     /**
+     * @return BelongsTo<Creature,$this>
+     */
+    public function creature1(): BelongsTo
+    {
+        return $this->belongsTo(Creature::class, 'creature_1_id');
+    }
+
+    /**
+     * @return BelongsTo<Creature,$this>
+     */
+    public function creature2(): BelongsTo
+    {
+        return $this->belongsTo(Creature::class, 'creature_2_id');
+    }
+
+    /**
+     * @return BelongsTo<Creature,$this>
+     */
+    public function creature3(): BelongsTo
+    {
+        return $this->belongsTo(Creature::class, 'creature_3_id');
+    }
+
+    /**
      * @return Attribute<string,never>
      */
     protected function formattedStory(): Attribute

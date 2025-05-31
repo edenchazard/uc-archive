@@ -18,11 +18,14 @@
     </x-content-section>
 
     <x-content-section :title='"Stories"'>
-        <ol>
+        <ol class="space-y-2">
             @foreach ($explorationArea->explorationStories as $story)
-                <li class="">
-                    <span class="font-semibold">{{ $story->title }}</span>
-                    <x-formatted-block :text="$story->formatted_story" />
+                <li class="flex items-center gap-4">
+                    <h3 class="font-semibold text-base text-nowrap">{{ $story->title }}</h3>
+                    <x-article-link :url='route("exploration.area.story.show", [ $explorationArea, $story ])' />
+                    <div class="line-clamp-1">
+                        {{ $story->story}}
+                    </div>
                 </li>
             @endforeach
         </ol>

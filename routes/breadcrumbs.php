@@ -2,6 +2,7 @@
 
 use App\Models\Creature;
 use App\Models\ExplorationArea;
+use App\Models\ExplorationStory;
 use App\Models\Family;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
@@ -85,5 +86,15 @@ Breadcrumbs::for(
         ->parent('exploration.index')
         ->push($explorationArea->name, route('exploration.area.show', $explorationArea), [
             'pageTitle' => "Exploration: {$explorationArea->name}",
+        ])
+);
+
+Breadcrumbs::for(
+    'exploration.area.story.show',
+    fn (BreadcrumbTrail $trail, ExplorationArea $explorationArea, ExplorationStory $explorationStory) =>
+    $trail
+        ->parent('exploration.area.show', $explorationArea)
+        ->push($explorationStory->title, route('exploration.area.story.show', [$explorationArea, $explorationStory]), [
+            'pageTitle' => "Exploration Story: {$explorationStory->title}",
         ])
 );

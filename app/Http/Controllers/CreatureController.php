@@ -62,11 +62,6 @@ class CreatureController extends Controller
             'closestCreatures' => $closestCreatures,
             'family' => $family,
             'pet' => $wrappedCreature,
-            'page' => [
-                'title' => "Creature: {$creature->name}",
-                'route' => 'creature',
-                'breadcrumb' => $creature->name,
-            ],
             'alts' => $altEvolutions,
         ]);
     }

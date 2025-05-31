@@ -1,32 +1,89 @@
 <?php
 
-// routes/breadcrumbs.php
-
-// Note: Laravel will automatically resolve `Breadcrumbs::` without
-// this import. This is nice for IDE syntax and refactoring.
-
+use App\Models\Creature;
+use App\Models\ExplorationArea;
 use App\Models\Family;
 use Diglactic\Breadcrumbs\Breadcrumbs;
-// This import is also not required, and you could replace `BreadcrumbTrail $trail`
-//  with `$trail`. This is nice for IDE type checking and completion.
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
-// Home
-Breadcrumbs::for('home', function (BreadcrumbTrail $trail) {
-    $trail->push('Archive', route('home'));
+Breadcrumbs::macro('pageTitle', function () {
+    $breadcrumb = Breadcrumbs::current();
+    $resolvedTitle = $breadcrumb->pageTitle ?? $breadcrumb->title ?? '';
+
+    $title = is_string($resolvedTitle) ? $resolvedTitle : '';
+
+    return Str::trim($title);
 });
 
-Breadcrumbs::for('all families', function (BreadcrumbTrail $trail) {
-    $trail->parent('home');
-    $trail->push('Families', route('all families'));
+Breadcrumbs::macro('headTitle', function () {
+    $breadcrumb = Breadcrumbs::current();
+    $resolvedTitle = $breadcrumb->pageTitle ?? $breadcrumb->title ?? '';
+
+    if ($resolvedTitle === 'Archive') {
+        return 'UC Archive';
+    }
+
+    $title = is_string($resolvedTitle) ? "{$resolvedTitle} |" : '';
+
+    return Str::trim("{$title} UC Archive");
 });
 
-Breadcrumbs::for('family', function (BreadcrumbTrail $trail, Family $family) {
-    $trail->parent('all families');
-    $trail->push($family, route('family', $family));
-});
+Breadcrumbs::for(
+    'home',
+    fn (BreadcrumbTrail $trail) =>
+    $trail->push('Archive', route('home'))
+);
 
-/* Breadcrumbs::for('creature', function (BreadcrumbTrail $trail, $creature) {
-    $trail->parent('family', 'r');
-    $trail->push($creature->name, route('category', $creature));
-}); */
+Breadcrumbs::for(
+    'creatures.index',
+    fn (BreadcrumbTrail $trail) =>
+    $trail
+        ->parent('home')
+        ->push('All families', route('creatures.index'))
+);
+
+Breadcrumbs::for(
+    'creatures.family.show',
+    fn (BreadcrumbTrail $trail, Family $family) =>
+    $trail
+        ->parent('creatures.index')
+        ->push($family->name, route('creatures.family.show', $family), [
+            'pageTitle' => "Family: {$family->name}",
+        ])
+);
+
+Breadcrumbs::for(
+    'creatures.family.creature.show',
+    fn (BreadcrumbTrail $trail, Family $family, Creature $creature) =>
+    $trail
+        ->parent('creatures.family.show', $family)
+        ->push($creature->name, route('creatures.family.creature.show', [$family, $creature]), [
+            'pageTitle' => "Creature: {$creature->name}",
+        ])
+);
+
+Breadcrumbs::for(
+    'components.index',
+    fn (BreadcrumbTrail $trail) =>
+    $trail
+        ->parent('home')
+        ->push('Components', route('components.index'))
+);
+
+Breadcrumbs::for(
+    'exploration.index',
+    fn (BreadcrumbTrail $trail) =>
+    $trail
+        ->parent('home')
+        ->push('Exploration', route('exploration.index'))
+);
+
+Breadcrumbs::for(
+    'exploration.area.show',
+    fn (BreadcrumbTrail $trail, ExplorationArea $explorationArea) =>
+    $trail
+        ->parent('exploration.index')
+        ->push($explorationArea->name, route('exploration.area.show', $explorationArea), [
+            'pageTitle' => "Exploration: {$explorationArea->name}",
+        ])
+);

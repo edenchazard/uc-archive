@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $page['title'] ? "{$page['title']} | UC Archive" : 'UC Archive' }}</title>
+    <title>{{ Breadcrumbs::headTitle() }}</title>
     @vite('resources/css/app.css')
     @stack('css')
     @stack('scripts')
@@ -30,12 +30,9 @@
                 </nav>
             </div>
         </header>
-        {{--
-            @if (isset($page['route']))
-                <section id='breadcrumb' aria-label="Breadcrumb" class='bg-uc-ltbrown text-xs'>
-                    {{ Breadcrumbs::render($page['route'], $page['name']) }}
+        <section id='breadcrumb' aria-label="Breadcrumb" class='bg-uc-ltbrown text-xs'>
+            {{ Breadcrumbs::render() }}
         </section>
-        @endif --}}
         <main class='bg-linear-to-b from-uc-grad-begin to-uc-grad-end bg-uc-grad-end bg-size-[100%_526px] bg-no-repeat sm:p-5'>
             {{ $slot }}
         </main>

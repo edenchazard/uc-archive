@@ -1,6 +1,6 @@
-<x-page :page='$page'>
+<x-page>
     <section>
-        <h1>Exploration Areas</h1>
+        <h1>{{ Breadcrumbs::pageTitle() }}</h1>
         <ul class="grid grid-cols-[repeat(auto-fill,minmax(10rem,1fr))] gap-5">
             @foreach ($explorationAreas as $explorationArea)
                 <li>

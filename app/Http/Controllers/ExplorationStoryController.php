@@ -16,11 +16,6 @@ class ExplorationStoryController extends Controller
 
         /*  return view('pages.exploration.index', [
              'explorationAreas' => $explorationAreas,
-             'page' => [
-                 'title' => 'Exploration',
-                 'route' => 'exploration.index',
-                 'name' => 'Exploration',
-             ],
          ]); */
     }
 }

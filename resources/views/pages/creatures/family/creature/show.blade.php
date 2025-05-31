@@ -1,4 +1,4 @@
-<x-page :page='$page'>
+<x-page>
     <aside aria-label="creatures by id order">
         <ul class="flex flex-row flex-wrap justify-between items-end">
             <x-creature-nav :direction="'previous'" :pet='$closestCreatures["previous"]'></x-creature-nav>
@@ -7,7 +7,7 @@
         </ul>
     </aside>
     <section id='creature-introduction' class="my-2">
-        <h1>Creature: {{ $pet->creature->name }}</h1>
+        <h1>{{ Breadcrumbs::pageTitle() }}</h1>
         <h2 class='italic text-sm'>
             From the
             <a class='main-article' href='{{ route("creatures.family.show", $family) }}' aria-labelledby="{{ $pet->creature->name }}">{{$family->name}}</a>

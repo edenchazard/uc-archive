@@ -1,6 +1,6 @@
-<x-page :page='$page'>
+<x-page>
     <section id="results">
-        <h1>Search</h1>
+        <h1>{{ Breadcrumbs::pageTitle() }}</h1>
         @if ($results->first())
             <p><span class='font-bold'>'{{ $query }}'</span> doesn't match a specific family, however there are creatures with that name. Did you mean:</p>
             <ul class="grid grid-cols-fill-auto gap-5 m-5" >

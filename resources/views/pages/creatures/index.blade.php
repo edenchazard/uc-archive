@@ -1,4 +1,7 @@
-<x-page :page='$page'>
+<x-page>
+    <section>
+        <h1>{{ Breadcrumbs::pageTitle() }}</h1>
+    </section>
     <section id='list' class='flex gap-x-10 items-center'>
         Jump to section:
         <nav class="tracking-wider line text-xl leading-10">
@@ -6,10 +9,6 @@
             <a href='#{{$category}}'>{{$category}}</a>
             @endforeach
         </nav>
-        {{--<span>
-            <input type='checkbox' id='show-images' />
-            <label for='show-images'>Display images</label>
-        </span>--}}
     </section>
     <section class="mt-3">
         @foreach ($groups as $category => $families)

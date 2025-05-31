@@ -18,11 +18,6 @@ class ExplorationController extends Controller
 
         return view('pages.exploration.index', [
             'explorationAreas' => $explorationAreas,
-            'page' => [
-                'title' => 'Exploration',
-                'route' => 'exploration.index',
-                'name' => 'Exploration',
-            ],
         ]);
     }
 
@@ -39,11 +34,6 @@ class ExplorationController extends Controller
 
         return view('pages.exploration.show', [
             'explorationArea' => $explorationArea,
-            'page' => [
-                'title' => "Exploration: {$explorationArea->name}",
-                'route' => 'exploration.area.show',
-                'name' => $explorationArea->name,
-            ],
         ]);
     }
 }

@@ -1,6 +1,6 @@
-<x-page :page='$page'>
+<x-page>
     <section>
-        <h1>{{ $explorationArea->name }}</h1>
+        <h1>{{ Breadcrumbs::pageTitle() }}</h1>
         <p>{{ $explorationArea->description }}</p>
     </section>
 

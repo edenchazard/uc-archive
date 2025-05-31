@@ -16,11 +16,6 @@ class ComponentController extends Controller
 
         return view('pages.components.index', [
             'components' => $components,
-            'page' => [
-                'title' => 'Components',
-                'route' => 'components.index',
-                'name' => 'Components',
-            ],
         ]);
     }
 }

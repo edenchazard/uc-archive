@@ -1,6 +1,6 @@
-<x-page :page='$page'>
+<x-page>
     <section id="family-introduction">
-        <h1>Family: {{$family->name}}</h1>
+        <h1>{{ Breadcrumbs::pageTitle() }}</h1>
         <section id='evolutionary-line'>
             <x-evolutionary-line :stages='$stages' class="justify-center" />
         </section>

@@ -71,11 +71,6 @@ class FamilyController extends Controller
             'alts' => $alt_evos,
             'stages' => $wrappedStages,
             'family' => $family,
-            'page' => [
-                'title' => "Family: {$family->name}",
-                'route' => 'family',
-                'name' => $family->name,
-            ],
         ]);
     }
 
@@ -127,11 +122,6 @@ class FamilyController extends Controller
             'query' => null,
             'results' => collect([]),
             ...$data,
-            'page' => [
-                'title' => 'Search',
-                'route' => '',
-                'breadcrumb' => '',
-            ],
         ], 404);
     }
 }

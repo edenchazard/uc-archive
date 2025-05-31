@@ -1,6 +1,6 @@
-<x-page :page='$page'>
+<x-page>
     <section>
-        <h1>Components</h1>
+        <h1>{{ Breadcrumbs::pageTitle() }}</h1>
         <ul>
             @foreach ($components as $componentCategory => $componentList)
                 <li>

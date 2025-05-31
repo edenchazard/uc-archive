@@ -1,4 +1,4 @@
-<x-page :page='$page'>
+<x-page>
   <section class="max-w-prose">
     <h1>Unicreatures Archive</h1>
     <p>Unicreatures was a former adoptables site from 2009 to 2016. This site aims to be a partial archive of the content.</p>

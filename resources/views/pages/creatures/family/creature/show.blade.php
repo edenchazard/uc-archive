@@ -104,4 +104,21 @@
         N/A
         @endif
     </x-content-section>
+
+    <x-content-section :title='"exploration stories"'>
+        @if ($explorationStories->isNotEmpty())
+            <p>This creature featured in the following exploration stories:</p>
+            <ol class="flex flex-col gap-3 list-disc list-inside">
+                @foreach ($explorationStories as $story)
+                    <li>
+                        <a class="main-article" href="{{ route('exploration.area.story.show', [ $story->explorationArea, $story ]) }}">
+                            {{ $story->title }}
+                        </a>
+                    </li>
+                @endforeach
+            </ol>
+        @else
+            <p>This creature didn't feature in any exploration stories.</p>
+        @endif
+    </x-content-section>
 </x-page>

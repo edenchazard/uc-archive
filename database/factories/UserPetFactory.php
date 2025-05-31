@@ -32,7 +32,7 @@ class UserPetFactory extends Factory
     {
         static $remember = [];
 
-        $key = "gender-{$creature->family->name}";
+        $key = "gender-{$creature->family_id}";
 
         if (! isset($remember[$key])) {
             if ($creature->family->gender === 3) {

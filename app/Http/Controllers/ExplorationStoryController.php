@@ -12,9 +12,9 @@ class ExplorationStoryController extends Controller
     public function show(ExplorationArea $explorationArea, ExplorationStory $explorationStory): View
     {
         $explorationStory->loadMissing([
-            'creature1',
-            'creature2',
-            'creature3',
+            'creature1.family',
+            'creature2.family',
+            'creature3.family',
         ]);
 
         return view('pages.exploration.stories.show', [

@@ -63,6 +63,10 @@ class CreatureController extends Controller
             'family' => $family,
             'pet' => $wrappedCreature,
             'alts' => $altEvolutions,
+            'explorationStories' => $creature
+                ->explorationStories()
+                ->with('explorationArea')
+                ->get(),
         ]);
     }
 }

@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
 
 /**
@@ -81,11 +81,11 @@ class Creature extends Model
     }
 
     /**
-     * @return HasOne<Consumable,$this>
+     * @return BelongsTo<Consumable,$this>
      */
-    public function consumable(): HasOne
+    public function consumable(): BelongsTo
     {
-        return $this->hasOne(Consumable::class);
+        return $this->belongsTo(Consumable::class);
     }
 
     /**
@@ -97,17 +97,29 @@ class Creature extends Model
     }
 
     /**
+     * @return Builder<ExplorationStory>
+     */
+    public function explorationStories(): Builder
+    {
+        return ExplorationStory::query()
+            ->where('creature_1_id', $this->id)
+            ->orWhere('creature_2_id', $this->id)
+            ->orWhere('creature_3_id', $this->id);
+    }
+
+    /**
      * Returns the nearest previous and nearest next creatures adjacent to this
      * creature in terms of id. Skips missing ids.
      * @return Collection<string,$this|null>
      */
     public function getChronologicalAdjacents(): Collection
     {
-        $baseQuery = self::query()->with('family');
-        return collect([
-            'previous' => $baseQuery->clone()->where('id', '<', $this->id)->orderByDesc('id')->first(),
-            'next' => $baseQuery->clone()->where('id', '>', $this->id)->orderBy('id')->first(),
+        $collection = collect([
+            'previous' => self::query()->where('id', '<', $this->id)->orderByDesc('id')->first(),
+            'next' => self::query()->where('id', '>', $this->id)->orderBy('id')->first(),
         ]);
+
+        return $collection;
     }
 
     /**

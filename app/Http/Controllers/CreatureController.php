@@ -15,7 +15,11 @@ class CreatureController extends Controller
      */
     public function show(Family $family, Creature $creature): View
     {
-        $creature->loadMissing('consumable');
+        $creature->loadMissing([
+            'consumable',
+            'family',
+            'trainingOptions.creature',
+        ]);
         $family->loadMissing('alts');
 
         $closestCreatures = $creature

@@ -85,7 +85,7 @@ class Creature extends Model
      */
     public function consumable(): HasOne
     {
-        return $this->hasOne(Consumable::class, 'id', 'component_id');
+        return $this->hasOne(Consumable::class);
     }
 
     /**

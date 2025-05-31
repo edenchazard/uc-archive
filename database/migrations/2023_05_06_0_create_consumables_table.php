@@ -12,8 +12,8 @@ return new class() extends Migration {
     {
         Schema::create('consumables', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 20);
-            $table->string('type', 20);
+            $table->string('name');
+            $table->string('type');
             $table->timestamps();
         });
     }

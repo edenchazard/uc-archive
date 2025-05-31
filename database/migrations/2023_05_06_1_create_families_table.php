@@ -11,11 +11,8 @@ return new class() extends Migration {
     public function up()
     {
         Schema::create('families', function (Blueprint $table) {
-            $table->comment('Table for creature families.');
-
-            $table->unsignedSmallInteger('id')->autoIncrement();
-
-            $table->string('name', 36);
+            $table->id();
+            $table->string('name');
             $table->boolean('in_basket')->default(1);
             $table->boolean('deny_exalt')->default(1);
             $table->boolean('has_alts')->default(0);
@@ -26,7 +23,6 @@ return new class() extends Migration {
             $table->date('released')->useCurrent()->nullable();
             $table->date('availability_begin')->default('1970-01-01');
             $table->date('availability_end')->default('1970-01-01');
-
             $table->timestamps();
         });
     }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Alt;
 use App\Models\Creature;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -13,11 +14,10 @@ return new class() extends Migration {
     {
         Schema::create('user_pets', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Creature::class);
+            $table->foreignIdFor(Creature::class)->constrained();
+            $table->foreignIdFor(Alt::class)->constrained()->nullable();
             $table->unsignedTinyInteger('specialty')->default(0);
-            // todo if we add varieties, we'll change this to a foreign key, probably.
-            $table->unsignedSmallInteger('variety')->default(0);
-            $table->string('nickname', 40);
+            $table->string('nickname');
             $table->unsignedTinyInteger('gender')->default(0);
             $table->timestamps();
         });

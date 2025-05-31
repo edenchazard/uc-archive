@@ -1,5 +1,3 @@
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 
 INSERT INTO `alts` (`family_id`, `name`, `enabled`) VALUES
 (2, 'candycane', 0),
@@ -107,4 +105,3 @@ INSERT INTO `alts` (`family_id`, `name`, `enabled`) VALUES
 (34, 'dragonbot', 0),
 (38, 'partay', 1);
 
-COMMIT;

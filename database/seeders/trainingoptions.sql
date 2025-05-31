@@ -1,6 +1,3 @@
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-
 INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `energy_cost`, `reward`) VALUES
 (1, 2, 'Play in the snow', 'Asmo pounces through the snow and makes ball-angels.', 2, '+1 creativity'),
 (2, 2, 'Sing a lullaby', 'Asmo sings a quiet lullaby for others to hear.', 2, '+1 charisma'),
@@ -1085,7 +1082,7 @@ INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `en
 (1079, 165, 'Detect area', 'Finn uses a powerful underwater signal to detect things nearby.', 10, '+1 Echolocation, +1 willpower'),
 (1080, 166, 'Play with others', 'Flipper swims over to some friends and plays a game.', 4, '+1 charisma'),
 (1081, 166, 'Learn new games', 'Flipper learns how to play a new game.', 5, '+1 intelligence'),
-(1082, 0, 'Triple backflip', 'Flipper jumps high out of the water to perform a triple backflip.', 6, '+1 strength'),
+(1082, 166, 'Triple backflip', 'Flipper jumps high out of the water to perform a triple backflip.', 6, '+1 strength'),
 (1083, 166, 'Play tag', 'Flipper plays an exciting game of tag with some friends.', 7, '+1 speed, +1 agility'),
 (1084, 166, 'Play hide and seek', 'Flipper chirps happily while swimming off to hide.', 7, '+1 willpower, +1 creativity'),
 (1085, 166, 'Investigate noises', 'Flipper hears a fun sound and rushes off to investigate.', 8, '+1 focus, +1 wisdom'),
@@ -1160,7 +1157,7 @@ INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `en
 (1154, 177, 'Minor telekinesis', 'Equas uses telekinesis to move small objects around.', 10, '+1 Minor Telekinesis, +1 focus'),
 (1155, 177, 'Sense the world', 'Equas excitedly senses the world around itself.', 11, '+1 Intuition, +1 wisdom'),
 (1156, 178, 'Decide behavior', 'Chi takes time to consider how it will grow up.', 4, '+1 willpower'),
-(1157, 0, 'Learn about the world', 'Chi goes and explores the world to discover more about it.', 5, '+1 intelligence'),
+(1157, 178, 'Learn about the world', 'Chi goes and explores the world to discover more about it.', 5, '+1 intelligence'),
 (1158, 178, 'Play', 'Chi excitedly runs around and plays!', 7, '+1 creativity, +1 charisma'),
 (1159, 178, 'Work together', 'Chi learns to work together and become stronger.', 8, '+1 agility, +1 creativity'),
 (1160, 178, 'Share gifts', 'Chi shares its gifts between its two entities.', 8, '+1 Chi, +1 wisdom'),
@@ -2234,7 +2231,6 @@ INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `en
 (2226, 362, 'Play with Squawk', '* plays Pirates and Ninjas with Squawk.', 6, '+1 agility, +1 creativity'),
 (2227, 362, 'Quick nap', '* snuggles up against you and gets some sleep before continuing #his training.', 6, '+1 willpower, +1 wisdom'),
 (2228, 362, 'Quick meal', '* quickly gulps down some cheese so #he can regain #his focus and continue #his training.', 8, '+1 focus, +1 speed'),
-(2229, 0, '', '', 0, ''),
 (2230, 363, 'Share cheese', '* offers you a piece of #his cheese.', 4, '+1 charisma'),
 (2231, 363, 'Learn about justice', '* contemplates the nature of justice.', 4, '+1 focus'),
 (2232, 363, 'Race Scalawag', '* races Scalawag in a friendly game to see who''s the faster flyer.', 6, '+1 speed'),
@@ -3636,7 +3632,7 @@ INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `en
 (3625, 606, 'Fly!', '* launches #himself in the air, spreading #his large wings and climbing to great heights.', 10, '+1 Fly, +1 speed'),
 (3626, 606, 'Sing of winter', '* sings a song of winter as #he soars over your territory.', 11, '+1 Sing, +1 charisma, +1 creativity'),
 (3627, 606, 'Summon winter', '* leaves traces of winter as #he flies through the night. Everyone will wake up to a beautiful snowy morning!', 12, '+1 Mystic Winter, +1 agility, +1 charisma'),
-(3628, 0, 'Ow', '* topples over when #he tries to stand.', 5, '+1 speed'),
+(3628, 608, 'Ow', '* topples over when #he tries to stand.', 5, '+1 speed'),
 (3629, 608, '...', '* ducks #his head beneath the pillows when you ask #him what #he wants for breakfast.', 6, '+1 creativity'),
 (3630, 608, '....', 'You find * tailing you while you work.', 7, '+1 Mimic, +1 willpower'),
 (3631, 608, '...?', '* carries a bucket for you.', 8, '+1 strength'),
@@ -4301,6 +4297,4 @@ INSERT INTO `training_options` (`id`, `creature_id`, `title`, `description`, `en
 (4312, 741, 'Big convention', 'As one of the most experienced members of mansion staff, * heads up preparations for a huge convention visiting Hephland.', 10, '+1 focus, +1 wisdom'),
 (4313, 741, 'It''s alright', '* stops her chores to smile and help a young Fubuki clean up a mess she just made.', 10, '+1 Help, +1 charisma'),
 (4314, 741, 'Must be serious business', 'You realize just what ends * is willing to go to for a prank as you watch her heft a box of gadgets twice her weight up to the attic to prepare.', 11, '+1 Hard Work, +1 strength, +1 willpower'),
-(4315, 741, 'Biggest prank ever', '* wants to know if you''ll help her pull off the biggest prank yet!', 12, '+1 Surprise, +1 creativity, +1 intelligence'),
-(4316, 754, 'Jump', '', 15, '+1 Thing, +1 Agility');
-COMMIT;
+(4315, 741, 'Biggest prank ever', '* wants to know if you''ll help her pull off the biggest prank yet!', 12, '+1 Surprise, +1 creativity, +1 intelligence');

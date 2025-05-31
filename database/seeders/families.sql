@@ -18,7 +18,7 @@ SET AUTOCOMMIT = 0;
 START TRANSACTION;
 
 -- Dumping data for table uc_archive.families: ~190 rows (approximately)
-INSERT IGNORE INTO `families` (`id`, `name`, `slug`, `in_basket`, `deny_exalt`, `has_alts`, `gender`, `rarity`, `unique_rating`, `element`, `released`, `availability_begin`, `availability_end`, `base_stats`, `created_at`, `updated_at`) VALUES
+INSERT INTO `families` (`id`, `name`, `slug`, `in_basket`, `deny_exalt`, `has_alts`, `gender`, `rarity`, `unique_rating`, `element`, `released`, `availability_begin`, `availability_end`, `base_stats`, `created_at`, `updated_at`) VALUES
 	(1, 'Adamant', 'adamant', 1, 0, 0, 0, 5, NULL, 'Earth', '2011-07-26', '1970-01-01', '1970-12-31', '{"strength":0,"agility":4,"speed":3,"intelligence":6,"wisdom":8,"charisma":9,"creativity":4,"willpower":8,"focus":7}', NULL, '2025-05-26 11:06:50'),
 	(2, 'Aello', 'aello', 1, 0, 1, 3, 5, NULL, 'Air', '2010-04-11', '1970-01-01', '1970-12-31', '{"strength":0,"agility":7,"speed":4,"intelligence":6,"wisdom":1,"charisma":3,"creativity":2,"willpower":5,"focus":4}', NULL, '2025-05-26 11:06:50'),
 	(3, 'Ahanu', 'ahanu', 1, 0, 0, 3, 2, NULL, 'Air', '2009-06-13', '1970-01-01', '1970-12-31', '{"strength":0,"agility":3,"speed":7,"intelligence":4,"wisdom":5,"charisma":6,"creativity":5,"willpower":2,"focus":1}', NULL, '2025-05-26 11:06:50'),

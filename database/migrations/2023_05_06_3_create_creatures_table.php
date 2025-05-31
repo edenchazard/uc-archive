@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Consumable;
 use App\Models\Family;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -12,20 +13,14 @@ return new class() extends Migration {
     public function up()
     {
         Schema::create('creatures', function (Blueprint $table) {
-            $table->comment('Table for individual creatures themselves.');
-
-            $table->unsignedSmallInteger('id', true)->autoIncrement();
-            $table->string('name', 20);
+            $table->id();
+            $table->foreignIdFor(Family::class)->constrained();
+            $table->foreignIdFor(Consumable::class)->constrained();
+            $table->string('name');
             $table->unsignedTinyInteger('stage')->default(1);
+            $table->unsignedSmallInteger('required_clicks')->nullable();
             $table->text('short_description');
             $table->text('long_description');
-            $table->unsignedSmallInteger('required_clicks');
-
-            $table->unsignedSmallInteger('family_id');
-            //    $table->foreign('family_id')->references('id')->on('families')->restrictOnDelete()->cascadeOnUpdate();
-            $table->unsignedTinyInteger('component_id')->index();
-            //    $table->foreign('component_id')->references('id')->on('consumables')->restrictOnDelete()->cascadeOnUpdate();
-
             $table->timestamps();
 
             $table->unique(['stage', 'family_id']);

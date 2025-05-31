@@ -14,17 +14,17 @@ return new class() extends Migration {
     {
         Schema::create('exploration_stories', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
             $table->string('slug')->nullable();
             $table->foreignIdFor(ExplorationArea::class)->constrained();
+            $table->foreignIdFor(Creature::class, 'creature_1_id')->constrained()->nullable();
+            $table->string('creature_1_option');
+            $table->foreignIdFor(Creature::class, 'creature_2_id')->constrained()->nullable();
+            $table->string('creature_2_option');
+            $table->foreignIdFor(Creature::class, 'creature_3_id')->constrained()->nullable();
+            $table->string('creature_3_option');
+            $table->string('title');
             $table->text('story')->nullable();
             $table->text('history')->nullable();
-            $table->foreignIdFor(Creature::class, 'creature_1_id')->nullable();
-            $table->string('creature_1_option');
-            $table->foreignIdFor(Creature::class, 'creature_2_id')->nullable();
-            $table->string('creature_2_option');
-            $table->foreignIdFor(Creature::class, 'creature_3_id')->nullable();
-            $table->string('creature_3_option');
             $table->timestamps();
         });
     }

@@ -13,14 +13,14 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            ExplorationAreaSeeder::class,
             ConsumableSeeder::class,
-            ExplorationAreaConsumableSeeder::class,
             FamilySeeder::class,
-            CreatureSeeder::class,
-            ExplorationStorySeeder::class,
-            TrainingOptionSeeder::class,
             AltSeeder::class,
+            CreatureSeeder::class,
+            TrainingOptionSeeder::class,
+            ExplorationAreaSeeder::class,
+            ExplorationAreaConsumableSeeder::class,
+            ExplorationStorySeeder::class,
         ]);
     }
 }

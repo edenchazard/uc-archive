@@ -31,7 +31,7 @@ class ExplorationStory extends Model
     {
         return Attribute::make(
             get: function () {
-                return (new FormattingService($this->story ?? '', [],))
+                return (new FormattingService($this->story ?? '', []))
                     ->formatAll()
                     ->get();
             }

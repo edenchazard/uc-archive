@@ -92,7 +92,7 @@
                 <tr class="flex flex-col odd:bg-[#add0eb] even:bg-uc-blue md:table-row">
                     <td>{{ $option->title }}</td>
                     <td>{{ $option->energy_cost }}</td>
-                    <td>{{ $option->reward }}</td>
+                    <td>{!! $option->formatted_reward !!}</td>
                     <td>
                         <x-formatted-block :text="$option->format($pet)" />
                     </td>

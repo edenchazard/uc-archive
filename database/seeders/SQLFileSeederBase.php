@@ -21,7 +21,7 @@ abstract class SQLFileSeederBase extends Seeder
         }
 
         $path = dirname(__DIR__) . "/seeders/{$this->file}";
-        $sql = "SET AUTOCOMMIT = 0; START TRANSACTION;" . file_get_contents($path) . " COMMIT;";
+        $sql = 'SET AUTOCOMMIT = 0; START TRANSACTION;' . file_get_contents($path) . ' COMMIT;';
 
         $status = DB::unprepared($sql);
 

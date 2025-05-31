@@ -31,11 +31,6 @@ class FamilyController extends Controller
 
         return view('pages.creatures.index', [
             'groups' => $families->groupBy(fn ($family) => $family['family']?->name[0] ?? ''),
-            'page' => [
-                'title' => 'Families',
-                'route' => 'family',
-                'name' => 'All families',
-            ],
         ]);
     }
 

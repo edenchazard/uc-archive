@@ -11,7 +11,7 @@
                       <img src="{{ $creature->image_link }}" alt="" />
                   </a>
                   <span>{{ $creature->creature->name }}</span>
-                  {{ $explorationStory->{"creature_{$loop->iteration}_option"} }}
+                  {{ $explorationStory->storyOptions[$loop->index]->formatted_description }}
               </li>
           @endforeach
       </ol>

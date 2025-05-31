@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
@@ -97,14 +97,19 @@ class Creature extends Model
     }
 
     /**
-     * @return Builder<ExplorationStory>
+     * @return BelongsToMany<ExplorationStory,$this>
      */
-    public function explorationStories(): Builder
+    public function explorationStories(): BelongsToMany
     {
-        return ExplorationStory::query()
-            ->where('creature_1_id', $this->id)
-            ->orWhere('creature_2_id', $this->id)
-            ->orWhere('creature_3_id', $this->id);
+        return $this->belongsToMany(ExplorationStory::class, 'exploration_story_option');
+    }
+
+    /**
+     * @return HasMany<ExplorationStoryOption,$this>
+     */
+    public function explorationStoryOptions(): HasMany
+    {
+        return $this->hasMany(ExplorationStoryOption::class);
     }
 
     /**

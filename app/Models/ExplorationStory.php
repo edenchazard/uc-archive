@@ -6,6 +6,7 @@ use App\Services\Formatting\FormattingService;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ExplorationStory extends Model
 {
@@ -25,27 +26,11 @@ class ExplorationStory extends Model
     }
 
     /**
-     * @return BelongsTo<Creature,$this>
+     * @return HasMany<ExplorationStoryOption,$this>
      */
-    public function creature1(): BelongsTo
+    public function storyOptions(): HasMany
     {
-        return $this->belongsTo(Creature::class, 'creature_1_id');
-    }
-
-    /**
-     * @return BelongsTo<Creature,$this>
-     */
-    public function creature2(): BelongsTo
-    {
-        return $this->belongsTo(Creature::class, 'creature_2_id');
-    }
-
-    /**
-     * @return BelongsTo<Creature,$this>
-     */
-    public function creature3(): BelongsTo
-    {
-        return $this->belongsTo(Creature::class, 'creature_3_id');
+        return $this->hasMany(ExplorationStoryOption::class);
     }
 
     /**

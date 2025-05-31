@@ -6,6 +6,8 @@ use App\Models\Alt;
 use App\Models\Creature;
 use App\Models\Family;
 use App\Models\UserPet;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\View\View;
 
 class CreatureController extends Controller
@@ -18,8 +20,15 @@ class CreatureController extends Controller
         $creature->loadMissing([
             'consumable',
             'family',
-            'trainingOptions.creature',
+            'trainingOptions' => fn (HasMany $q) => $q
+                ->with('creature')
+                ->orderBy('energy_cost')
+                ->orderBy('title'),
+            'explorationStories' => fn (BelongsToMany $q) => $q
+                ->with('explorationArea')
+                ->orderBy('title'),
         ]);
+
         $family->loadMissing('alts');
 
         $closestCreatures = $creature
@@ -67,10 +76,7 @@ class CreatureController extends Controller
             'family' => $family,
             'pet' => $wrappedCreature,
             'alts' => $altEvolutions,
-            'explorationStories' => $creature
-                ->explorationStories()
-                ->with('explorationArea')
-                ->get(),
+            'explorationStories' => $creature->explorationStories,
         ]);
     }
 }

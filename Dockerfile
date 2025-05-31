@@ -47,6 +47,7 @@ RUN rm -rf /usr/bin/composer /usr/local/bin/node /usr/local/lib/node_modules /us
 
 RUN chmod -R 770 storage bootstrap/cache \
   && mkdir -p /var/www/storage/logs \
-  && touch /var/www/storage/logs/laravel.log
+  && touch /var/www/storage/logs/laravel.log \
+  && chown -R www-data:www-data /var/www/storage/logs
 
 USER www-data

@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\File;
+use Str;
 
 /**
  * App\Models\UserPet
@@ -111,33 +113,44 @@ class UserPet extends Model
     }
 
     /**
-     * @return Attribute<string,never>
+     * @return Attribute<string|null,never>
      */
     protected function imageLink(): Attribute
     {
         return Attribute::make(
             get: function () {
                 $creature = $this->creature;
-                $parts = collect([]);
 
-                if ($this->specialty->value > 0 && $this->specialty->value <= 2) {
-                    $parts->push($this->specialty->friendlyName());
-                }
+                $path = Str::of("images/creatures/{$creature->family->name}/")
+                    ->when(
+                        $this->specialty->value > 0 && $this->specialty->value <= 2,
+                        fn ($path) =>
+                        $path->append("{$this->specialty->friendlyName()}_")
+                    )
+                    ->when(
+                        $this->variety > 0,
+                        fn ($path) =>
+                        $path->append("{$this->variety}_")
+                    )
+                    // creatures with their family name don't follow the same url format...
+                    ->append($creature->family->name)
+                    ->when(
+                        $creature->family->name !== $creature->name,
+                        fn ($path) =>
+                        $path->append("_{$creature->name}")
+                    )
+                    ->lower()
+                    ->when(
+                        fn ($path) => File::exists(public_path("{$path}.png")),
+                        fn ($path) =>
+                        $path->append('.png'),
+                        fn ($path) => $path->when(
+                            File::exists(public_path("{$path}.gif")),
+                            fn ($path) => $path->append('.gif'),
+                        )
+                    );
 
-                if ($this->variety) {
-                    $parts->push($this->variety);
-                }
-
-                // creatures with their family name don't follow the same url format...
-                $parts->push($creature->family->name);
-
-                if ($creature->family->name !== $creature->name) {
-                    $parts->push($creature->name);
-                }
-
-                $path = strtolower("/images/creatures/{$creature->family->name}/{$parts->join('_')}.png");
-
-                return asset($path);
+                return $path->contains('.') ? asset($path) : null;
             }
         );
     }

@@ -48,6 +48,9 @@
         @if ($alts->isNotEmpty())
             <div class="flex flex-wrap items-end gap-3">
                 @foreach (['normal' => $pet, ...$alts] as $altName => $alt)
+                    @if (! $alt->image_link)
+                        @continue
+                    @endif
                     <div class="flex flex-col justify-between items-center">
                         <img src="{{ $alt->image_link }}" alt="{{ ucfirst($altName) }}" />
                         <span>{{ ucfirst($altName) }}</span>

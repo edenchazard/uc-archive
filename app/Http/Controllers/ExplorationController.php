@@ -26,7 +26,7 @@ class ExplorationController extends Controller
 
         $explorationArea->loadMissing([
             'consumables' => fn (BelongsToMany $q) => $q
-                ->orderByRaw("type = '" . ConsumableTypeEnum::RareComponent->value . "'")
+                ->orderByRaw("type = '" . ConsumableTypeEnum::Tree->value . "' DESC")
                 ->orderBy('name'),
             'explorationStories' => fn (HasMany $q) => $q
                 ->orderBy('title'),

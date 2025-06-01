@@ -8,7 +8,7 @@
   <section>
     <h2>Archives</h2>
     <ol class="flex flex-col gap-3 list-disc list-inside">
-      <li><a href="{{ route('creatures.index') }}">Families</a></li>
+      <li><a href="{{ route('creatures.index') }}">Families</a> (image-heavy)</li>
       <li><a href="{{ route('components.index') }}">Components</a></li>
       <li><a href="{{ route('exploration.index') }}">Exploration Areas</a></li>
     </ol>

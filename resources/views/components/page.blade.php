@@ -2,12 +2,19 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="motion-safe:scroll-smooth motion-reduce:scroll-auto">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ Breadcrumbs::headTitle() }}</title>
+    <meta name="description" content="An unofficial archive of the content from the game Unicreatures.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#7ae789">
+    <meta property="og:title" content="Unicreatures Archive" />
+    <meta property="og:url" content="{{ URL::current() }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="{{ asset('images/creatures/flick/flick.png') }}" />
+    <meta property="og:description" content="An unofficial archive of the content from the game Unicreatures." />
+    <link rel="icon" type="image/x-icon" href="{{ asset('/images/favicon.ico') }}">
     @vite('resources/css/app.css')
     @stack('css')
     @stack('scripts')
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 </head>
 <body class="antialiased bg-uc-blue font-sans font-normal font-base">
     <div class='max-w-5xl m-auto drop-shadow-[0px_0px_8px_rgba(200,204,179,0.9)]'>
@@ -16,7 +23,7 @@
             </div>
             <div class='drop-shadow-lg flex flex-row items-center justify-between bg-uc-mdbrown p-4'>
                 <div>
-                    UC Archive
+                    Unicreatures Archive
                 </div>
                 <nav id='menu' class='grow'>
                     <ul class='flex flex-row flex-wrap justify-end text-uc-dkbrown uppercase text-sm font-medium'>

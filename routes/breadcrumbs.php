@@ -21,7 +21,7 @@ Breadcrumbs::macro('headTitle', function () {
     $resolvedTitle = $breadcrumb->pageTitle ?? $breadcrumb->title ?? '';
 
     if ($resolvedTitle === 'Archive') {
-        return 'UC Archive';
+        return 'Unicreatures Archive';
     }
 
     $title = is_string($resolvedTitle) ? "{$resolvedTitle} |" : '';

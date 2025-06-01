@@ -69,6 +69,7 @@ class Creature extends Model
      */
     protected $casts = [
         'stage' => 'integer',
+        'artist' => 'string',
         'max_stats' => AsCollection::class,
     ];
 

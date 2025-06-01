@@ -21,6 +21,7 @@ return new class() extends Migration {
             $table->unsignedSmallInteger('required_clicks')->nullable();
             $table->text('short_description');
             $table->text('long_description');
+            $table->string('artist')->nullable();
             $table->timestamps();
 
             $table->unique(['stage', 'family_id']);

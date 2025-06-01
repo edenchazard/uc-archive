@@ -17,7 +17,7 @@
             <img src='{{ $pet->image_link }}' alt="{{ $pet->creature->name }}" class="self-center" />
             <div class="max-w-sm">
                 <div class="flex flex-col gap-2">
-                    <p><span class='font-bold'>{{ $pet->creature->name }}</span> is the {{ Number::ordinal($pet->creature->stage) }}{{  $pet->creature->required_clicks === 0 ? ' and final' : '' }} evolution of the {{$family->name}} family and {{ Number::ordinal($pet->creature->id) }} creature overall.</p>
+                    <p><span class='font-bold'>{{ $pet->creature->name }}</span> was drawn {{ $pet->creature->artist ? "by  {$pet->creature->artist}" : "by an unknown artist" }} and is the {{ Number::ordinal($pet->creature->stage) }}{{  $pet->creature->required_clicks === 0 ? ' and final' : '' }} evolution of the {{$family->name}} family, and {{ Number::ordinal($pet->creature->id) }} creature overall.</p>
                     <p>Being a member of the {{$family->name}} family, its elemental type is {{ $family->element->value }} with a rarity rating of {{ $family->rarity->friendlyName() }}{!! $family->unique_rating ? " <span class='font-bold'>(".$family->unique_rating->value.")</span>" : '' !!}.</p>
                     @if ($family->released)
                         <p>It was released on <time>{{ $family->released->format('jS F o') }}</time>.</p>
@@ -28,7 +28,7 @@
                         <img
                             src='{{ $pet->creature->consumable->image_link }}'
                             alt='{{ $pet->creature->consumable->name }}'
-                            class="self-center"/>
+                            class="self-center" />
                         Interacting with {{$pet->creature->name}} while exploring would earn you the {{$pet->creature->consumable->name}} component.
                         @if ($pet->creature->required_clicks > 0)
                         It requires {{$pet->creature->required_clicks}} clicks to evolve.

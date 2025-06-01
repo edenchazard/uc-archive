@@ -70,6 +70,7 @@
                             </div>
                         @endforeach
                     </div>
+                    <p class='text-sm italic'>({{ $stage->creature->artist ? "Art by {$stage->creature->artist}" : 'Artist unknown' }})</p>
                     <div>
                         <h3 class='inline font-medium'>{{ $stage->creature->name }}</h3>
                         <x-article-link :url='route("creatures.family.creature.show", [$family, $stage->creature])' />

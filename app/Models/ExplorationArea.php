@@ -32,7 +32,7 @@ class ExplorationArea extends Model
     protected function imageLink(): Attribute
     {
         return Attribute::make(
-            get: fn () => asset(strtolower('images/exploration/' . Str::snake($this->name) . '.png'))
+            get: fn () => asset(strtolower('images/exploration/' . Str::snake($this->name) . '.webp'))
         );
     }
 }

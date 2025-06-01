@@ -141,13 +141,9 @@ class UserPet extends Model
                     )
                     ->lower()
                     ->when(
-                        fn ($path) => File::exists(public_path("{$path}.png")),
+                        fn ($path) => File::exists(public_path("{$path}.webp")),
                         fn ($path) =>
-                        $path->append('.png'),
-                        fn ($path) => $path->when(
-                            File::exists(public_path("{$path}.gif")),
-                            fn ($path) => $path->append('.gif'),
-                        )
+                        $path->append('.webp')
                     );
 
                 return $path->contains('.') ? asset($path) : null;

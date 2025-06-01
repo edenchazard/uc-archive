@@ -9,7 +9,7 @@
     <meta property="og:title" content="Unicreatures Archive" />
     <meta property="og:url" content="{{ URL::current() }}" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="{{ asset('images/creatures/flick/flick.png') }}" />
+    <meta property="og:image" content="{{ asset('images/og-image.png') }}" />
     <meta property="og:description" content="An unofficial archive of the content from the game Unicreatures." />
     <link rel="icon" type="image/x-icon" href="{{ asset('/images/favicon.ico') }}">
     @vite('resources/css/app.css')
@@ -19,7 +19,7 @@
 <body class="antialiased bg-uc-blue font-sans font-normal font-base">
     <div class='max-w-5xl m-auto drop-shadow-[0px_0px_8px_rgba(200,204,179,0.9)]'>
         <header>
-            <div id='banner' role='presentation' style="background-image: url({{ asset('images/bannerv2_clean.png') }})" class="h-[232px] bg-no-repeat bg-center">
+            <div id='banner' role='presentation' style="background-image: url({{ asset('images/bannerv2_clean.webp') }})" class="h-[232px] bg-no-repeat bg-center">
             </div>
             <div class='drop-shadow-lg flex flex-row items-center justify-between bg-uc-mdbrown p-4'>
                 <div>

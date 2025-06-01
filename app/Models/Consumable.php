@@ -51,7 +51,7 @@ class Consumable extends Model
     protected function imageLink(): Attribute
     {
         return Attribute::make(
-            get: fn () => asset(strtolower('images/components/' . Str::snake($this->name) . '.png'))
+            get: fn () => asset(strtolower('images/components/' . Str::snake($this->name) . '.webp'))
         );
     }
 }

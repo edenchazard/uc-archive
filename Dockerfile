@@ -2,6 +2,13 @@
 FROM composer:latest AS composer
 
 FROM node:24.0-alpine3.21 AS node
+WORKDIR /var/www
+COPY public ./public
+COPY resources ./resources
+COPY vite.config.js ./
+COPY package.json package-lock.json ./
+RUN [ "npm", "ci" ]
+RUN [ "npm", "run", "build" ]
 
 FROM php:8.4-fpm-alpine3.21 AS base
 WORKDIR /var/www
@@ -10,23 +17,14 @@ RUN docker-php-ext-install mbstring pdo mysqli pdo_mysql intl
 
 FROM base AS production
 COPY --from=composer /usr/bin/composer /usr/bin/composer
-COPY --from=node /usr/local/bin/node /usr/local/bin/node
-COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
-RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
-
 COPY app ./app
 COPY bootstrap ./bootstrap
 COPY config ./config
 COPY database ./database
-COPY public ./public
-COPY resources ./resources
 COPY routes ./routes
 COPY storage ./storage
-COPY package.json package-lock.json ./
-COPY vite.config.js ./
-
-RUN [ "npm", "ci" ]
-RUN [ "npm", "run", "build" ]
+COPY --from=node /var/www/public ./public
+COPY resources ./resources
 
 COPY composer.json composer.lock artisan ./
 RUN composer install \
@@ -41,7 +39,7 @@ RUN composer install \
   --apcu \
   --no-dev
 
-RUN rm -rf /usr/bin/composer /usr/local/bin/node /usr/local/lib/node_modules /usr/local/bin/npm \
+RUN rm -rf /usr/bin/composer \
   && chown -R www-data:www-data /var/www \
   && chmod -R 555 .
 

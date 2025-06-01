@@ -2,6 +2,8 @@
 FROM composer:latest AS composer
 
 FROM node:24.0-alpine3.21 AS node
+ARG VITE_BASE_URL="/unicreatures"
+ENV VITE_BASE_URL=$VITE_BASE_URL
 WORKDIR /var/www
 COPY public ./public
 COPY resources ./resources

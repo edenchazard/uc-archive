@@ -7,12 +7,12 @@
     @vite('resources/css/app.css')
     @stack('css')
     @stack('scripts')
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 </head>
-
 <body class="antialiased bg-uc-blue font-sans font-normal font-base">
     <div class='max-w-5xl m-auto drop-shadow-[0px_0px_8px_rgba(200,204,179,0.9)]'>
         <header>
-            <div id='banner' role='presentation' class="h-[232px] bg-[url(/resources/css/images/bannerv2_clean.png)] bg-no-repeat bg-center">
+            <div id='banner' role='presentation' style="background-image: url({{ asset('images/bannerv2_clean.png') }})" class="h-[232px] bg-no-repeat bg-center">
             </div>
             <div class='drop-shadow-lg flex flex-row items-center justify-between bg-uc-mdbrown p-4'>
                 <div>

@@ -1,52 +1,55 @@
 @import 'tailwindcss';
 
 @theme {
-  --grid-template-columns-fill-auto: repeat(auto-fill, minmax(4em, 1fr));
-  --color-uc-blue: #5ba0d6;
-  --color-uc-ltbrown: #f7f4cc;
-  --color-uc-mdbrown: #dfd1a6;
-  --color-uc-dkbrown: #2e260f;
-  --color-uc-grad-begin: #599fd5;
-  --color-uc-grad-end: #abe4fe;
-  --color-uc-glow: rgba(200, 204, 179, 0.9);
+    --grid-template-columns-fill-auto: repeat(auto-fill, minmax(4em, 1fr));
+    --color-uc-blue: #5ba0d6;
+    --color-uc-ltbrown: #f7f4cc;
+    --color-uc-mdbrown: #dfd1a6;
+    --color-uc-dkbrown: #2e260f;
+    --color-uc-grad-begin: #599fd5;
+    --color-uc-grad-end: #abe4fe;
+    --color-uc-glow: rgba(200, 204, 179, 0.9);
 }
 
 @layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
-  }
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-gray-200, currentcolor);
+    }
 
-  h1 {
-    @apply text-3xl;
-  }
-  h2 {
-    @apply text-2xl;
-  }
-  h3 {
-    @apply text-xl;
-  }
-  h4 {
-    @apply text-lg;
-  }
+    h1 {
+        @apply text-3xl;
+    }
+    h2 {
+        @apply text-2xl;
+    }
+    h3 {
+        @apply text-xl;
+    }
+    h4 {
+        @apply text-lg;
+    }
 
-  a {
-    @apply text-uc-dkbrown;
-  }
+    a {
+        @apply text-uc-dkbrown;
+    }
 
-  #breadcrumb nav ol {
-    @apply flex flex-row p-2;
-  }
+    #breadcrumb nav ol {
+        @apply font-semibold flex flex-row py-2;
 
-  #breadcrumb nav ol li::after {
-    content: '>';
-    @apply m-2;
-  }
+        & li::after {
+            @apply m-2 content-['>'] text-uc-dkbrown;
+        }
 
-  #breadcrumb nav ol li:last-child::after {
-    @apply content-none;
-  }
+        & li a {
+            @apply text-uc-dkbrown hover:text-uc-mdbrown;
+        }
+
+        & li:last-child::after {
+            @apply content-none;
+        }
+    }
 }

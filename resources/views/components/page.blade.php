@@ -12,7 +12,7 @@
 <body class="antialiased bg-uc-blue font-sans font-normal font-base">
     <div class='max-w-5xl m-auto drop-shadow-[0px_0px_8px_rgba(200,204,179,0.9)]'>
         <header>
-            <div id='banner' role='presentation' class="h-[232px] bg-[url('../../resources/css/images/bannerv2_clean.png')] bg-no-repeat bg-center">
+            <div id='banner' role='presentation' class="h-[232px] bg-[url(/resources/css/images/bannerv2_clean.png)] bg-no-repeat bg-center">
             </div>
             <div class='drop-shadow-lg flex flex-row items-center justify-between bg-uc-mdbrown p-4'>
                 <div>
@@ -30,12 +30,14 @@
                 </nav>
             </div>
         </header>
-        <section id='breadcrumb' aria-label="Breadcrumb" class='bg-uc-ltbrown text-xs'>
-            {{ Breadcrumbs::render() }}
-        </section>
-        <main class='bg-linear-to-b from-uc-grad-begin to-uc-grad-end bg-uc-grad-end bg-size-[100%_526px] bg-no-repeat sm:p-5'>
-            {{ $slot }}
-        </main>
+        <div class='bg-linear-to-b from-uc-grad-begin to-uc-grad-end bg-uc-grad-end bg-size-[100%_526px] bg-no-repeat sm:p-5'>
+            <section id='breadcrumb' aria-label="Breadcrumb">
+                {{ Breadcrumbs::render() }}
+            </section>
+            <main>
+                {{ $slot }}
+            </main>
+        </div>
     </div>
 </body>
 

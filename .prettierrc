@@ -1,6 +1,18 @@
 {
-  "semi": true,
-  "trailingComma": "all",
-  "singleQuote": true,
-  "singleAttributePerLine": true
+    "semi": true,
+    "trailingComma": "all",
+    "singleQuote": true,
+    "singleAttributePerLine": true,
+    "plugins": ["@shufo/prettier-plugin-blade"],
+    "overrides": [
+        {
+            "files": ["*.blade.php"],
+            "options": {
+                "parser": "blade",
+                "tabWidth": 2,
+                "sortTailwindcssClasses": true,
+                "sortHtmlAttributes": "code-guide"
+            }
+        }
+    ]
 }

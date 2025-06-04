@@ -1,0 +1,9 @@
+composer.json
+composer.lock
+package.json
+package-lock.json
+vendor
+node_modules
+dist
+coverage
+public/images

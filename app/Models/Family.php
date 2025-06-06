@@ -103,6 +103,7 @@ class Family extends Model
     {
         return $this
             ->hasMany(Creature::class)
+            ->chaperone()
             ->orderBy('stage');
     }
 

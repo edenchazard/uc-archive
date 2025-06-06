@@ -10,4 +10,5 @@ enum ConsumableTypeEnum: string
     case Tree = 'Tree';
     case Orb = 'Orb';
     case Shard = 'Shard';
+    case Other = 'Other';
 }

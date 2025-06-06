@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Interfaces\ImageLink;
+use App\Traits\IsTransactionable;
+use File;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -9,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Str;
 
 /**
  * App\Models\Creature
@@ -62,8 +66,10 @@ use Illuminate\Support\Collection;
  * @method static \Illuminate\Database\Eloquent\Builder|Creature orderByFamilyName()
  * @mixin \Eloquent
  */
-class Creature extends Model
+class Creature extends Model implements ImageLink
 {
+    use IsTransactionable;
+
     /**
      * @var array<string,string>
      */
@@ -136,6 +142,31 @@ class Creature extends Model
     {
         return Attribute::make(
             get: fn () => $this->max_stats->sum()
+        );
+    }
+
+
+    public function imageLink(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $path = Str::of("images/creatures/{$this->family->name}/")
+                    // creatures with their family name don't follow the same url format...
+                    ->append($this->family->name)
+                    ->when(
+                        $this->family->name !== $this->name,
+                        fn ($path) =>
+                        $path->append("_{$this->name}")
+                    )
+                    ->lower()
+                    ->when(
+                        fn ($path) => File::exists(public_path("{$path}.webp")),
+                        fn ($path) =>
+                        $path->append('.webp')
+                    );
+
+                return $path->contains('.') ? asset($path) : null;
+            }
         );
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ConsumableTypeEnum;
 use App\Models\Consumable;
 use Illuminate\View\View;
 
@@ -11,6 +12,7 @@ class ComponentController extends Controller
     {
         $components = Consumable::query()
             ->orderBy('name')
+            ->whereNot('type', ConsumableTypeEnum::Other)
             ->get()
             ->groupBy('type');
 

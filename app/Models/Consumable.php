@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Enums\ConsumableTypeEnum;
+use App\Interfaces\ImageLink;
+use App\Traits\IsTransactionable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -25,8 +27,10 @@ use Str;
  * @method static \Illuminate\Database\Eloquent\Builder|Consumable whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Consumable extends Model
+class Consumable extends Model implements ImageLink
 {
+    use IsTransactionable;
+
     /**
      * @var array<string,string>
      */
@@ -45,13 +49,10 @@ class Consumable extends Model
         );
     }
 
-    /**
-     * @return Attribute<string,never>
-     */
-    protected function imageLink(): Attribute
+    public function imageLink(): Attribute
     {
         return Attribute::make(
-            get: fn () => asset(strtolower('images/components/' . Str::snake($this->name) . '.webp'))
+            get: fn () => asset(strtolower('images/consumables/' . Str::snake($this->name) . '.webp'))
         );
     }
 }

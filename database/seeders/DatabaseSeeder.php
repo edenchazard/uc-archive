@@ -1,9 +1,6 @@
 <?php
 
 namespace Database\Seeders;
-
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,6 +11,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            ItemSeeder::class,
             ConsumableSeeder::class,
             FamilySeeder::class,
             AltSeeder::class,
@@ -23,6 +21,9 @@ class DatabaseSeeder extends Seeder
             ExplorationAreaConsumableSeeder::class,
             ExplorationStorySeeder::class,
             ExplorationStoryOptionSeeder::class,
+            ShopCategorySeeder::class,
+            ShopTransactionSeeder::class,
+            ShopTransactionRequirementSeeder::class,
         ]);
     }
 }

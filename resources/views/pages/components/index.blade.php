@@ -1,7 +1,7 @@
 <x-page>
   <section>
     <h1>{{ Breadcrumbs::pageTitle() }}</h1>
-    <ul>
+    <ul class="space-y-2">
       @foreach ($components as $componentCategory => $componentList)
         <li>
           <x-content-section :title="$componentCategory">

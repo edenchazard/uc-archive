@@ -3,7 +3,7 @@
     <h1>{{ Breadcrumbs::pageTitle() }}</h1>
     <x-formatted-block :text="$explorationStory->formatted_story" />
   </section>
-  <section>
+  <nav>
     <ol class="flex justify-between text-center">
       @foreach ($creatures as $creature)
         <li class="flex flex-1 flex-col items-center gap-4">
@@ -21,5 +21,5 @@
         </li>
       @endforeach
     </ol>
-  </section>
+  </nav>
 </x-page>

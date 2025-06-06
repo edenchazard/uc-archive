@@ -53,16 +53,16 @@
   <div class="m-auto max-w-5xl drop-shadow-[0px_0px_8px_rgba(200,204,179,0.9)]">
     <header>
       <div
-        class="h-[232px] bg-center bg-no-repeat"
+        class="relative h-[232px] items-end bg-center bg-no-repeat px-12 text-4xl font-semibold"
         id="banner"
         role="presentation"
         style="background-image: url({{ asset('images/bannerv2_clean.webp') }})"
       >
+        <span class="absolute bottom-4">
+          <span class="text-white">Unicreatures</span> <span class="text-uc-grad-end">Archive</span>
+        </span>
       </div>
       <div class="bg-uc-mdbrown flex flex-row items-center justify-between p-4 drop-shadow-lg">
-        <div>
-          Unicreatures Archive
-        </div>
         <nav
           class="grow"
           id="menu"
@@ -76,7 +76,7 @@
       </div>
     </header>
     <div
-      class="bg-linear-to-b from-uc-grad-begin to-uc-grad-end bg-uc-grad-end bg-size-[100%_526px] bg-no-repeat sm:p-5"
+      class="bg-linear-to-b from-uc-grad-begin to-uc-grad-end bg-uc-grad-end bg-size-[100%_526px] bg-no-repeat p-4 md:p-6"
     >
       <section
         id="breadcrumb"

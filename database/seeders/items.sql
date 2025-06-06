@@ -1,0 +1,17 @@
+INSERT IGNORE INTO `items` (`id`, `name`, `description`, `created_at`, `updated_at`) VALUES
+	(1, 'Male Gen-X', NULL, NULL, NULL),
+	(2, 'Female Gen-X', NULL, NULL, NULL),
+	(12, 'Cryogenic Freeze Spray', 'This cyrogenic freeze spray will freeze a creature or egg in its current form. It cannot evolve, be trained, use the Arena, be used in accomplishments, or count toward your egg limit.', NULL, NULL),
+	(23, 'Mystery Box', NULL, NULL, NULL),
+	(25, 'Time Warp Watch', NULL, NULL, NULL),
+	(26, 'Story Parchment', NULL, NULL, NULL),
+	(29, 'Component Bag', NULL, NULL, NULL),
+	(33, 'Elixir of Nobility', 'The Elixir of Nobility will rebirth a creature with 500 or more care points as a noble!', NULL, NULL),
+	(34, 'Elixir of Exaltation', 'The Elixir of Exalted will rebirth a noble creature with 1,000 or more care points as an exalted!', NULL, NULL),
+	(35, 'Normalize Potion', NULL, NULL, NULL),
+	(36, 'Defrosting Torch', NULL, NULL, NULL),
+	(37, 'Refresh Potion', NULL, NULL, NULL),
+	(38, 'Vigor Potion', NULL, NULL, NULL),
+	(39, 'Moxie Potion', NULL, NULL, NULL),
+	(40, 'Vitality Potion', NULL, NULL, NULL),
+	(41, 'Profession Scroll', NULL, NULL, NULL);

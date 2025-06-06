@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\GenderEnum;
 use App\Enums\SpecialtyEnum;
+use App\Interfaces\ImageLink;
 use App\Services\Formatting\CreatureFormattingService;
 use Database\Factories\UserPetFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -37,7 +38,7 @@ use Str;
  * @method static \Illuminate\Database\Eloquent\Builder|UserPet whereVariety($value)
  * @mixin \Eloquent
  */
-class UserPet extends Model
+class UserPet extends Model implements ImageLink
 {
     /**
      * @use HasFactory<UserPetFactory>
@@ -112,10 +113,7 @@ class UserPet extends Model
         );
     }
 
-    /**
-     * @return Attribute<string|null,never>
-     */
-    protected function imageLink(): Attribute
+    public function imageLink(): Attribute
     {
         return Attribute::make(
             get: function () {

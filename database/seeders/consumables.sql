@@ -33,4 +33,5 @@ INSERT INTO `consumables` (`id`, `name`, `type`) VALUES
 (33, 'Earth Shard', 'Shard'),
 (34, 'Fire Shard', 'Shard'),
 (35, 'Water Shard', 'Shard'),
-(36, 'Wind Shard', 'Shard');
+(36, 'Wind Shard', 'Shard'),
+(37, "Coins", "Other");

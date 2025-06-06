@@ -6,6 +6,7 @@ use App\Http\Controllers\ExplorationController;
 use App\Http\Controllers\ExplorationStoryController;
 use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -49,4 +50,9 @@ Route::prefix('/exploration')->name('exploration.')->group(function () {
         Route::get('/', [ExplorationController::class, 'show'])->name('show');
         Route::get('/{explorationStory:slug}', [ExplorationStoryController::class, 'show'])->name('story.show');
     });
+});
+
+Route::prefix('/shop')->name('shop.')->group(function () {
+    Route::get('/', [ShopController::class, 'index'])->name('index');
+    Route::get('/{shopCategory:slug}', [ShopController::class, 'show'])->name('category.show');
 });

@@ -4,6 +4,7 @@ use App\Models\Creature;
 use App\Models\ExplorationArea;
 use App\Models\ExplorationStory;
 use App\Models\Family;
+use App\Models\ShopCategory;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
@@ -96,5 +97,22 @@ Breadcrumbs::for(
         ->parent('exploration.area.show', $explorationArea)
         ->push($explorationStory->title, route('exploration.area.story.show', [$explorationArea, $explorationStory]), [
             'pageTitle' => "Exploration Story: {$explorationStory->title}",
+        ])
+);
+
+Breadcrumbs::for('shop.index',
+fn (BreadcrumbTrail $trail) =>
+    $trail
+        ->parent('home')
+        ->push('Shop', route('shop.index'))
+);
+
+Breadcrumbs::for(
+    'shop.category.show',
+    fn (BreadcrumbTrail $trail, ShopCategory $shopCategory) =>
+    $trail
+        ->parent('shop.index')
+        ->push($shopCategory->title, route('shop.category.show', $shopCategory), [
+            'pageTitle' => "Shop Category: {$shopCategory->title}",
         ])
 );

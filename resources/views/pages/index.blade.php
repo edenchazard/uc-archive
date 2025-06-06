@@ -15,6 +15,7 @@
       <li><a href="{{ route('creatures.index') }}">Families</a> (image-heavy)</li>
       <li><a href="{{ route('components.index') }}">Components</a></li>
       <li><a href="{{ route('exploration.index') }}">Exploration Areas</a></li>
+      <li><a href="{{ route('shop.index') }}">Shop Categories</a></li>
     </ol>
   </section>
 </x-page>

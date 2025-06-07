@@ -19,6 +19,7 @@
                   src="{{ $transaction->rewardable->image_link }}"
                   alt="{{ $transaction->rewardable->name }}"
                 />
+                <span class="text-sm">(&times; {{ $transaction->amount }})</span>
                 {{ $transaction->rewardable?->family?->name }}
                 {{ $transaction->rewardable->name }}
               @else

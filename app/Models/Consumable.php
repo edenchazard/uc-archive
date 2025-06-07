@@ -52,7 +52,12 @@ class Consumable extends Model implements ImageLink
     public function imageLink(): Attribute
     {
         return Attribute::make(
-            get: fn () => asset(strtolower('images/consumables/' . Str::snake($this->name) . '.webp'))
+            get: fn () => asset(
+                Str::of('images/consumables/')
+                    ->append(Str::slug($this->name, '_'))
+                    ->append('.webp')
+                    ->lower()
+            )
         );
     }
 }

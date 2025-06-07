@@ -14,7 +14,12 @@ class Item extends Model implements ImageLink
     public function imageLink(): Attribute
     {
         return Attribute::make(
-            get: fn () => asset(strtolower('images/items/' . Str::snake($this->name) . '.png'))
+            get: fn () => asset(
+                Str::of('images/items/')
+                    ->append(Str::slug($this->name, '_'))
+                    ->append('.webp')
+                    ->lower()
+            )
         );
     }
 }

@@ -63,6 +63,8 @@ services:
       - internal
     volumes:
       - .docker-contents/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./public/images:/var/www/public/images
+      - ./resources:/var/www/resources
       - web_content:/var/www
 
   db:

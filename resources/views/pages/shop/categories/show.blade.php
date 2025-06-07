@@ -7,24 +7,27 @@
         <li>
           <h2>{{ $transaction->title }}</h2>
           <div>
+            {{ $transaction->short_description }}
+          </div>
+          <div class="my-2 text-sm italic">
             {{ $transaction->description }}
           </div>
-          <div class="mt-2 flex items-center">
-            <div class="flex flex-col items-center text-center font-semibold w-32">
+          <div class="flex flex-col items-center md:flex-row">
+            <div class="flex w-32 flex-col items-center pb-4 text-center font-semibold md:pb-0 md:pr-8">
               @if ($transaction->rewardable)
                 <img
                   src="{{ $transaction->rewardable->image_link }}"
                   alt="{{ $transaction->rewardable->name }}"
                 />
-                @if ($transaction->rewardable::class === \App\Models\Creature::class)
-                  {{ $transaction->rewardable->family->name }}
-                @endif
+                {{ $transaction->rewardable?->family?->name }}
                 {{ $transaction->rewardable->name }}
               @else
                 <i>Unknown</i>
               @endif
             </div>
-            <div class="ml-8 border-l-4 border-uc-grad-begin grid flex-1 grid-cols-[repeat(auto-fit,9rem)] gap-4">
+            <div
+              class="border-uc-grad-begin grid w-full flex-1 grid-cols-[repeat(auto-fit,9rem)] gap-4 border-t-4 pt-4 md:border-l-4 md:border-t-0 md:pl-8 md:pt-0"
+            >
               @foreach ($transaction->requirements as $requirement)
                 <div class="flex flex-col items-center text-center">
                   <div class="flex flex-1 items-center">

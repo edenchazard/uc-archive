@@ -18,14 +18,12 @@ return new class() extends Migration {
             $table->string('slug')->unique();
             $table->text('description');
             $table->unsignedSmallInteger('accomplishments')->default(0);
-            $table->timestamps();
         });
 
         Schema::create('exploration_area_consumables', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(ExplorationArea::class)->constrained();
             $table->foreignIdFor(Consumable::class)->constrained();
-            $table->timestamps();
         });
     }
 

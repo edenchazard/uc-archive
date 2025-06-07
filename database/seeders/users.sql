@@ -14,24 +14,7 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- Dumping data for table uc_archive.items: ~16 rows (approximately)
-INSERT IGNORE INTO `items` (`id`, `name`, `description`) VALUES
-	(1, 'Male Gen-X', NULL),
-	(2, 'Female Gen-X', NULL),
-	(12, 'Cryogenic Freeze Spray', 'This cyrogenic freeze spray will freeze a creature or egg in its current form. It cannot evolve, be trained, use the Arena, be used in accomplishments, or count toward your egg limit.'),
-	(23, 'Mystery Box', NULL),
-	(25, 'Time Warp Watch', NULL),
-	(26, 'Story Parchment', NULL),
-	(29, 'Component Bag', NULL),
-	(33, 'Elixir of Nobility', 'The Elixir of Nobility will rebirth a creature with 500 or more care points as a noble!'),
-	(34, 'Elixir of Exaltation', 'The Elixir of Exalted will rebirth a noble creature with 1,000 or more care points as an exalted!'),
-	(35, 'Normalize Potion', NULL),
-	(36, 'Defrosting Torch', NULL),
-	(37, 'Refresh Potion', NULL),
-	(38, 'Vigor Potion', NULL),
-	(39, 'Moxie Potion', NULL),
-	(40, 'Vitality Potion', NULL),
-	(41, 'Profession Scroll', NULL);
+-- Dumping data for table uc_archive.users: ~0 rows (approximately)
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

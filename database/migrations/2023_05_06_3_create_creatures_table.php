@@ -22,7 +22,6 @@ return new class() extends Migration {
             $table->text('short_description');
             $table->text('long_description');
             $table->string('artist')->nullable();
-            $table->timestamps();
 
             $table->unique(['stage', 'family_id']);
             $table->unique(['family_id', 'name']);

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->timestamps();
         });
 
         Schema::create('shop_categories', function (Blueprint $table) {
@@ -25,7 +24,6 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
-            $table->timestamps();
         });
 
         Schema::create('shop_transactions', function (Blueprint $table) {
@@ -36,15 +34,13 @@ return new class extends Migration
             $table->unsignedBigInteger('amount');
             $table->text('short_description')->nullable();
             $table->text('description')->nullable();
-            $table->timestamps();
         });
 
         Schema::create('shop_transaction_requirements', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(ShopTransaction::class)->constrained();
-            $table->morphs('requireable', 'too_long_index');
+            $table->morphs('requireable', 'requirable_index');
             $table->unsignedBigInteger('amount');
-            $table->timestamps();
         });
     }
 

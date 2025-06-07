@@ -1,37 +1,60 @@
-INSERT INTO `consumables` (`id`, `name`, `type`) VALUES
-(1, 'Ancientberry', 'Rare Component'),
-(2, 'Astralune', 'Rare Component'),
-(3, 'Auraglass', 'Standard'),
-(4, 'Bluemaple', 'Standard'),
-(5, 'Echoberry', 'Standard'),
-(6, 'Essentia', 'Rare Component'),
-(7, 'Heartwater', 'Standard'),
-(8, 'Lifepowder', 'Standard'),
-(9, 'Meadowgem', 'Standard'),
-(10, 'Moonruby', 'Standard'),
-(11, 'Riverstone', 'Standard'),
-(12, 'Seamelon', 'Standard'),
-(13, 'Skypollen', 'Standard'),
-(14, 'Starweave', 'Rare Component'),
-(15, 'Sunnyseed', 'Standard'),
-(16, 'Timeshard', 'Standard'),
-(17, 'Treescent', 'Standard'),
-(18, 'Watervine', 'Standard'),
-(19, 'Whiteroot', 'Standard'),
-(20, 'Wood', 'Building Material'),
-(21, 'Stone', 'Building Material'),
-(22, 'Metal', 'Building Material'),
-(23, 'Supplies', 'Building Material'),
-(25, 'Mystic Dew', 'Tree'),
-(26, 'Gemstone', 'Tree'),
-(27, 'Tree Seeds', 'Tree'),
-(28, 'Spirit Stones', 'Tree'),
-(29, 'Earth Orb', 'Orb'),
-(30, 'Fire Orb', 'Orb'),
-(31, 'Water Orb', 'Orb'),
-(32, 'Wind Orb', 'Orb'),
-(33, 'Earth Shard', 'Shard'),
-(34, 'Fire Shard', 'Shard'),
-(35, 'Water Shard', 'Shard'),
-(36, 'Wind Shard', 'Shard'),
-(37, "Coins", "Other");
+-- --------------------------------------------------------
+-- Host:                         localhost
+-- Server version:               10.9.8-MariaDB-1:10.9.8+maria~ubu2204 - mariadb.org binary distribution
+-- Server OS:                    debian-linux-gnu
+-- HeidiSQL Version:             12.8.0.6908
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+-- Dumping data for table uc_archive.consumables: ~36 rows (approximately)
+INSERT IGNORE INTO `consumables` (`id`, `name`, `type`) VALUES
+	(1, 'Ancientberry', 'Rare Component'),
+	(2, 'Astralune', 'Rare Component'),
+	(3, 'Auraglass', 'Standard'),
+	(4, 'Bluemaple', 'Standard'),
+	(5, 'Echoberry', 'Standard'),
+	(6, 'Essentia', 'Rare Component'),
+	(7, 'Heartwater', 'Standard'),
+	(8, 'Lifepowder', 'Standard'),
+	(9, 'Meadowgem', 'Standard'),
+	(10, 'Moonruby', 'Standard'),
+	(11, 'Riverstone', 'Standard'),
+	(12, 'Seamelon', 'Standard'),
+	(13, 'Skypollen', 'Standard'),
+	(14, 'Starweave', 'Rare Component'),
+	(15, 'Sunnyseed', 'Standard'),
+	(16, 'Timeshard', 'Standard'),
+	(17, 'Treescent', 'Standard'),
+	(18, 'Watervine', 'Standard'),
+	(19, 'Whiteroot', 'Standard'),
+	(20, 'Wood', 'Building Material'),
+	(21, 'Stone', 'Building Material'),
+	(22, 'Metal', 'Building Material'),
+	(23, 'Supplies', 'Building Material'),
+	(25, 'Mystic Dew', 'Tree'),
+	(26, 'Gemstone', 'Tree'),
+	(27, 'Tree Seeds', 'Tree'),
+	(28, 'Spirit Stones', 'Tree'),
+	(29, 'Earth Orb', 'Orb'),
+	(30, 'Fire Orb', 'Orb'),
+	(31, 'Water Orb', 'Orb'),
+	(32, 'Wind Orb', 'Orb'),
+	(33, 'Earth Shard', 'Shard'),
+	(34, 'Fire Shard', 'Shard'),
+	(35, 'Water Shard', 'Shard'),
+	(36, 'Wind Shard', 'Shard'),
+	(37, 'Coins', 'Other');
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;

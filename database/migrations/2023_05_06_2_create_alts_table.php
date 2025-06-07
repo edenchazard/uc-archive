@@ -16,7 +16,6 @@ return new class() extends Migration {
             $table->foreignIdFor(Family::class)->constrained();
             $table->string('name');
             $table->boolean('enabled')->default(0);
-            $table->timestamps();
 
             $table->unique(['family_id', 'name']);
         });

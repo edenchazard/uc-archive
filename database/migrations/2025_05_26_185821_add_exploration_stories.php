@@ -13,12 +13,11 @@ return new class() extends Migration {
     {
         Schema::create('exploration_stories', function (Blueprint $table) {
             $table->id();
-            $table->string('slug')->nullable();
+            $table->string('slug')->nullable()->unique();
             $table->foreignIdFor(ExplorationArea::class)->constrained();
             $table->string('title');
             $table->text('story')->nullable();
             $table->text('history')->nullable();
-            $table->timestamps();
         });
     }
 

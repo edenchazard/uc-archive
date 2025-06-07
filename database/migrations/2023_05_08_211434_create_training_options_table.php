@@ -18,7 +18,6 @@ return new class() extends Migration {
             $table->string('reward');
             $table->text('description');
             $table->unsignedTinyInteger('energy_cost')->default(5);
-            $table->timestamps();
         });
     }
 

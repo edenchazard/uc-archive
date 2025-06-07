@@ -18,7 +18,6 @@ return new class() extends Migration {
             $table->foreignIdFor(Creature::class)->constrained();
             $table->unsignedTinyInteger('order')->default(0);
             $table->string('description')->nullable();
-            $table->timestamps();
         });
     }
 

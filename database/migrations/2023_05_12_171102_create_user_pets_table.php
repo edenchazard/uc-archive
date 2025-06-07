@@ -19,7 +19,6 @@ return new class() extends Migration {
             $table->unsignedTinyInteger('specialty')->default(0);
             $table->string('nickname');
             $table->unsignedTinyInteger('gender')->default(0);
-            $table->timestamps();
         });
     }
 

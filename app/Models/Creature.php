@@ -134,18 +134,6 @@ class Creature extends Model implements ImageLink
         return $collection;
     }
 
-    /**
-     * Calculate the max possible stat value for this creature.
-     * @return Attribute<int,never>
-     */
-    protected function maxStatPoints(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => $this->max_stats->sum()
-        );
-    }
-
-
     public function imageLink(): Attribute
     {
         return Attribute::make(
@@ -167,6 +155,17 @@ class Creature extends Model implements ImageLink
 
                 return $path->contains('.') ? asset($path) : null;
             }
+        );
+    }
+
+    /**
+     * Calculate the max possible stat value for this creature.
+     * @return Attribute<int,never>
+     */
+    protected function maxStatPoints(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->max_stats->sum()
         );
     }
 }

@@ -69,6 +69,42 @@ class UserPet extends Model implements ImageLink
         return $this->hasOne(Creature::class);
     }
 
+    public function imageLink(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $creature = $this->creature;
+
+                $path = Str::of("images/creatures/{$creature->family->name}/")
+                    ->when(
+                        $this->specialty->value > 0 && $this->specialty->value <= 2,
+                        fn ($path) =>
+                        $path->append("{$this->specialty->friendlyName()}_")
+                    )
+                    ->when(
+                        $this->variety > 0,
+                        fn ($path) =>
+                        $path->append("{$this->variety}_")
+                    )
+                    // creatures with their family name don't follow the same url format...
+                    ->append($creature->family->name)
+                    ->when(
+                        $creature->family->name !== $creature->name,
+                        fn ($path) =>
+                        $path->append("_{$creature->name}")
+                    )
+                    ->lower()
+                    ->when(
+                        fn ($path) => File::exists(public_path("{$path}.webp")),
+                        fn ($path) =>
+                        $path->append('.webp')
+                    );
+
+                return $path->contains('.') ? asset($path) : null;
+            }
+        );
+    }
+
     /**
      * @return Attribute<string,never>
      */
@@ -109,42 +145,6 @@ class UserPet extends Model implements ImageLink
                 ))
                     ->formatAll()
                     ->get();
-            }
-        );
-    }
-
-    public function imageLink(): Attribute
-    {
-        return Attribute::make(
-            get: function () {
-                $creature = $this->creature;
-
-                $path = Str::of("images/creatures/{$creature->family->name}/")
-                    ->when(
-                        $this->specialty->value > 0 && $this->specialty->value <= 2,
-                        fn ($path) =>
-                        $path->append("{$this->specialty->friendlyName()}_")
-                    )
-                    ->when(
-                        $this->variety > 0,
-                        fn ($path) =>
-                        $path->append("{$this->variety}_")
-                    )
-                    // creatures with their family name don't follow the same url format...
-                    ->append($creature->family->name)
-                    ->when(
-                        $creature->family->name !== $creature->name,
-                        fn ($path) =>
-                        $path->append("_{$creature->name}")
-                    )
-                    ->lower()
-                    ->when(
-                        fn ($path) => File::exists(public_path("{$path}.webp")),
-                        fn ($path) =>
-                        $path->append('.webp')
-                    );
-
-                return $path->contains('.') ? asset($path) : null;
             }
         );
     }

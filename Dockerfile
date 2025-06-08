@@ -43,10 +43,10 @@ RUN composer install \
 
 RUN rm -rf /usr/bin/composer
 
-RUN chmod -R 555 . \
+RUN chmod -R 755 . \
   chmod -R 770 storage bootstrap/cache \
   && mkdir -p /var/www/storage/logs \
   && touch /var/www/storage/logs/laravel.log \
-  && chown -R www-data:www-data /var/www/storage/logs
+  && chown -R www-data:www-data .
 
 USER www-data

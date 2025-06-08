@@ -9,7 +9,7 @@ use Illuminate\View\View;
 
 class ShopController extends Controller
 {
-    public function index():View
+    public function index(): View
     {
         $categories = ShopCategory::query()->get();
 

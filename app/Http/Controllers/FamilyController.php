@@ -6,7 +6,6 @@ use App\Enums\SpecialtyEnum;
 use App\Models\Creature;
 use App\Models\Family;
 use App\Models\UserPet;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\View\View;

@@ -100,8 +100,9 @@ Breadcrumbs::for(
         ])
 );
 
-Breadcrumbs::for('shop.index',
-fn (BreadcrumbTrail $trail) =>
+Breadcrumbs::for(
+    'shop.index',
+    fn (BreadcrumbTrail $trail) =>
     $trail
         ->parent('home')
         ->push('Shop', route('shop.index'))

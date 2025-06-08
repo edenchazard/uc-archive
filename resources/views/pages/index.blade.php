@@ -20,6 +20,10 @@
     </ol>
   </section>
   <section class="max-w-prose">
+    <h2>Links</h2>
+    <ol class="list-inside list-disc">
+      <li><a href="https://github.com/edenchazard/uc-archive">Github</a></li>
+    </ol>
     <h2>Disclaimer</h2>
     <div class="space-y-2">
       <p>

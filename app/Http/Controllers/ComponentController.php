@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Enums\ConsumableTypeEnum;
 use App\Models\Consumable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\View\View;
 
 class ComponentController extends Controller
@@ -24,10 +27,16 @@ class ComponentController extends Controller
     public function show(Consumable $consumable): View
     {
         $consumable->loadMissing([
-            'creatures.family',
-            'shopTransactionRequirements.shopTransaction.shopCategory',
-            'shopTransactions.shopCategory',
-            'explorationAreas',
+            'creatures' => fn (HasMany $q) => $q
+                ->with('family')
+                ->orderBy('name'),
+            'shopTransactionRequirements.shopTransaction' => fn (BelongsTo $q) => $q
+                ->with('shopCategory')
+                ->orderBy('title'),
+            'shopTransactions.shopCategory' => fn (BelongsTo $q) => $q
+                ->orderBy('title'),
+            'explorationAreas' => fn (BelongsToMany $q) => $q
+                ->orderBy('name'),
         ]);
 
         return view('pages.components.show', [

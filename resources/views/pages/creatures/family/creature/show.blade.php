@@ -49,12 +49,16 @@
             @else
               <p>Its release date is unknown.</p>
             @endif
-            <p class="flex flex-row flex-wrap justify-center gap-3 py-3 align-middle sm:flex-nowrap sm:px-5">
-              <img
-                class="self-center"
-                src="{{ $pet->creature->consumable->image_link }}"
-                alt="{{ $pet->creature->consumable->name }}"
-              />
+            <p class="flex flex-row flex-wrap gap-3 py-3 sm:flex-nowrap sm:px-5">
+              <a
+                class="shrink-0 self-center"
+                href="{{ $pet->creature->consumable->direct_link }}"
+              >
+                <img
+                  src="{{ $pet->creature->consumable->image_link }}"
+                  alt="{{ $pet->creature->consumable->name }}"
+                />
+              </a>
               Interacting with {{ $pet->creature->name }} while exploring would earn you the
               {{ $pet->creature->consumable->name }} component.
               @if ($pet->creature->required_clicks > 0)

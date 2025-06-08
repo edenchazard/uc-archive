@@ -9,13 +9,18 @@
       <ol class="grid grid-cols-[repeat(auto-fill,minmax(6rem,1fr))] gap-5">
         @foreach ($explorationArea->consumables as $component)
           <li class="flex flex-col items-center gap-3 text-center font-semibold">
-            <div class="flex-1 content-center">
-              <img
-                src="{{ $component->image_link }}"
-                alt=""
-              />
-            </div>
-            {{ $component->name }}
+            <a
+              class="flex flex-col items-center gap-2"
+              href="{{ $component->direct_link }}"
+            >
+              <div class="flex flex-1 items-center justify-center">
+                <img
+                  src="{{ $component->image_link }}"
+                  alt=""
+                />
+              </div>
+              {{ $component->name }}
+            </a>
           </li>
         @endforeach
       </ol>

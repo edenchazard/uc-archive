@@ -13,9 +13,10 @@
     <h2>Archives</h2>
     <ol class="flex list-inside list-disc flex-col gap-2">
       <li><a href="{{ route('creatures.index') }}">Families</a> (image-heavy)</li>
-      <li><a href="{{ route('components.index') }}">Components</a></li>
       <li><a href="{{ route('exploration.index') }}">Exploration Areas</a></li>
       <li><a href="{{ route('shop.index') }}">Shop Categories</a></li>
+      <li><a href="{{ route('components.index') }}">Components</a></li>
+      <li><a href="{{ route('items.index') }}">Items</a></li>
     </ol>
   </section>
 </x-page>

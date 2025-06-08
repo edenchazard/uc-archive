@@ -12,7 +12,7 @@ class ShopTransaction extends Model
     /**
      * @return BelongsTo<ShopCategory,$this>
      */
-    public function category(): BelongsTo
+    public function shopCategory(): BelongsTo
     {
         return $this->belongsTo(ShopCategory::class);
     }

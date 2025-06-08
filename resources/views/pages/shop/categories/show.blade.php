@@ -15,13 +15,18 @@
           <div class="flex flex-col items-center md:flex-row">
             <div class="flex w-32 flex-col items-center pb-4 text-center font-semibold md:pb-0 md:pr-8">
               @if ($transaction->rewardable)
-                <img
-                  src="{{ $transaction->rewardable->image_link }}"
-                  alt="{{ $transaction->rewardable->name }}"
-                />
-                <span class="text-sm">(&times; {{ $transaction->amount }})</span>
-                {{ $transaction->rewardable?->family?->name }}
-                {{ $transaction->rewardable->name }}
+                <a
+                  class="flex flex-col items-center justify-center gap-1"
+                  href="{{ $transaction->rewardable->direct_link }}"
+                >
+                  <img
+                    src="{{ $transaction->rewardable->image_link }}"
+                    alt="{{ $transaction->rewardable->name }}"
+                  />
+                  {{ $transaction->rewardable?->family?->name }}
+                  {{ $transaction->rewardable->name }}
+                  <span class="text-sm">(&times; {{ $transaction->amount }})</span>
+                </a>
               @else
                 <i>Unknown</i>
               @endif
@@ -31,14 +36,19 @@
             >
               @foreach ($transaction->requirements as $requirement)
                 <div class="flex flex-col items-center text-center">
-                  <div class="flex flex-1 items-center">
-                    <img
-                      src="{{ $requirement->requireable->image_link }}"
-                      alt="{{ $requirement->requireable->name }}"
-                    />
-                  </div>
-                  <span class="text-sm">(&times; {{ $requirement->amount }})</span>
-                  <span class="font-semibold">{{ $requirement->requireable->name }}</span>
+                  <a
+                    class="flex flex-1 flex-col gap-1"
+                    href="{{ $requirement->requireable->direct_link }}"
+                  >
+                    <span class="flex flex-1 flex-col items-center justify-center">
+                      <img
+                        src="{{ $requirement->requireable->image_link }}"
+                        alt="{{ $requirement->requireable->name }}"
+                      />
+                    </span>
+                    <span class="font-semibold">{{ $requirement->requireable->name }}</span>
+                    <span class="text-sm">(&times; {{ $requirement->amount }})</span>
+                  </a>
                 </div>
               @endforeach
             </div>

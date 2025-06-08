@@ -20,4 +20,18 @@ class ComponentController extends Controller
             'components' => $components,
         ]);
     }
+
+    public function show(Consumable $consumable): View
+    {
+        $consumable->loadMissing([
+            'creatures.family',
+            'shopTransactionRequirements.shopTransaction.shopCategory',
+            'shopTransactions.shopCategory',
+            'explorationAreas',
+        ]);
+
+        return view('pages.components.show', [
+            'consumable' => $consumable,
+        ]);
+    }
 }

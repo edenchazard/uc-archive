@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use App\Enums\ConsumableTypeEnum;
+use App\Interfaces\DirectLink;
 use App\Interfaces\ImageLink;
 use App\Traits\IsTransactionable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Str;
 
 /**
@@ -27,7 +29,7 @@ use Str;
  * @method static \Illuminate\Database\Eloquent\Builder|Consumable whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Consumable extends Model implements ImageLink
+class Consumable extends Model implements ImageLink, DirectLink
 {
     use IsTransactionable;
 
@@ -43,9 +45,21 @@ class Consumable extends Model implements ImageLink
      */
     public function explorationAreas(): BelongsToMany
     {
-        return $this->belongsToMany(
-            ExplorationArea::class,
-            table: 'exploration_area_consumables'
+        return $this->belongsToMany(ExplorationArea::class, 'exploration_area_consumables');
+    }
+
+    /**
+     * @return HasMany<Creature,$this>
+     */
+    public function creatures(): HasMany
+    {
+        return $this->hasMany(Creature::class);
+    }
+
+    public function directLink(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => route('components.show', $this)
         );
     }
 

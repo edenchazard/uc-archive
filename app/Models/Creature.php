@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Interfaces\DirectLink;
 use App\Interfaces\ImageLink;
 use App\Traits\IsTransactionable;
 use File;
@@ -66,7 +67,7 @@ use Str;
  * @method static \Illuminate\Database\Eloquent\Builder|Creature orderByFamilyName()
  * @mixin \Eloquent
  */
-class Creature extends Model implements ImageLink
+class Creature extends Model implements ImageLink, DirectLink
 {
     use IsTransactionable;
 
@@ -166,6 +167,13 @@ class Creature extends Model implements ImageLink
     {
         return Attribute::make(
             get: fn () => $this->max_stats->sum()
+        );
+    }
+
+    public function directLink(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => route('creatures.family.creature.show', [$this->family, $this])
         );
     }
 }

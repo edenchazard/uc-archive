@@ -15,23 +15,23 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 -- Dumping data for table uc_archive.items: ~16 rows (approximately)
-INSERT IGNORE INTO `items` (`id`, `name`, `description`) VALUES
-	(1, 'Male Gen-X', NULL),
-	(2, 'Female Gen-X', NULL),
-	(12, 'Cryogenic Freeze Spray', 'This cyrogenic freeze spray will freeze a creature or egg in its current form. It cannot evolve, be trained, use the Arena, be used in accomplishments, or count toward your egg limit.'),
-	(23, 'Mystery Box', NULL),
-	(25, 'Time Warp Watch', NULL),
-	(26, 'Story Parchment', NULL),
-	(29, 'Component Bag', NULL),
-	(33, 'Elixir of Nobility', 'The Elixir of Nobility will rebirth a creature with 500 or more care points as a noble!'),
-	(34, 'Elixir of Exaltation', 'The Elixir of Exalted will rebirth a noble creature with 1,000 or more care points as an exalted!'),
-	(35, 'Normalize Potion', NULL),
-	(36, 'Defrosting Torch', NULL),
-	(37, 'Refresh Potion', NULL),
-	(38, 'Vigor Potion', NULL),
-	(39, 'Moxie Potion', NULL),
-	(40, 'Vitality Potion', NULL),
-	(41, 'Profession Scroll', NULL);
+INSERT IGNORE INTO `items` (`id`, `slug`, `name`, `description`) VALUES
+	(1, 'male-gen-x', 'Male Gen-X', NULL),
+	(2, 'female-gen-x', 'Female Gen-X', NULL),
+	(12, 'cryogenic-freeze-spray', 'Cryogenic Freeze Spray', 'This cyrogenic freeze spray will freeze a creature or egg in its current form. It cannot evolve, be trained, use the Arena, be used in accomplishments, or count toward your egg limit.'),
+	(23, 'mystery-box', 'Mystery Box', NULL),
+	(25, 'time-warp-watch', 'Time Warp Watch', NULL),
+	(26, 'story-parchment', 'Story Parchment', NULL),
+	(29, 'component-bag', 'Component Bag', NULL),
+	(33, 'elixir-of-nobility', 'Elixir of Nobility', 'The Elixir of Nobility will rebirth a creature with 500 or more care points as a noble!'),
+	(34, 'elixir-of-exaltation', 'Elixir of Exaltation', 'The Elixir of Exalted will rebirth a noble creature with 1,000 or more care points as an exalted!'),
+	(35, 'normalize-potion', 'Normalize Potion', NULL),
+	(36, 'defrosting-torch', 'Defrosting Torch', NULL),
+	(37, 'refresh-potion', 'Refresh Potion', NULL),
+	(38, 'vigor-potion', 'Vigor Potion', NULL),
+	(39, 'moxie-potion', 'Moxie Potion', NULL),
+	(40, 'vitality-potion', 'Vitality Potion', NULL),
+	(41, 'profession-scroll', 'Profession Scroll', NULL);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

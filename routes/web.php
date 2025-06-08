@@ -6,6 +6,7 @@ use App\Http\Controllers\ExplorationController;
 use App\Http\Controllers\ExplorationStoryController;
 use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,7 @@ Route::prefix('creatures')->name('creatures.')->group(function () {
 
 Route::prefix('/components')->name('components.')->group(function () {
     Route::get('/', [ComponentController::class, 'index'])->name('index');
+    Route::get('/{consumable:slug}', [ComponentController::class, 'show'])->name('show');
 });
 
 Route::prefix('/exploration')->name('exploration.')->group(function () {
@@ -56,3 +58,9 @@ Route::prefix('/shop')->name('shop.')->group(function () {
     Route::get('/', [ShopController::class, 'index'])->name('index');
     Route::get('/{shopCategory:slug}', [ShopController::class, 'show'])->name('category.show');
 });
+
+Route::prefix('/items')->name('items.')->group(function () {
+    Route::get('/', [ItemController::class, 'index'])->name('index');
+    Route::get('/{item:slug}', [ItemController::class, 'show'])->name('show');
+});
+

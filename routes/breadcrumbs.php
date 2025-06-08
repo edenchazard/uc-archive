@@ -1,9 +1,11 @@
 <?php
 
+use App\Models\Consumable;
 use App\Models\Creature;
 use App\Models\ExplorationArea;
 use App\Models\ExplorationStory;
 use App\Models\Family;
+use App\Models\Item;
 use App\Models\ShopCategory;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
@@ -73,6 +75,16 @@ Breadcrumbs::for(
 );
 
 Breadcrumbs::for(
+    'components.show',
+    fn (BreadcrumbTrail $trail, Consumable $consumable) =>
+    $trail
+        ->parent('components.index')
+        ->push($consumable->name, route('components.show', $consumable), [
+            'pageTitle' => "Component: {$consumable->name}",
+        ])
+);
+
+Breadcrumbs::for(
     'exploration.index',
     fn (BreadcrumbTrail $trail) =>
     $trail
@@ -117,3 +129,24 @@ Breadcrumbs::for(
             'pageTitle' => "Shop Category: {$shopCategory->title}",
         ])
 );
+
+Breadcrumbs::for(
+    'items.index',
+    fn (BreadcrumbTrail $trail) =>
+    $trail
+        ->parent('home')
+        ->push('Items', route('items.index'), [
+            'pageTitle' => 'Items',
+        ])
+);
+
+Breadcrumbs::for(
+    'items.show',
+    fn (BreadcrumbTrail $trail, Item $item) =>
+    $trail
+        ->parent('items.index')
+        ->push($item->name, route('items.show', $item), [
+            'pageTitle' => "Item: {$item->name}",
+        ])
+);
+

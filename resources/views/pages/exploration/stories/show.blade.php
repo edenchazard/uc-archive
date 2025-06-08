@@ -8,15 +8,17 @@
       @foreach ($creatures as $creature)
         <li class="flex flex-1 flex-col items-center gap-4">
           <a
-            class="flex flex-1 items-center justify-center"
+            class="flex flex-1 flex-col"
             href="{{ $creature->creature->direct_link }}"
           >
-            <img
-              src="{{ $creature->image_link }}"
-              alt=""
-            />
+            <span class="flex flex-1 items-center justify-center">
+              <img
+                src="{{ $creature->image_link }}"
+                alt=""
+              />
+            </span>
+            <span>{{ $creature->creature->name }}</span>
           </a>
-          <span>{{ $creature->creature->name }}</span>
           {{ $explorationStory->storyOptions[$loop->index]->formatted_description }}
         </li>
       @endforeach

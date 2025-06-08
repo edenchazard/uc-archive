@@ -16,7 +16,7 @@
   <section class="mt-3">
     @foreach ($groups as $category => $families)
       <div class="relative">
-        <div class="bg-uc-blue sticky top-0 flex flex-row justify-between p-1">
+        <div class="bg-uc-blue sticky top-0 flex flex-row items-center justify-between p-1">
           <h2 id="{{ $category }}">
             <a
               class="text-white"
@@ -24,7 +24,7 @@
             >{{ $category }}</a>
           </h2>
           <a
-            class="bg-uc-mdbrown rounded-xs sticky p-1"
+            class="bg-uc-mdbrown rounded-xs px-4 py-2 uppercase"
             href="#list"
             aria-label="back to start of list"
           >top</a>

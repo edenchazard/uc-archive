@@ -16,6 +16,7 @@ class FamilyController extends Controller
     {
         $families = Creature::query()
             ->with('family')
+            ->orderBy('stage')
             ->get()
             ->map(
                 fn (Creature $creature) => UserPet::factory()
@@ -27,7 +28,7 @@ class FamilyController extends Controller
                 'family' => $creatures->first()?->creature->family,
                 'stages' => $creatures,
             ])
-            ->sortBy('family.name');
+            ->sortBy('family.name') ;
 
         return view('pages.creatures.index', [
             'groups' => $families->groupBy(fn ($family) => $family['family']?->name[0] ?? ''),

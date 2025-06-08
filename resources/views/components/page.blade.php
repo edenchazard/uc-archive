@@ -58,17 +58,20 @@
         role="presentation"
         style="background-image: url({{ asset('images/bannerv2_clean.webp') }})"
       >
-        <span class="absolute bottom-4">
+        <a
+          class="absolute bottom-4"
+          href="{{ route('home') }}"
+        >
           <span class="text-white">Unicreatures</span> <span class="text-uc-grad-end">Archive</span>
-        </span>
+        </a>
       </div>
       <div class="bg-uc-mdbrown flex flex-row items-center justify-between p-4 drop-shadow-lg">
         <nav
           class="grow"
           id="menu"
         >
-          <ul class="text-uc-dkbrown flex flex-row flex-wrap justify-end text-sm font-medium uppercase">
-            @foreach ([['home', route('home')], ['creatures', route('creatures.index')]] as $route)
+          <ul class="text-uc-dkbrown flex flex-row flex-wrap text-sm font-medium uppercase">
+            @foreach ([['components', route('components.index')], ['creatures', route('creatures.index')], ['exploration', route('exploration.index')], ['items', route('items.index')], ['shop', route('shop.index')]] as $route)
               <li class="p-2"><a href="{{ $route[1] }}">{{ $route[0] }}</a></li>
             @endforeach
           </ul>

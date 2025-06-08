@@ -49,7 +49,7 @@
             @else
               <p>Its release date is unknown.</p>
             @endif
-            <p class="flex flex-row flex-wrap gap-3 py-3 sm:flex-nowrap sm:px-5">
+            <p class="flex flex-col flex-wrap gap-3 py-3 sm:flex-nowrap sm:px-5 md:flex-row">
               <a
                 class="shrink-0 self-center"
                 href="{{ $pet->creature->consumable->direct_link }}"

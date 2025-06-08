@@ -149,4 +149,3 @@ Breadcrumbs::for(
             'pageTitle' => "Item: {$item->name}",
         ])
 );
-

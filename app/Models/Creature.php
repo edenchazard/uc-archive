@@ -159,6 +159,13 @@ class Creature extends Model implements ImageLink, DirectLink
         );
     }
 
+    public function directLink(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => route('creatures.family.creature.show', [$this->family, $this])
+        );
+    }
+
     /**
      * Calculate the max possible stat value for this creature.
      * @return Attribute<int,never>
@@ -167,13 +174,6 @@ class Creature extends Model implements ImageLink, DirectLink
     {
         return Attribute::make(
             get: fn () => $this->max_stats->sum()
-        );
-    }
-
-    public function directLink(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => route('creatures.family.creature.show', [$this->family, $this])
         );
     }
 }

@@ -63,4 +63,3 @@ Route::prefix('/items')->name('items.')->group(function () {
     Route::get('/', [ItemController::class, 'index'])->name('index');
     Route::get('/{item:slug}', [ItemController::class, 'show'])->name('show');
 });
-

@@ -34,6 +34,13 @@ class ExplorationStory extends Model implements DirectLink
         return $this->hasMany(ExplorationStoryOption::class);
     }
 
+    public function directLink(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => route('exploration.area.story.show', [$this->explorationArea, $this])
+        );
+    }
+
     /**
      * @return Attribute<string,never>
      */
@@ -45,13 +52,6 @@ class ExplorationStory extends Model implements DirectLink
                     ->formatAll()
                     ->get();
             }
-        );
-    }
-
-    public function directLink(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => route('exploration.area.story.show', [$this->explorationArea, $this])
         );
     }
 }

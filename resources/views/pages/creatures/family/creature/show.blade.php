@@ -22,7 +22,7 @@
         From the
         <a
           class="main-article"
-          href="{{ route('creatures.family.show', $family) }}"
+          href="{{ $family->direct_link }}"
           aria-labelledby="{{ $pet->creature->name }}"
         >{{ $family->name }}</a>
         family
@@ -154,7 +154,7 @@
             <li>
               <a
                 class="main-article"
-                href="{{ route('exploration.area.story.show', [$story->explorationArea, $story]) }}"
+                href="{{ $story->direct_link }}"
               >
                 {{ $story->title }}
               </a>

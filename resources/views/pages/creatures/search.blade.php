@@ -9,7 +9,7 @@
           <li class="flex flex-col">
             <a
               class="flex flex-1 flex-col items-center justify-between text-center"
-              href="{{ route('creatures.family.creature.show', [$pet->creature->family, $pet->creature]) }}"
+              href="{{ $pet->creature->direct_link }}"
             >
               <img
                 class=""

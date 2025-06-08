@@ -20,7 +20,7 @@
       <ol class="list-inside list-disc">
         @foreach ($item->shopTransactionRequirements as $requirement)
           <li>
-            <a href="{{ route('shop.category.show', $requirement->shopTransaction->shopCategory) }}">
+            <a href="{{ $requirement->shopTransaction->shopCategory->direct_link }}">
               {{ $requirement->shopTransaction->title }}
             </a>
           </li>
@@ -35,7 +35,7 @@
       <ol class="list-inside list-disc">
         @foreach ($item->shopTransactions as $shopTransaction)
           <li>
-            <a href="{{ route('shop.category.show', $shopTransaction->shopCategory) }}">
+            <a href="{{ $shopTransaction->shopCategory->direct_link }}">
               {{ $shopTransaction->title }}
             </a>
           </li>

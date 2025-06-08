@@ -6,7 +6,7 @@
         <li>
           <a
             class="flex flex-col items-center gap-3 text-center font-semibold"
-            href="{{ route('exploration.area.show', $explorationArea) }}"
+            href="{{ $explorationArea->direct_link }}"
           >
             <div class="flex-1 content-center">
               <img

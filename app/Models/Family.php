@@ -5,7 +5,9 @@ namespace App\Models;
 use App\Enums\ElementTypeEnum;
 use App\Enums\RarityCategoryEnum;
 use App\Enums\UniqueRatingEnum;
+use App\Interfaces\DirectLink;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -69,7 +71,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read int|null $creatures_count
  * @mixin \Eloquent
  */
-class Family extends Model
+class Family extends Model implements DirectLink
 {
     protected $guarded = [];
 
@@ -113,5 +115,12 @@ class Family extends Model
     public function alts(): HasMany
     {
         return $this->hasMany(Alt::class);
+    }
+
+    public function directLink(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => route('creatures.family.show', $this)
+        );
     }
 }

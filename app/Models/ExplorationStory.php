@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Interfaces\DirectLink;
 use App\Services\Formatting\FormattingService;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class ExplorationStory extends Model
+class ExplorationStory extends Model implements DirectLink
 {
     /**
      * @var array<string,string>
@@ -44,6 +45,13 @@ class ExplorationStory extends Model
                     ->formatAll()
                     ->get();
             }
+        );
+    }
+
+    public function directLink(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => route('exploration.area.story.show', [$this->explorationArea, $this])
         );
     }
 }

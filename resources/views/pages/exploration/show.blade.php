@@ -10,7 +10,7 @@
         @foreach ($explorationArea->consumables as $component)
           <li class="flex flex-col items-center gap-3 text-center font-semibold">
             <a
-              class="flex flex-col items-center gap-2"
+              class="flex flex-1 flex-col items-center gap-2"
               href="{{ $component->direct_link }}"
             >
               <div class="flex flex-1 items-center justify-center">
@@ -19,7 +19,7 @@
                   alt=""
                 />
               </div>
-              {{ $component->name }}
+              <span>{{ $component->name }}</span>
             </a>
           </li>
         @endforeach
@@ -31,7 +31,7 @@
         @foreach ($explorationArea->explorationStories as $story)
           <li class="grid grid-cols-[auto_auto_1fr] items-center gap-x-4">
             <h3 class="text-nowrap text-base font-semibold">{{ $story->title }}</h3>
-            <x-article-link :url="route('exploration.area.story.show', [$explorationArea, $story])" />
+            <x-article-link :url="$story->direct_link" />
             <div class="col-span-full line-clamp-1">
               {{ $story->story }}
             </div>

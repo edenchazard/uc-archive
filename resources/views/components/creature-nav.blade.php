@@ -2,7 +2,7 @@
   @if ($pet)
     <a
       class="flex flex-col items-center text-center"
-      href="{{ route('creatures.family.creature.show', [$pet->creature->family, $pet->creature]) }}"
+      href="{{ $pet->creature->direct_link }}"
     >
       <img
         class="max-h-10 max-w-10 self-center"

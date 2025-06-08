@@ -36,7 +36,7 @@
                 <li class="my-10">
                   <div class="flex flex-row items-center gap-2">
                     <h3 class="text-lg">{{ $family['family']->name }}</h3>
-                    <x-article-link :url="route('creatures.family.show', $family)" />
+                    <x-article-link :url="$family['family']->direct_link" />
                   </div>
                   <x-evolutionary-line :stages="$family['stages']" />
                 </li>

@@ -6,7 +6,7 @@
       <div class="row-start-1 flex flex-1 justify-center">
         <a
           class="self-center"
-          href="{{ route('creatures.family.creature.show', [$pet->creature->family, $pet->creature]) }}"
+          href="{{ $pet->creature->direct_link }}"
         >
           <img
             class="creature-image self-center"

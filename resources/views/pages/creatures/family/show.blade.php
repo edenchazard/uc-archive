@@ -91,7 +91,7 @@
             ({{ $stage->creature->artist ? "Art by {$stage->creature->artist}" : 'Artist unknown' }})</p>
           <div>
             <h3 class="inline font-medium">{{ $stage->creature->name }}</h3>
-            <x-article-link :url="route('creatures.family.creature.show', [$family, $stage->creature])" />
+            <x-article-link :url="$stage->creature->direct_link" />
           </div>
           <section>
             <h4 class="font-medium">Visual Description</h4>

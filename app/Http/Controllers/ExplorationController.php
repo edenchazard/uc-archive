@@ -29,6 +29,7 @@ class ExplorationController extends Controller
                 ->orderByRaw("type = '" . ConsumableTypeEnum::Tree->value . "' DESC")
                 ->orderBy('name'),
             'explorationStories' => fn (HasMany $q) => $q
+                ->with('explorationArea')
                 ->orderBy('title'),
         ]);
 

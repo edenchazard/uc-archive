@@ -14,7 +14,7 @@
       <ol class="list-inside list-disc">
         @foreach ($consumable->shopTransactionRequirements as $requirement)
           <li>
-            <a href="{{ route('shop.category.show', $requirement->shopTransaction->shopCategory) }}">
+            <a href="{{ $requirement->shopTransaction->shopCategory->direct_link }}">
               {{ $requirement->shopTransaction->title }}
             </a>
           </li>
@@ -29,7 +29,7 @@
       <ol class="list-inside list-disc">
         @foreach ($consumable->shopTransactions as $shopTransaction)
           <li>
-            <a href="{{ route('shop.category.show', $shopTransaction->shopCategory) }}">
+            <a href="{{ $shopTransaction->shopCategory->direct_link }}">
               {{ $shopTransaction->title }}
             </a>
           </li>
@@ -44,7 +44,7 @@
       <ol class="list-inside list-disc">
         @foreach ($consumable->explorationAreas as $explorationArea)
           <li>
-            <a href="{{ route('exploration.area.show', $explorationArea) }}">
+            <a href="{{ $explorationArea->direct_link }}">
               {{ $explorationArea->name }}
             </a>
           </li>

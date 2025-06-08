@@ -6,7 +6,7 @@
         <li>
           <a
             class="flex flex-col items-center gap-3 text-center font-semibold"
-            href="{{ route('shop.category.show', $category) }}"
+            href="{{ $category->direct_link }}"
           >
             <div class="flex-1 content-center">
               <img alt="" />

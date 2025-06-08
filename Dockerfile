@@ -41,12 +41,13 @@ RUN composer install \
   --apcu \
   --no-dev
 
-RUN rm -rf /usr/bin/composer
+RUN rm -rf /usr/bin/composer \
+  && chown -R www-data:www-data /var/www \
+  && chmod -R 555 .
 
-RUN chmod -R 755 . \
-  chmod -R 770 storage bootstrap/cache \
+RUN chmod -R 770 storage bootstrap/cache \
   && mkdir -p /var/www/storage/logs \
   && touch /var/www/storage/logs/laravel.log \
-  && chown -R www-data:www-data .
+  && chown -R www-data:www-data /var/www/storage/logs
 
 USER www-data

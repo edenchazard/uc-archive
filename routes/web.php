@@ -10,6 +10,10 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
+ Route::namespace('')
+    ->middleware('web')
+    ->group(__DIR__.'/laravel-playwright.php');
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::prefix('creatures')->name('creatures.')->group(function () {

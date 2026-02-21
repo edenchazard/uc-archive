@@ -16,7 +16,7 @@
         "eslint-config-prettier": "^10.1.5",
         "laravel-vite-plugin": "^1.2.0",
         "prettier": "^3.5.3",
-        "vite": "^6.3.5"
+        "vite": "^6.4.1"
     },
     "browserslist": [
         "defaults"

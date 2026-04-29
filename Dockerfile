@@ -14,8 +14,8 @@ RUN [ "npm", "run", "build" ]
 
 FROM php:8.4-fpm-alpine3.21 AS base
 WORKDIR /var/www
-RUN apk update && apk add curl-dev oniguruma-dev libxml2-dev icu-dev
-RUN docker-php-ext-install mbstring pdo mysqli pdo_mysql intl
+RUN apk update && apk add curl-dev oniguruma-dev libxml2-dev icu-dev sqlite-dev
+RUN docker-php-ext-install mbstring pdo sqlite3 pdo_sqlite intl
 
 FROM base AS production
 COPY --from=composer /usr/bin/composer /usr/bin/composer
@@ -47,6 +47,7 @@ RUN rm -rf /usr/bin/composer \
 
 RUN chmod -R 770 storage bootstrap/cache \
   && mkdir -p /var/www/storage/logs \
+  && touch /var/www/storage/database.sqlite \
   && touch /var/www/storage/logs/laravel.log \
   && chown -R www-data:www-data /var/www/storage/logs
 

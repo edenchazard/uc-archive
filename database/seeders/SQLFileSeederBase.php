@@ -21,9 +21,23 @@ abstract class SQLFileSeederBase extends Seeder
         }
 
         $path = dirname(__DIR__) . "/seeders/{$this->file}";
-        $sql = 'SET AUTOCOMMIT = 0; START TRANSACTION;' . file_get_contents($path) . ' COMMIT;';
+        $sql = file_get_contents($path);
 
-        $status = DB::unprepared($sql);
+        if (DB::connection()->getDriverName() === 'sqlite') {
+            $sql = preg_replace('/^\/\*!.*?\*\/;?\s*$/m', '', $sql) ?? $sql;
+            $sql = str_replace('INSERT IGNORE INTO', 'INSERT OR IGNORE INTO', $sql);
+            $sql = str_replace("\\'", "''", $sql);
+
+            DB::statement('PRAGMA foreign_keys = OFF');
+        }
+
+        try {
+            $status = DB::transaction(fn () => DB::unprepared($sql));
+        } finally {
+            if (DB::connection()->getDriverName() === 'sqlite') {
+                DB::statement('PRAGMA foreign_keys = ON');
+            }
+        }
 
         Log::info($status ? '[success]' : '[failure]' . " importing sql data from {$path}");
     }

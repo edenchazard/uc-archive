@@ -14,7 +14,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        URL::useOrigin(config('app.url'));
+        $appUrl = config('app.url');
+
+        if (is_string($appUrl)) {
+            URL::useOrigin($appUrl);
+        }
 
         if ($this->app->environment() !== 'production') {
             $this->app->register(IdeHelperServiceProvider::class);

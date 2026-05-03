@@ -127,13 +127,13 @@ class Creature extends Model implements DirectLink, ImageLink
      * Returns the nearest previous and nearest next creatures adjacent to this
      * creature in terms of id. Skips missing ids.
      *
-     * @return Collection<string,$this|null>
+     * @return Collection<string,static|null>
      */
     public function getChronologicalAdjacents(): Collection
     {
         $collection = collect([
-            'previous' => self::query()->where('id', '<', $this->id)->orderByDesc('id')->first(),
-            'next' => self::query()->where('id', '>', $this->id)->orderBy('id')->first(),
+            'previous' => static::query()->where('id', '<', $this->id)->orderByDesc('id')->first(),
+            'next' => static::query()->where('id', '>', $this->id)->orderBy('id')->first(),
         ]);
 
         return $collection;

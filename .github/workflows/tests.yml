@@ -1,0 +1,22 @@
+name: Tests
+
+on: [push]
+
+jobs:
+  code-quality-and-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: start test environment
+        run: docker compose up testapp -d
+
+      - name: run prettier
+        run: docker compose exec -T testapp sh -c "npm run fmt:check"
+
+      - name: run phpstan
+        run: docker compose exec -T testapp sh -c "composer run analyse"
+
+      - name: run pint
+        run: docker compose exec -T testapp sh -c "composer run pint"

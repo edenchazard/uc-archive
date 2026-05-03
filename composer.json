@@ -57,8 +57,10 @@
       "@php artisan key:generate --ansi"
     ],
     "lint": [
-      "vendor/bin/parallel-lint --exclude resources --exclude vendor .",
-      "pint --test"
+      "vendor/bin/parallel-lint --exclude resources --exclude vendor ."
+    ],
+    "pint": [
+      "vendor/bin/pint --test"
     ],
     "analyse": [
       "phpstan analyse --memory-limit 2G"

@@ -6,7 +6,7 @@ FROM node:24-alpine3.23 AS node
 FROM php:8.5-fpm-alpine3.23 AS base
 WORKDIR /var/www
 RUN apk update && apk add curl-dev oniguruma-dev libxml2-dev icu-dev sqlite-dev
-RUN docker-php-ext-install mbstring pdo sqlite3 pdo_sqlite intl
+RUN docker-php-ext-install intl
 
 FROM base AS dev
 COPY --from=composer --chown=www-data:www-data /usr/bin/composer /usr/bin/composer

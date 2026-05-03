@@ -1,21 +1,21 @@
 {
-    "private": true,
-    "type": "module",
-    "scripts": {
-        "dev": "vite --host",
-        "build": "vite build",
-        "fmt:check": "prettier . --check",
-        "fmt": "prettier --write .",
-        "fix": "npm run fmt"
-    },
-    "devDependencies": {
-        "@shufo/prettier-plugin-blade": "^1.16.2",
-        "@tailwindcss/vite": "^4.2.4",
-        "laravel-vite-plugin": "^3.1.0",
-        "prettier": "^3.8.3",
-        "vite": "^8.0.10"
-    },
-    "browserslist": [
-        "defaults"
-    ]
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "fmt:check": "prettier . --check",
+    "fmt": "prettier --write .",
+    "fix": "npm run fmt"
+  },
+  "devDependencies": {
+    "@shufo/prettier-plugin-blade": "^1.16.2",
+    "@tailwindcss/vite": "^4.2.4",
+    "laravel-vite-plugin": "^3.1.0",
+    "prettier": "^3.8.3",
+    "vite": "^8.0.10"
+  },
+  "browserslist": [
+    "defaults"
+  ]
 }

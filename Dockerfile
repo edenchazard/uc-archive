@@ -1,7 +1,7 @@
 # grab composer 🎶
 FROM composer:latest AS composer
 
-FROM node:24.0-alpine3.21 AS node
+FROM node:24-alpine3.23 AS node
 ARG VITE_BASE_URL="/unicreatures"
 ENV VITE_BASE_URL=$VITE_BASE_URL
 WORKDIR /var/www
@@ -12,10 +12,10 @@ COPY package.json package-lock.json ./
 RUN [ "npm", "ci" ]
 RUN [ "npm", "run", "build" ]
 
-FROM php:8.5-fpm-alpine3.21 AS base
+FROM php:8.5-fpm-alpine3.23 AS base
 WORKDIR /var/www
 RUN apk update && apk add curl-dev oniguruma-dev libxml2-dev icu-dev sqlite-dev
-RUN docker-php-ext-install mbstring pdo sqlite3 pdo_sqlite intl
+RUN docker-php-ext-install intl
 
 FROM base AS production
 COPY --from=composer /usr/bin/composer /usr/bin/composer

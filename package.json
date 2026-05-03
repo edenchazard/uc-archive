@@ -4,6 +4,7 @@
     "scripts": {
         "dev": "vite --host",
         "build": "vite build",
+        "fmt:check": "prettier . --check",
         "fmt": "prettier --write .",
         "fix": "npm run fmt"
     },

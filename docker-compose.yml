@@ -32,7 +32,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    command: sh -c "mkdir -p /var/www/storage && touch /var/www/storage/database.sqlite && php-fpm"
     networks:
       - internal
     volumes:

@@ -10,12 +10,12 @@ class Page extends Component
 {
     /**
      * Create a new component instance.
-     * @param array<string,mixed> $page
+     *
+     * @param  array<string,mixed>  $page
      */
     public function __construct(
         public array $page = []
-    ) {
-    }
+    ) {}
 
     /**
      * Get the view / contents that represent the component.

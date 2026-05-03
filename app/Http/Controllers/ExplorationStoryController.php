@@ -24,8 +24,7 @@ class ExplorationStoryController extends Controller
             'explorationStory' => $explorationStory,
             'creatures' => $explorationStory
                 ->storyOptions
-                ->map(fn (ExplorationStoryOption $storyOption)
-                    => UserPet::factory()->mockCreature($storyOption->creature)->make()),
+                ->map(fn (ExplorationStoryOption $storyOption) => UserPet::factory()->mockCreature($storyOption->creature)->make()),
         ]);
     }
 }

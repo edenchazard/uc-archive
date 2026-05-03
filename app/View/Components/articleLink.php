@@ -13,9 +13,7 @@ class articleLink extends Component
      */
     public function __construct(
         public string $url
-    ) {
-
-    }
+    ) {}
 
     /**
      * Get the view / contents that represent the component.

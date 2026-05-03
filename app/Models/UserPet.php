@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
 use Str;
 
@@ -21,9 +22,10 @@ use Str;
  * @property int $creature_id
  * @property int $variety
  * @property string $nickname
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Creature $creature
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Creature $creature
+ *
  * @method static \Database\Factories\UserPetFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|UserPet newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|UserPet newQuery()
@@ -36,6 +38,7 @@ use Str;
  * @method static \Illuminate\Database\Eloquent\Builder|UserPet whereSpecialty($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UserPet whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UserPet whereVariety($value)
+ *
  * @mixin \Eloquent
  */
 class UserPet extends Model implements ImageLink
@@ -78,26 +81,22 @@ class UserPet extends Model implements ImageLink
                 $path = Str::of("images/creatures/{$creature->family->name}/")
                     ->when(
                         $this->specialty->value > 0 && $this->specialty->value <= 2,
-                        fn ($path) =>
-                        $path->append("{$this->specialty->friendlyName()}_")
+                        fn ($path) => $path->append("{$this->specialty->friendlyName()}_")
                     )
                     ->when(
                         $this->variety > 0,
-                        fn ($path) =>
-                        $path->append("{$this->variety}_")
+                        fn ($path) => $path->append("{$this->variety}_")
                     )
                     // creatures with their family name don't follow the same url format...
                     ->append($creature->family->name)
                     ->when(
                         $creature->family->name !== $creature->name,
-                        fn ($path) =>
-                        $path->append("_{$creature->name}")
+                        fn ($path) => $path->append("_{$creature->name}")
                     )
                     ->lower()
                     ->when(
                         fn ($path) => File::exists(public_path("{$path}.webp")),
-                        fn ($path) =>
-                        $path->append('.webp')
+                        fn ($path) => $path->append('.webp')
                     );
 
                 return $path->contains('.') ? asset($path) : null;

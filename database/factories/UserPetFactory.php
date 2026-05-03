@@ -4,10 +4,11 @@ namespace Database\Factories;
 
 use App\Enums\GenderEnum;
 use App\Models\Creature;
+use App\Models\UserPet;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UserPet>
+ * @extends Factory<UserPet>
  */
 class UserPetFactory extends Factory
 {
@@ -26,7 +27,7 @@ class UserPetFactory extends Factory
     /**
      * Indicate that the user pet is a placeholder.
      *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     * @return Factory
      */
     public function mockCreature(Creature $creature): self
     {

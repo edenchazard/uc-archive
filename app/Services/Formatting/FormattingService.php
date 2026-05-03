@@ -14,8 +14,8 @@ class FormattingService
     protected array $transformations = [];
 
     /**
-     * @param string $str The text to format.
-     * @param array<string, string> $replacements Optional key and value replacements.
+     * @param  string  $str  The text to format.
+     * @param  array<string, string>  $replacements  Optional key and value replacements.
      */
     public function __construct(
         protected string $str,
@@ -26,7 +26,8 @@ class FormattingService
 
     /**
      * Register a class method as new transformation.
-     * @param string|array<int,string>|callable $transformations A class method name, array of class method names, or a callable.
+     *
+     * @param  string|array<int,string>|callable  $transformations  A class method name, array of class method names, or a callable.
      * @return $this
      */
     final public function register(string|array|callable $transformations): self
@@ -48,6 +49,7 @@ class FormattingService
 
     /**
      * Applies all of the transformations in array $transformations order.
+     *
      * @return $this
      */
     final public function formatAll(): self
@@ -55,11 +57,13 @@ class FormattingService
         foreach ($this->transformations as $transform) {
             $this->{$transform}();
         }
+
         return $this;
     }
 
     /**
      * Returns the text being formatted.
+     *
      * @return string
      */
     final public function get()
@@ -69,6 +73,7 @@ class FormattingService
 
     /**
      * Applies a case-insensitive search and replace on the text.
+     *
      * @return $this
      */
     public function applyReplacements(): self
@@ -78,6 +83,7 @@ class FormattingService
             array_values($this->replacements),
             $this->str
         );
+
         return $this;
     }
 
@@ -86,6 +92,7 @@ class FormattingService
      * Unfortunately, when UC was designed, they didn't use proper paragraphs,
      * instead opting for classic newlines with nl2br applied.
      * We'd ideally like to rewrite them with paragraphs.
+     *
      * @return $this
      */
     public function fixParagraphs(): self
@@ -102,6 +109,7 @@ class FormattingService
         $paragraphs = array_map(fn ($p) => "<p>{$p}</p>", $paragraphs);
 
         $this->str = implode($paragraphs);
+
         return $this;
     }
 }

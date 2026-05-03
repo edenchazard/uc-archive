@@ -24,7 +24,7 @@ services:
       - ./package-lock.json:/var/www/package-lock.json
       - ./vite.config.js:/var/www/vite.config.js
       - ./.env:/var/www/.env
-      - .docker-contents/php.ini:/etc/php/8.4/fpm/php.ini
+      - .docker-contents/php.ini:/etc/php/8.5/fpm/php.ini
       - appdata:/var/www/storage
       - web_content:/var/www
 
@@ -52,7 +52,6 @@ services:
       - ./vite.config.js:/var/www/vite.config.js
       - ./.env:/var/www/.env
       - ./tests:/var/www/tests
-      - ./ecs.php:/var/www/ecs.php
       - ./phpstan.neon:/var/www/phpstan.neon
   nginx:
     image: nginxinc/nginx-unprivileged:1.28-alpine-slim

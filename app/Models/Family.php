@@ -8,8 +8,10 @@ use App\Enums\UniqueRatingEnum;
 use App\Interfaces\DirectLink;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Family
@@ -35,10 +37,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $base_creativity
  * @property int $base_willpower
  * @property int $base_focus
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Creature> $stages
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection<int, Creature> $stages
  * @property-read int|null $stages_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Family newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Family newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Family query()
@@ -65,10 +68,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Family whereReleased($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Family whereUniqueRating($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Family whereUpdatedAt($value)
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Alt> $alts
+ *
+ * @property-read Collection<int, Alt> $alts
  * @property-read int|null $alts_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Creature> $creatures
+ * @property-read Collection<int, Creature> $creatures
  * @property-read int|null $creatures_count
+ *
  * @mixin \Eloquent
  */
 class Family extends Model implements DirectLink
@@ -91,6 +96,7 @@ class Family extends Model implements DirectLink
 
     /**
      * Just an alias for stages, basically.
+     *
      * @return HasMany<Creature, $this>
      */
     public function creatures(): HasMany

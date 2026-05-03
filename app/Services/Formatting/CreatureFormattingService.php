@@ -38,7 +38,8 @@ class CreatureFormattingService extends FormattingService
             $replacement = $this->gender->pronounConversions()[strtolower($matchedPronoun)];
             // determine casing
             $casing = ctype_upper($matchedPronoun[0]) ? 'strtoupper' : 'strtolower';
-            return $casing($replacement[0]) . substr($replacement, 1);
+
+            return $casing($replacement[0]).substr($replacement, 1);
         }, $this->str);
 
         return $this;

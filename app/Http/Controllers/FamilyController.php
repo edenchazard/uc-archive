@@ -28,7 +28,7 @@ class FamilyController extends Controller
                 'family' => $creatures->first()?->creature->family,
                 'stages' => $creatures,
             ])
-            ->sortBy('family.name') ;
+            ->sortBy('family.name');
 
         return view('pages.creatures.index', [
             'groups' => $families->groupBy(fn ($family) => $family['family']?->name[0] ?? ''),

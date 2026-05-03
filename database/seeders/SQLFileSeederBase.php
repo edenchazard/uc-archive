@@ -20,7 +20,7 @@ abstract class SQLFileSeederBase extends Seeder
             throw new Exception('no sql file specified.');
         }
 
-        $path = dirname(__DIR__) . "/seeders/{$this->file}";
+        $path = dirname(__DIR__)."/seeders/{$this->file}";
         $sql = file_get_contents($path);
 
         if (DB::connection()->getDriverName() === 'sqlite') {
@@ -39,6 +39,6 @@ abstract class SQLFileSeederBase extends Seeder
             }
         }
 
-        Log::info($status ? '[success]' : '[failure]' . " importing sql data from {$path}");
+        Log::info($status ? '[success]' : '[failure]'." importing sql data from {$path}");
     }
 }

@@ -13,7 +13,7 @@ class ContentSection extends Component
      */
     public function __construct(
         public string $title,
-        public string|null $anchor = null,
+        public ?string $anchor = null,
         public bool $hideAnchor = false,
         public int $level = 2
     ) {

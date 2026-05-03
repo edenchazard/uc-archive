@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Str;
 
-class Item extends Model implements ImageLink, DirectLink
+class Item extends Model implements DirectLink, ImageLink
 {
     use IsTransactionable;
 

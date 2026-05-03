@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Str;
 
@@ -35,12 +36,13 @@ use Str;
  * @property int $max_focus
  * @property int $family_id
  * @property int $component_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Consumable|null $consumable
- * @property-read \App\Models\Family $family
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\TrainingOption> $trainingOptions
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Consumable|null $consumable
+ * @property-read Family $family
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, TrainingOption> $trainingOptions
  * @property-read int|null $training_options_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Creature locate(string|int $family, string|int $creature)
  * @method static \Illuminate\Database\Eloquent\Builder|Creature newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Creature newQuery()
@@ -65,9 +67,10 @@ use Str;
  * @method static \Illuminate\Database\Eloquent\Builder|Creature whereStage($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Creature whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Creature orderByFamilyName()
+ *
  * @mixin \Eloquent
  */
-class Creature extends Model implements ImageLink, DirectLink
+class Creature extends Model implements DirectLink, ImageLink
 {
     use IsTransactionable;
 
@@ -123,6 +126,7 @@ class Creature extends Model implements ImageLink, DirectLink
     /**
      * Returns the nearest previous and nearest next creatures adjacent to this
      * creature in terms of id. Skips missing ids.
+     *
      * @return Collection<string,$this|null>
      */
     public function getChronologicalAdjacents(): Collection
@@ -144,14 +148,12 @@ class Creature extends Model implements ImageLink, DirectLink
                     ->append($this->family->name)
                     ->when(
                         $this->family->name !== $this->name,
-                        fn ($path) =>
-                        $path->append("_{$this->name}")
+                        fn ($path) => $path->append("_{$this->name}")
                     )
                     ->lower()
                     ->when(
                         fn ($path) => File::exists(public_path("{$path}.webp")),
-                        fn ($path) =>
-                        $path->append('.webp')
+                        fn ($path) => $path->append('.webp')
                     );
 
                 return $path->contains('.') ? asset($path) : null;
@@ -168,6 +170,7 @@ class Creature extends Model implements ImageLink, DirectLink
 
     /**
      * Calculate the max possible stat value for this creature.
+     *
      * @return Attribute<int,never>
      */
     protected function maxStatPoints(): Attribute

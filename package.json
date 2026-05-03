@@ -4,19 +4,15 @@
     "scripts": {
         "dev": "vite --host",
         "build": "vite build",
-        "lint": "eslint resources/js/",
-        "lint:fix": "npm run lint -- --fix",
         "fmt": "prettier --write .",
-        "fix": "npm run lint:fix && npm run fmt"
+        "fix": "npm run fmt"
     },
     "devDependencies": {
         "@shufo/prettier-plugin-blade": "^1.15.3",
-        "@tailwindcss/vite": "^4.1.8",
-        "eslint": "^9.27.0",
-        "eslint-config-prettier": "^10.1.5",
-        "laravel-vite-plugin": "^1.2.0",
+        "@tailwindcss/vite": "^4.2.4",
+        "laravel-vite-plugin": "^3.1.0",
         "prettier": "^3.5.3",
-        "vite": "^6.3.5"
+        "vite": "^8.0.10"
     },
     "browserslist": [
         "defaults"

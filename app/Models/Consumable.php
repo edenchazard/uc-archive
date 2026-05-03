@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 use Str;
 
 /**
@@ -17,8 +18,9 @@ use Str;
  *
  * @property int $id
  * @property string $name
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Consumable newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Consumable newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Consumable query()
@@ -27,9 +29,10 @@ use Str;
  * @method static \Illuminate\Database\Eloquent\Builder|Consumable whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Consumable whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Consumable whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
-class Consumable extends Model implements ImageLink, DirectLink
+class Consumable extends Model implements DirectLink, ImageLink
 {
     use IsTransactionable;
 

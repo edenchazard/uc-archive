@@ -6,6 +6,7 @@ use App\Services\Formatting\CreatureFormattingService;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use Str;
 
 /**
@@ -17,8 +18,9 @@ use Str;
  * @property string $description
  * @property int $energy_cost
  * @property-read Creature $creature
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|TrainingOption newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TrainingOption newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TrainingOption query()
@@ -30,6 +32,7 @@ use Str;
  * @method static \Illuminate\Database\Eloquent\Builder|TrainingOption whereReward($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TrainingOption whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TrainingOption whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class TrainingOption extends Model
@@ -82,6 +85,7 @@ class TrainingOption extends Model
                         if (! in_array(Str::afterLast($reward, ' '), $generic)) {
                             return 'special';
                         }
+
                         return 'generic';
                     });
 

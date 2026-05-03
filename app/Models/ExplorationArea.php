@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Str;
 
-class ExplorationArea extends Model implements ImageLink, DirectLink
+class ExplorationArea extends Model implements DirectLink, ImageLink
 {
     /**
      * @return HasMany<ExplorationStory,$this>
@@ -31,7 +31,7 @@ class ExplorationArea extends Model implements ImageLink, DirectLink
     public function imageLink(): Attribute
     {
         return Attribute::make(
-            get: fn () => asset(strtolower('images/exploration/' . Str::snake($this->name) . '.webp'))
+            get: fn () => asset(strtolower('images/exploration/'.Str::snake($this->name).'.webp'))
         );
     }
 

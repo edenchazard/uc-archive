@@ -8,30 +8,48 @@ use App\Models\Family;
 use App\Models\UserPet;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
 use Illuminate\View\View;
 
 class FamilyController extends Controller
 {
     public function index(): View
     {
+        /**
+         * @var Collection<int, array{family: Family|null, stages: Collection<int, UserPet>}>
+         */
         $families = Creature::query()
             ->with('family')
             ->orderBy('stage')
             ->get()
             ->map(
-                fn (Creature $creature) => UserPet::factory()
+                fn (Creature $creature): UserPet => UserPet::factory()
                     ->mockCreature($creature)
                     ->make()
             )
             ->groupBy('creature.family.name')
-            ->map(fn ($creatures) => [
-                'family' => $creatures->first()?->creature->family,
-                'stages' => $creatures,
-            ])
+            ->map(
+                fn (Collection $creatures): array => [
+                    'family' => $creatures->first()?->creature->family,
+                    'stages' => $creatures,
+                ]
+            )
             ->sortBy('family.name');
 
+        /**
+         * @var Collection<string, Collection<int, array{family: Family|null, stages: Collection<int, UserPet>}>>
+         */
+        $groups = $families->groupBy(
+            /**
+             * @param  array{family: Family|null, stages: Collection<int, UserPet>}  $family
+             */
+            function (array $family): string {
+                return $family['family']?->name[0] ?? '';
+            }
+        );
+
         return view('pages.creatures.index', [
-            'groups' => $families->groupBy(fn ($family) => $family['family']?->name[0] ?? ''),
+            'groups' => $groups,
         ]);
     }
 

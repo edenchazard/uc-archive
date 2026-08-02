@@ -78,8 +78,6 @@ use Illuminate\Support\Carbon;
  */
 class Family extends Model implements DirectLink
 {
-    protected $guarded = [];
-
     /**
      * @var array<string,string>
      */

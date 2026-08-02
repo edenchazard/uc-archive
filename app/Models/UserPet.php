@@ -48,7 +48,6 @@ class UserPet extends Model implements ImageLink
      */
     use HasFactory;
 
-
     /**
      * @var array<string,string>
      */

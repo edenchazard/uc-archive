@@ -21,3 +21,4 @@ _ide_helper.php
 .gitignore
 docker-compose.yml
 node_modules
+storage/logs/laravel.log

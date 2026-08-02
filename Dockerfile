@@ -50,6 +50,7 @@ RUN chmod -R 770 storage bootstrap \
   && touch /var/www/storage/database.sqlite \
   && touch /var/www/storage/logs/laravel.log \
   && chown -R www-data:www-data /var/www/storage/logs \
-  && chown -R www-data:www-data /var/www/storage/database.sqlite
+  && chown -R www-data:www-data /var/www/storage/database.sqlite \
+  && php artisan migrate --seed --force
 
 USER www-data

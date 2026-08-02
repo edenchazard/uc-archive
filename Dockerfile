@@ -49,6 +49,7 @@ RUN chmod -R 770 storage bootstrap \
   && mkdir -p /var/www/storage/logs \
   && touch /var/www/storage/database.sqlite \
   && touch /var/www/storage/logs/laravel.log \
-  && chown -R www-data:www-data /var/www/storage/logs
+  && chown -R www-data:www-data /var/www/storage/logs \
+  && chown -R www-data:www-data /var/www/storage/database.sqlite
 
 USER www-data

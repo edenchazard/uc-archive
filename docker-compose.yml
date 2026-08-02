@@ -9,6 +9,7 @@ services:
       - internal
     volumes:
       - ./app:/var/www/app
+      - ./bootstrap/app.php:/var/www/bootstrap/app.php
       - ./config:/var/www/config
       - ./routes:/var/www/routes
       - ./settings:/var/www/settings
@@ -35,6 +36,7 @@ services:
       - internal
     volumes:
       - ./app:/var/www/app
+      - ./bootstrap/app.php:/var/www/bootstrap/app.php
       - ./config:/var/www/config
       - ./routes:/var/www/routes
       - ./settings:/var/www/settings

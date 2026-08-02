@@ -31,7 +31,7 @@ COPY composer.json composer.lock artisan ./
 RUN composer install --prefer-dist --no-scripts --no-progress --no-interaction --no-autoloader \
   && composer dump-autoload --optimize --apcu
 
-RUN chmod -R 770 ./storage ./bootstrap/cache
+RUN chmod -R 770 ./storage ./bootstrap
 RUN mkdir -p /var/www/storage/logs \
   && touch /var/www/storage/database.sqlite \
   && touch /var/www/storage/logs/laravel.log \

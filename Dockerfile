@@ -45,7 +45,7 @@ RUN rm -rf /usr/bin/composer \
   && chown -R www-data:www-data /var/www \
   && chmod -R 555 .
 
-RUN chmod -R 770 storage bootstrap/cache \
+RUN chmod -R 770 storage bootstrap \
   && mkdir -p /var/www/storage/logs \
   && touch /var/www/storage/database.sqlite \
   && touch /var/www/storage/logs/laravel.log \

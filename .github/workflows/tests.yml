@@ -10,13 +10,13 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: start test environment
-        run: docker compose up testapp -d
+        run: docker compose up testphp -d
 
       - name: run prettier
-        run: docker compose exec -T testapp sh -c "npm run fmt:check"
+        run: docker compose exec -T testphp sh -c "npm run fmt:check"
 
       - name: run phpstan
-        run: docker compose exec -T testapp sh -c "composer run analyse"
+        run: docker compose exec -T testphp sh -c "composer run analyse"
 
       - name: run pint
-        run: docker compose exec -T testapp sh -c "composer run pint"
+        run: docker compose exec -T testphp sh -c "composer run pint"

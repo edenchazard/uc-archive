@@ -33,7 +33,7 @@
   />
   <meta
     property="og:image"
-    content="{{ asset('images/og-image.png') }}"
+    content="{{ asset('images/og-image.webp') }}"
   />
   <meta
     property="og:description"
@@ -41,7 +41,7 @@
   />
   <link
     type="image/x-icon"
-    href="{{ asset('/images/favicon.ico') }}"
+    href="{{ asset('/favicon.ico') }}"
     rel="icon"
   >
   @vite('resources/css/app.css')

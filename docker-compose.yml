@@ -1,9 +1,8 @@
 services:
-  app:
+  php:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    command: sh -c "mkdir -p /var/www/storage && touch /var/www/storage/database.sqlite && php-fpm"
     ports:
       - 5173:5173
     networks:
@@ -28,7 +27,7 @@ services:
       - appdata:/var/www/storage
       - web_content:/var/www
 
-  testapp:
+  testphp:
     build:
       context: .
       dockerfile: Dockerfile.dev
@@ -54,12 +53,13 @@ services:
       - ./phpstan.neon:/var/www/phpstan.neon
       - ./.prettierignore:/var/www/.prettierignore
       - ./.prettierrc:/var/www/.prettierrc
+
   nginx:
     image: nginxinc/nginx-unprivileged:1.28-alpine-slim
     ports:
       - 80:8080
     depends_on:
-      - app
+      - php
     networks:
       - internal
     volumes:

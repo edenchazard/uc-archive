@@ -1,0 +1,21 @@
+{
+    "$schema": "./node_modules/oxfmt/configuration_schema.json",
+    "semi": true,
+    "trailingComma": "all",
+    "singleQuote": true,
+    "singleAttributePerLine": true,
+    "printWidth": 80,
+    "sortPackageJson": false,
+    "ignorePatterns": [
+        "composer.json",
+        "composer.lock",
+        "package.json",
+        "package-lock.json",
+        "vendor",
+        "node_modules",
+        "dist",
+        "coverage",
+        "public/images",
+        "storage"
+    ]
+}

@@ -12,7 +12,7 @@ jobs:
       - name: start test environment
         run: docker compose up testphp -d
 
-      - name: run prettier
+      - name: run oxfmt
         run: docker compose exec -T testphp sh -c "npm run fmt:check"
 
       - name: run phpstan

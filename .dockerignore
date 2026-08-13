@@ -7,7 +7,6 @@
 .gitattributes
 .gitignore
 .phpstorm.meta.php
-.prettierrc
 ecs.php
 jsconfig.json
 phpstan.neon

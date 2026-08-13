@@ -53,8 +53,7 @@ services:
       - ./.env:/var/www/.env
       - ./tests:/var/www/tests
       - ./phpstan.neon:/var/www/phpstan.neon
-      - ./.prettierignore:/var/www/.prettierignore
-      - ./.prettierrc:/var/www/.prettierrc
+      - ./.oxfmtrc.json:/var/www/.oxfmtrc.json
 
   nginx:
     image: nginxinc/nginx-unprivileged:1.28-alpine-slim

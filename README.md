@@ -12,16 +12,21 @@ The project is built with:
 - [Tailwind](https://tailwindcss.com/)
 - [Docker](https://www.docker.com/)
 
+SQLite is used for simplicity and portability.
+
 To run:
 
 1. `docker compose up -d`
-2. `docker compose exec app sh -c "php artisan migrate --seed"`
-3. `docker compose exec app sh -c "npm run dev"`
-4. It should now be visible on `localhost`.
+2. `docker compose exec php sh -c "npm run dev"`
+3. It should now be visible at [localhost](http://localhost/).
 
 ## Production
 
-With every new tag, a new container image is published. Please see the [latest package release for the image](https://github.com/edenchazard/uc-archive/pkgs/container/uc-archive). The latest image will always be tagged with `latest`. For example, the latest image will be available at `ghcr.io/edenchazard/uc-archive:2.1.1`.
+With every new tag, a new container image is published. Please see the [latest images](https://github.com/edenchazard/uc-archive/pkgs/container/uc-archive). Every release follows typical semantic versioning.
+
+The newest image will always be tagged with `latest`.
+
+The image contains the database file with the migrations already applied, ready to be used immediately.
 
 ## Disclaimer
 

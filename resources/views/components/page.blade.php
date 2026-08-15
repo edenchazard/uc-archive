@@ -33,7 +33,7 @@
   />
   <meta
     property="og:image"
-    content="{{ asset('images/og-image.webp') }}"
+    content="/images/og-image.webp"
   />
   <meta
     property="og:description"
@@ -41,7 +41,7 @@
   />
   <link
     type="image/x-icon"
-    href="{{ asset('/favicon.ico') }}"
+    href="/favicon.ico"
     rel="icon"
   >
   @vite('resources/css/app.css')
@@ -56,7 +56,7 @@
         class="relative h-[232px] items-end bg-center bg-no-repeat px-12 text-4xl font-semibold"
         id="banner"
         role="presentation"
-        style="background-image: url({{ asset('images/bannerv2_clean.webp') }})"
+        style="background-image: url(/images/bannerv2_clean.webp)"
       >
         <a
           class="absolute bottom-4"

@@ -14,11 +14,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        if ($this->app->environment() !== 'production') {
-            $this->app->register(IdeHelperServiceProvider::class);
-        } elseif ($this->app->environment() === 'production') {
+        if ($this->app->environment() === 'production') {
             // Force assets to be served over HTTPS.
             URL::forceScheme('https');
+        } else {
+            $this->app->register(IdeHelperServiceProvider::class);
         }
     }
 

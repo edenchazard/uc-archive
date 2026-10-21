@@ -10,7 +10,7 @@ COPY package.json package-lock.json ./
 RUN [ "npm", "ci" ]
 RUN [ "npm", "run", "build" ]
 
-FROM php:8.5-fpm-alpine AS base
+FROM php:8.5.12-fpm-alpine AS base
 WORKDIR /var/www
 RUN apk update && apk add curl-dev oniguruma-dev libxml2-dev icu-dev sqlite-dev
 RUN docker-php-ext-install intl

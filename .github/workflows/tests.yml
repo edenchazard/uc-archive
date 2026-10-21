@@ -9,6 +9,9 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Create test environment
+        run: cp .env.example .env
+
       - name: start test environment
         run: docker compose up testphp -d
 

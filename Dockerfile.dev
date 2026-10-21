@@ -5,7 +5,7 @@ FROM node:26-alpine AS node
 
 FROM php:8.5.12-fpm-alpine AS base
 WORKDIR /var/www
-RUN apk update && apk add curl-dev oniguruma-dev libxml2-dev icu-dev sqlite-dev
+RUN apk update && apk add curl-dev oniguruma-dev libxml2-dev icu-dev sqlite-dev libatomic
 RUN docker-php-ext-install intl
 
 FROM base AS dev

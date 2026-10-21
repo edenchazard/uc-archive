@@ -8,7 +8,7 @@
   ],
   "license": "MIT",
   "require": {
-    "php": "^8.5",
+    "php": "^8.5.12",
     "diglactic/laravel-breadcrumbs": "^10.1.0",
     "fakerphp/faker": "^1.24.1",
     "laravel/framework": "^13.21",

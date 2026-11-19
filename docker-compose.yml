@@ -24,7 +24,7 @@ services:
       - ./package-lock.json:/var/www/package-lock.json
       - ./vite.config.js:/var/www/vite.config.js
       - ./.env:/var/www/.env
-      - .docker-contents/php.ini:/etc/php/8.5/fpm/php.ini
+      - .docker-contents/php.ini:/etc/php/8.6/fpm/php.ini
       - appdata:/var/www/storage
       - web_content:/var/www
 

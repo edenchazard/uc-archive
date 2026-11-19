@@ -10,10 +10,10 @@ COPY package.json package-lock.json ./
 RUN [ "npm", "ci" ]
 RUN [ "npm", "run", "build" ]
 
-FROM php:8.5.13-fpm-alpine AS base
+FROM php:8.6.0-fpm-alpine AS base
 WORKDIR /var/www
-RUN apk update && apk add curl-dev oniguruma-dev libxml2-dev icu-dev sqlite-dev
-RUN docker-php-ext-install intl
+RUN apk update && apk add curl-dev oniguruma-dev libxml2-dev icu-dev sqlite-dev libatomic
+RUN docker-php-ext-install intl mbstring
 
 FROM base AS production
 COPY --from=composer /usr/bin/composer /usr/bin/composer

@@ -77,22 +77,19 @@ class TrainingOption extends Model
 
         return Attribute::make(
             get: function () use ($generic) {
-                $grouped = collect(explode(',', $this->reward))
-                    ->sortBy(
-                        fn (string $reward) => Str::beforeLast($reward, ' ')
-                    )
-                    ->groupBy(function (string $reward) use ($generic) {
-                        if (! in_array(Str::afterLast($reward, ' '), $generic)) {
-                            return 'special';
-                        }
+                $rewards = collect(explode(',', $this->reward))
+                    ->sortBy(fn (string $reward) => Str::beforeLast($reward, ' '));
 
-                        return 'generic';
-                    });
+                $special = $rewards->filter(
+                    fn (string $reward) => ! in_array(Str::afterLast($reward, ' '), $generic)
+                );
+                $genericRewards = $rewards->filter(
+                    fn (string $reward) => in_array(Str::afterLast($reward, ' '), $generic)
+                );
 
-                return collect($grouped->get('special', []))
-                    ->flatten()
+                return $special
                     ->map(fn (string $reward) => Str::wrap($reward, '<strong>', '</strong>'))
-                    ->merge($grouped->get('generic', []))
+                    ->merge($genericRewards)
                     ->map(fn (string $reward) => Str::title($reward))
                     ->implode(', ');
             }

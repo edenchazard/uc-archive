@@ -10,10 +10,28 @@ use App\Models\UserPet;
 use Illuminate\Support\Collection;
 use Illuminate\Testing\TestResponse;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class CreatureControllerTest extends TestCase
 {
+    /**
+     * @param  list<array{id: int|null, name: string|null}>  $expectedNeighbors
+     * @param  list<string>  $expectedAltKeys
+     * @param  list<SpecialtyEnum>  $expectedSpecialties
+     * @param array{
+     *     artist: string|null,
+     *     stageOrdinal: string,
+     *     creatureOrdinal: string,
+     *     family: string,
+     *     element: string,
+     *     rarity: string,
+     *     uniqueRating: string|null,
+     *     release: string,
+     *     consumable: string,
+     *     requiredClicks: int
+     * }  $expectedDisplay
+     */
     #[DataProvider('creatureShowCases')]
     public function test_show(
         int $creatureId,
@@ -49,6 +67,11 @@ class CreatureControllerTest extends TestCase
         $finalEvolution = $requiredClicks === 0 ? ' and final' : '';
 
         $consumable = $viewData['pet']->creature->consumable;
+        $directLink = $consumable?->getAttribute('direct_link');
+        $imageLink = $consumable?->getAttribute('image_link');
+
+        $this->assertIsString($directLink);
+        $this->assertIsString($imageLink);
 
         $response
             ->assertSeeText("{$expectedCreatureName} was drawn {$artist} and is the {$expectedDisplay['stageOrdinal']}{$finalEvolution} evolution of the {$expectedDisplay['family']} family, and {$expectedDisplay['creatureOrdinal']} creature overall.")
@@ -57,12 +80,12 @@ class CreatureControllerTest extends TestCase
                 '.')
             ->assertSeeText($expectedDisplay['release'])
             ->assertSeeText("Interacting with {$expectedCreatureName} while exploring would earn you the {$expectedDisplay['consumable']} component.")
-            ->assertSee('href="'.$consumable->direct_link.'"', false)
-            ->assertSee('src="'.$consumable->image_link.'"', false)
+            ->assertSee('href="'.$directLink.'"', false)
+            ->assertSee('src="'.$imageLink.'"', false)
             ->assertSee('alt="'.$expectedDisplay['consumable'].'"', false)
             ->when(
                 value: $requiredClicks > 0,
-                callback: fn ($response)  => $response->assertSeeText("It requires {$requiredClicks} clicks to evolve."),
+                callback: fn ($response) => $response->assertSeeText("It requires {$requiredClicks} clicks to evolve."),
                 default: fn ($response) => $response->assertDontSeeText('It requires')
             );
     }
@@ -297,7 +320,7 @@ class CreatureControllerTest extends TestCase
 
     /**
      * @param  list<array{id: int|null, name: string|null}>  $expectedNeighbors
-     * @return array{family: Family, pet: UserPet, alts: Collection, response: TestResponse}
+     * @return array{family: Family, pet: UserPet, alts: Collection<string, UserPet>, response: TestResponse<Response>}
      */
     private function assertCreatureShowPage(int $creatureId, array $expectedNeighbors): array
     {
@@ -305,6 +328,7 @@ class CreatureControllerTest extends TestCase
             ->with('family')
             ->whereKey($creatureId)
             ->firstOrFail();
+
         $family = $creature->family;
 
         $response = $this

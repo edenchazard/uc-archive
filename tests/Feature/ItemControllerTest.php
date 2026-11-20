@@ -20,10 +20,10 @@ class ItemControllerTest extends TestCase
         $items = $this->viewDataAs($response, 'items', Collection::class);
 
         $this->assertEquals(
-            expected: Item::query()
+            Item::query()
                 ->orderBy('name')
                 ->get(),
-            actual: $items
+            $items
         );
 
         $this->assertBreadcrumbTrail($response, [
@@ -57,8 +57,8 @@ class ItemControllerTest extends TestCase
         $viewItem = $this->viewDataAs($response, 'item', Item::class);
 
         $this->assertEquals(
-            expected: $expected,
-            actual: $viewItem
+            $expected,
+            $viewItem
         );
 
         $this->assertBreadcrumbTrail($response, [

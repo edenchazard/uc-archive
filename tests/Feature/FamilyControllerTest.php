@@ -37,8 +37,8 @@ class FamilyControllerTest extends TestCase
         $groups = $this->viewDataAs($response, 'groups', Collection::class);
 
         $this->assertEquals(
-            expected: $expectedGroups,
-            actual: $groups
+            $expectedGroups,
+            $groups
         );
 
         $this->assertBreadcrumbTrail($response, [
@@ -58,6 +58,8 @@ class FamilyControllerTest extends TestCase
         $expectedFamily = Family::query()
             ->with('stages')
             ->findOrFail($family->getKey());
+
+        $this->assertInstanceOf(Family::class, $expectedFamily);
 
         $expectedStages = $expectedFamily
             ->stages
@@ -86,9 +88,9 @@ class FamilyControllerTest extends TestCase
         $stages = $this->viewDataAs($response, 'stages', Collection::class);
         $alts = $this->viewDataAs($response, 'alts', Collection::class);
 
-        $this->assertEquals(expected: $expectedFamily->toArray(), actual: $viewFamily->toArray());
-        $this->assertEquals(expected: $expectedStages->toArray(), actual: $stages->toArray());
-        $this->assertEquals(expected: $expectedAlts->toArray(), actual: $alts->toArray());
+        $this->assertEquals($expectedFamily->toArray(), $viewFamily->toArray());
+        $this->assertEquals($expectedStages->toArray(), $stages->toArray());
+        $this->assertEquals($expectedAlts->toArray(), $alts->toArray());
 
         $this->assertBreadcrumbTrail($response, [
             ['Archive', route('home')],
@@ -109,6 +111,8 @@ class FamilyControllerTest extends TestCase
             ->with('stages')
             ->findOrFail($family->getKey());
 
+        $this->assertInstanceOf(Family::class, $expectedFamily);
+
         $expectedStages = $expectedFamily
             ->stages
             ->map(fn (Creature $stage) => UserPet::factory()
@@ -127,9 +131,9 @@ class FamilyControllerTest extends TestCase
         $stages = $this->viewDataAs($response, 'stages', Collection::class);
         $alts = $this->viewDataAs($response, 'alts', Collection::class);
 
-        $this->assertEquals(expected: $expectedFamily->toArray(), actual: $viewFamily->toArray());
-        $this->assertEquals(expected: $expectedStages->toArray(), actual: $stages->toArray());
-        $this->assertEquals(expected: collect(), actual: $alts);
+        $this->assertEquals($expectedFamily->toArray(), $viewFamily->toArray());
+        $this->assertEquals($expectedStages->toArray(), $stages->toArray());
+        $this->assertEquals(collect(), $alts);
 
         $this->assertBreadcrumbTrail($response, [
             ['Archive', route('home')],
@@ -167,7 +171,7 @@ class FamilyControllerTest extends TestCase
             ->assertViewHas('results');
 
         $results = $this->viewDataAs($response, 'results', Collection::class);
-        $this->assertEquals(expected: collect(), actual: $results);
+        $this->assertEquals(collect(), $results);
 
         $this->assertBreadcrumbTrail($response, [
             ['Archive', route('home')],
@@ -237,7 +241,7 @@ class FamilyControllerTest extends TestCase
             ->assertViewHas('results');
 
         $results = $this->viewDataAs($response, 'results', Collection::class);
-        $this->assertEquals(expected: $expectedResults, actual: $results);
+        $this->assertEquals($expectedResults, $results);
 
         $this->assertBreadcrumbTrail($response, [
             ['Archive', route('home')],

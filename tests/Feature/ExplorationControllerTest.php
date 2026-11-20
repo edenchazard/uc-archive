@@ -26,8 +26,8 @@ class ExplorationControllerTest extends TestCase
         $areas = $this->viewDataAs($response, 'explorationAreas', Collection::class);
 
         $this->assertEquals(
-            expected: $expected,
-            actual: $areas
+            $expected,
+            $areas
         );
 
         $this->assertBreadcrumbTrail($response, [
@@ -62,8 +62,8 @@ class ExplorationControllerTest extends TestCase
         $viewArea = $this->viewDataAs($response, 'explorationArea', ExplorationArea::class);
 
         $this->assertEquals(
-            expected: $expected->toArray(),
-            actual: $viewArea->toArray()
+            $expected->toArray(),
+            $viewArea->toArray()
         );
 
         $this->assertBreadcrumbTrail($response, [

@@ -21,9 +21,9 @@ class ShopControllerTest extends TestCase
         $categories = $this->viewDataAs($response, 'categories', Collection::class);
 
         $this->assertEquals(
-            expected: ShopCategory::query()
+            ShopCategory::query()
                 ->get(),
-            actual: $categories
+            $categories
         );
 
         $this->assertBreadcrumbTrail($response, [
@@ -59,8 +59,8 @@ class ShopControllerTest extends TestCase
         $viewCategory = $this->viewDataAs($response, 'shopCategory', ShopCategory::class);
 
         $this->assertEquals(
-            expected: $expected,
-            actual: $viewCategory
+            $expected,
+            $viewCategory
         );
 
         $this->assertBreadcrumbTrail($response, [

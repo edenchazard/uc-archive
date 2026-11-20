@@ -17,7 +17,11 @@ class ExplorationStoryControllerTest extends TestCase
             ->with('explorationArea')
             ->orderBy('id')
             ->firstOrFail();
+
         $area = $story->explorationArea;
+
+        $this->assertInstanceOf(ExplorationArea::class, $area);
+
         $expectedStory = ExplorationStory::query()
             ->with([
                 'storyOptions' => fn (HasMany $q) => $q
@@ -25,6 +29,9 @@ class ExplorationStoryControllerTest extends TestCase
                     ->orderBy('order'),
             ])
             ->findOrFail($story->getKey());
+
+        $this->assertInstanceOf(ExplorationStory::class, $expectedStory);
+
         $expectedCreatures = $expectedStory->storyOptions
             ->map(fn ($storyOption) => UserPet::factory()
                 ->mockCreature($storyOption->creature)
@@ -40,10 +47,10 @@ class ExplorationStoryControllerTest extends TestCase
         $viewStory = $this->viewDataAs($response, 'explorationStory', ExplorationStory::class);
         $creatures = $this->viewDataAs($response, 'creatures', Collection::class);
 
-        $this->assertEquals(expected: $expectedStory->toArray(), actual: $viewStory->toArray());
+        $this->assertEquals($expectedStory->toArray(), $viewStory->toArray());
         $this->assertEquals(
-            expected: $expectedCreatures->toArray(),
-            actual: $creatures->toArray()
+            $expectedCreatures->toArray(),
+            $creatures->toArray()
         );
 
         $this->assertBreadcrumbTrail($response, [

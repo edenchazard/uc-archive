@@ -29,8 +29,8 @@ class ComponentControllerTest extends TestCase
         $components = $this->viewDataAs($response, 'components', Collection::class);
 
         $this->assertEquals(
-            expected: $expected,
-            actual: $components
+            $expected,
+            $components
         );
 
         $this->assertBreadcrumbTrail($response, [
@@ -69,8 +69,8 @@ class ComponentControllerTest extends TestCase
         $viewComponent = $this->viewDataAs($response, 'consumable', Consumable::class);
 
         $this->assertEquals(
-            expected: $expected,
-            actual: $viewComponent
+            $expected,
+            $viewComponent
         );
 
         $this->assertBreadcrumbTrail($response, [

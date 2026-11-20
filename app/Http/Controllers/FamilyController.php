@@ -72,7 +72,7 @@ class FamilyController extends Controller
                         'specialty' => $specialty,
                     ])));
 
-            $alt_evos->merge($alts);
+            $alt_evos = $alt_evos->merge($alts);
         }
 
         $wrappedStages = $family->stages->map(

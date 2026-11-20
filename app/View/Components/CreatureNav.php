@@ -14,7 +14,7 @@ class CreatureNav extends Component
      */
     public function __construct(
         public string $direction,
-        public UserPet $pet
+        public ?UserPet $pet = null
     ) {
         //
     }

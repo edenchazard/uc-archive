@@ -23,3 +23,6 @@ jobs:
 
       - name: run pint
         run: docker compose exec -T testphp sh -c "composer run pint"
+
+      - name: run tests
+        run: docker compose exec -T testphp sh -c "composer run phpunit"

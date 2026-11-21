@@ -5,9 +5,9 @@ namespace Tests\Unit\Services\Formatting;
 use App\Enums\GenderEnum;
 use App\Services\Formatting\CreatureFormattingService;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Tests\Unit\UnitTestCase;
+use Tests\Unit\TestCase;
 
-class CreatureFormattingServiceTest extends UnitTestCase
+class CreatureFormattingServiceTest extends TestCase
 {
     #[DataProvider('pronounCases')]
     public function test_format_pronouns(GenderEnum $gender, string $input, string $expected): void

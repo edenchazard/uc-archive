@@ -7,7 +7,6 @@ use App\Models\ExplorationStory;
 use App\Models\UserPet;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
-use Tests\TestCase;
 
 class ExplorationStoryControllerTest extends TestCase
 {

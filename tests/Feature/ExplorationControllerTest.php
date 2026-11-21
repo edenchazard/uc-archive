@@ -7,7 +7,6 @@ use App\Models\ExplorationArea;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
-use Tests\TestCase;
 
 class ExplorationControllerTest extends TestCase
 {

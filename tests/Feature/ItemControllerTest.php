@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Models\Item;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Collection;
-use Tests\TestCase;
 
 class ItemControllerTest extends TestCase
 {

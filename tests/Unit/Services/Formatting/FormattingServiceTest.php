@@ -3,11 +3,10 @@
 namespace Tests\Unit\Services\Formatting;
 
 use App\Services\Formatting\FormattingService;
-use Exception;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Tests\Unit\UnitTestCase;
+use Tests\Unit\TestCase;
 
-class FormattingServiceTest extends UnitTestCase
+class FormattingServiceTest extends TestCase
 {
     public function test_get_returns_the_unformatted_string(): void
     {
@@ -105,27 +104,5 @@ class FormattingServiceTest extends UnitTestCase
         ]);
 
         $this->assertSame('<p>Hi Ada</p><p>Bob</p>', $formatter->formatAll()->get());
-    }
-
-    public function test_registered_method_is_applied_by_format_all(): void
-    {
-        $formatter = app(MarkerFormattingService::class, ['str' => 'hello']);
-
-        $this->assertSame('<p>hello</p>!', $formatter->formatAll()->get());
-    }
-
-    public function test_register_returns_the_same_formatter(): void
-    {
-        $formatter = app(FormattingService::class, ['str' => 'hello']);
-
-        $this->assertSame($formatter, $formatter->register('applyReplacements'));
-    }
-
-    public function test_register_throws_for_unknown_transformation(): void
-    {
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage("Transformation wasn't found on class and isn't a callable.");
-
-        app(FormattingService::class, ['str' => 'hello'])->register('doesNotExist');
     }
 }

@@ -1,22 +1,22 @@
 <?php
 
-namespace Tests;
+namespace Tests\Feature;
 
+use DOMDocument;
+use DOMElement;
+use DOMXPath;
 use Illuminate\Foundation\Testing\Attributes\Seed;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Testing\TestResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Contracts\Console\Kernel;
-use Illuminate\Foundation\Application;
 use RuntimeException;
-use DOMDocument;
-use DOMElement;
-use DOMXPath;
+use Symfony\Component\HttpFoundation\Response;
+use Tests\Concerns\Traits\CreatesApplication;
 
 #[Seed]
 abstract class TestCase extends BaseTestCase
 {
+    use CreatesApplication;
     use RefreshDatabase;
 
     /**
@@ -34,19 +34,6 @@ abstract class TestCase extends BaseTestCase
         $this->assertInstanceOf($type, $value);
 
         return $value;
-    }
-
-    public function createApplication(): Application
-    {
-        $app = require __DIR__.'/../bootstrap/app.php';
-
-        if (! $app instanceof Application) {
-            throw new RuntimeException('The application bootstrap did not return an Application instance.');
-        }
-
-        $app->make(Kernel::class)->bootstrap();
-
-        return $app;
     }
 
     /**

@@ -6,7 +6,6 @@ use App\Models\Creature;
 use App\Models\ShopCategory;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Collection;
-use Tests\TestCase;
 
 class ShopControllerTest extends TestCase
 {

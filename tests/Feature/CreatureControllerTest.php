@@ -11,7 +11,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Testing\TestResponse;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\Response;
-use Tests\TestCase;
 
 class CreatureControllerTest extends TestCase
 {

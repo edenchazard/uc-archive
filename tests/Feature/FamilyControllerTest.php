@@ -7,7 +7,6 @@ use App\Models\Creature;
 use App\Models\Family;
 use App\Models\UserPet;
 use Illuminate\Support\Collection;
-use Tests\TestCase;
 
 class FamilyControllerTest extends TestCase
 {
@@ -146,16 +145,16 @@ class FamilyControllerTest extends TestCase
     {
         $this
             ->get(route('creatures.family.show', [
-                'family' => 'thisshouldnotexist'
+                'family' => 'thisshouldnotexist',
             ]))
             ->assertRedirect(route('creatures.search', [
-                'query' => 'thisshouldnotexist'
+                'query' => 'thisshouldnotexist',
             ]));
 
         $this
             ->followingRedirects()
             ->get(route('creatures.family.show', [
-                'family' => 'thisshouldnotexist'
+                'family' => 'thisshouldnotexist',
             ]))
             ->assertNotFound()
             ->assertSeeText('no creature results were found.');
@@ -201,7 +200,7 @@ class FamilyControllerTest extends TestCase
 
         $this
             ->get(route('creatures.search', [
-                'query' => $name
+                'query' => $name,
             ]))
             ->assertRedirect(route('creatures.family.creature.show', [
                 $creature->family,
@@ -233,7 +232,7 @@ class FamilyControllerTest extends TestCase
 
         $response = $this
             ->get(route('creatures.search', [
-                'query' => $name
+                'query' => $name,
             ]))
             ->assertNotFound()
             ->assertViewIs('pages.creatures.search')
@@ -254,7 +253,7 @@ class FamilyControllerTest extends TestCase
     {
         $this
             ->get(route('creatures.search', [
-                'query' => 'Fawn123'
+                'query' => 'Fawn123',
             ]))
             ->assertRedirect()
             ->assertSessionHasErrors('query');

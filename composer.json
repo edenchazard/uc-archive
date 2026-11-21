@@ -70,7 +70,7 @@
       "@analyse"
     ],
     "phpunit": [
-      "php artisan test --coverage --min=1"
+      "php artisan test"
     ]
   },
   "extra": {

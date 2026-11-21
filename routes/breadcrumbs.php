@@ -45,6 +45,15 @@ Breadcrumbs::for(
 );
 
 Breadcrumbs::for(
+    'creatures.search',
+    fn (BreadcrumbTrail $trail) => $trail
+        ->parent('creatures.index')
+        ->push('Search', route('creatures.search'), [
+            'pageTitle' => 'Creature search',
+        ])
+);
+
+Breadcrumbs::for(
     'creatures.family.show',
     fn (BreadcrumbTrail $trail, Family $family) => $trail
         ->parent('creatures.index')

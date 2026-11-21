@@ -8,6 +8,8 @@ use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ShopController;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -25,8 +27,8 @@ Route::prefix('creatures')->name('creatures.')->group(function () {
     Route::prefix('{family:slug}')->name('family.')->group(function () {
         Route::get('/', [FamilyController::class, 'show'])
             ->name('show')
-            ->missing(fn ($query) => to_route('creatures.search', [
-                'query' => $query,
+            ->missing(fn (Request $request, ModelNotFoundException $exception) => to_route('creatures.search', [
+                'query' => $exception->getIds()[0] ?? null,
             ]));
         /**
          * Show an individual creature.
@@ -34,8 +36,8 @@ Route::prefix('creatures')->name('creatures.')->group(function () {
         Route::get('/{creature:slug}', [CreatureController::class, 'show'])
             ->name('creature.show')
             ->scopeBindings()
-            ->missing(fn ($query) => to_route('creatures.search', [
-                'query' => $query,
+            ->missing(fn (Request $request, ModelNotFoundException $exception) => to_route('creatures.search', [
+                'query' => $exception->getIds()[0] ?? null,
             ]));
     });
 });

@@ -34,6 +34,8 @@ services:
       dockerfile: Dockerfile.dev
     networks:
       - internal
+    environment:
+      APP_ENV: testing
     volumes:
       - ./app:/var/www/app
       - ./bootstrap/app.php:/var/www/bootstrap/app.php
@@ -50,10 +52,11 @@ services:
       - ./package.json:/var/www/package.json
       - ./package-lock.json:/var/www/package-lock.json
       - ./vite.config.js:/var/www/vite.config.js
-      - ./.env:/var/www/.env
+      - ./.env.testing:/var/www/.env.testing
       - ./tests:/var/www/tests
       - ./phpstan.neon:/var/www/phpstan.neon
       - ./.oxfmtrc.json:/var/www/.oxfmtrc.json
+      - ./phpunit.xml:/var/www/phpunit.xml
 
   nginx:
     image: nginxinc/nginx-unprivileged:1.28-alpine-slim

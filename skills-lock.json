@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "skills": {
+    "laravel-attributes": {
+      "source": "MrPunyapal/laravel-attributes-list",
+      "commit": "56b7b6581de8ba910bc8f4624b48a91a65fbadd1",
+      "sourceType": "github",
+      "skillPath": "resources/boost/skills/laravel-attributes/SKILL.md",
+      "computedHash": "ec364f4beb82a64e1df4174d240d8466ea2332bd686ee9ff985d47aeb28c9f60"
+    }
+  }
+}

@@ -7,6 +7,7 @@ use App\Enums\SpecialtyEnum;
 use App\Interfaces\ImageLink;
 use App\Services\Formatting\CreatureFormattingService;
 use Database\Factories\UserPetFactory;
+use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -41,6 +42,7 @@ use Str;
  *
  * @mixin \Eloquent
  */
+#[UseFactory(UserPetFactory::class)]
 class UserPet extends Model implements ImageLink
 {
     /**
@@ -70,6 +72,7 @@ class UserPet extends Model implements ImageLink
         return $this->hasOne(Creature::class);
     }
 
+    #[\Override]
     public function imageLink(): Attribute
     {
         return Attribute::make(

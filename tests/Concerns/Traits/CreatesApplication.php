@@ -8,6 +8,7 @@ use RuntimeException;
 
 trait CreatesApplication
 {
+    #[\Override]
     public function createApplication(): Application
     {
         $app = require __DIR__.'/../../../bootstrap/app.php';

@@ -4,12 +4,14 @@ namespace App\Models;
 
 use App\Interfaces\DirectLink;
 use App\Interfaces\ImageLink;
+use Illuminate\Database\Eloquent\Attributes\RouteKey;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Str;
 
+#[RouteKey('slug')]
 class ExplorationArea extends Model implements DirectLink, ImageLink
 {
     /**
@@ -28,6 +30,7 @@ class ExplorationArea extends Model implements DirectLink, ImageLink
         return $this->belongsToMany(Consumable::class, 'exploration_area_consumables');
     }
 
+    #[\Override]
     public function imageLink(): Attribute
     {
         return Attribute::make(
@@ -35,6 +38,7 @@ class ExplorationArea extends Model implements DirectLink, ImageLink
         );
     }
 
+    #[\Override]
     public function directLink(): Attribute
     {
         return Attribute::make(

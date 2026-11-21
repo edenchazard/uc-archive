@@ -4,11 +4,13 @@ namespace App\Models;
 
 use App\Interfaces\DirectLink;
 use App\Services\Formatting\FormattingService;
+use Illuminate\Database\Eloquent\Attributes\RouteKey;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+#[RouteKey('slug')]
 class ExplorationStory extends Model implements DirectLink
 {
     /**
@@ -34,6 +36,7 @@ class ExplorationStory extends Model implements DirectLink
         return $this->hasMany(ExplorationStoryOption::class);
     }
 
+    #[\Override]
     public function directLink(): Attribute
     {
         return Attribute::make(

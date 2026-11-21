@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use App\Interfaces\DirectLink;
+use Illuminate\Database\Eloquent\Attributes\RouteKey;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+#[RouteKey('slug')]
 class ShopCategory extends Model implements DirectLink
 {
     /**
@@ -17,6 +19,7 @@ class ShopCategory extends Model implements DirectLink
         return $this->hasMany(ShopTransaction::class);
     }
 
+    #[\Override]
     public function directLink(): Attribute
     {
         return Attribute::make(

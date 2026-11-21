@@ -5,11 +5,13 @@ namespace Database\Factories;
 use App\Enums\GenderEnum;
 use App\Models\Creature;
 use App\Models\UserPet;
+use Illuminate\Database\Eloquent\Factories\Attributes\UseModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends Factory<UserPet>
  */
+#[UseModel(UserPet::class)]
 class UserPetFactory extends Factory
 {
     /**

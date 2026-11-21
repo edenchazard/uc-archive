@@ -50,7 +50,7 @@ services:
       - ./package.json:/var/www/package.json
       - ./package-lock.json:/var/www/package-lock.json
       - ./vite.config.js:/var/www/vite.config.js
-      - ./.env:/var/www/.env
+      - ./.env.testing:/var/www/.env.testing
       - ./tests:/var/www/tests
       - ./phpstan.neon:/var/www/phpstan.neon
       - ./.oxfmtrc.json:/var/www/.oxfmtrc.json

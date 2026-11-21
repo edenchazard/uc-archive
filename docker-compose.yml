@@ -34,6 +34,8 @@ services:
       dockerfile: Dockerfile.dev
     networks:
       - internal
+    environment:
+      APP_ENV: testing
     volumes:
       - ./app:/var/www/app
       - ./bootstrap/app.php:/var/www/bootstrap/app.php

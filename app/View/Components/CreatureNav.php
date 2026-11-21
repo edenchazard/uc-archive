@@ -22,6 +22,7 @@ class CreatureNav extends Component
     /**
      * Get the view / contents that represent the component.
      */
+    #[\Override]
     public function render(): View|Closure|string
     {
         return view('components.creature-nav');

@@ -6,6 +6,7 @@ use App\Enums\ConsumableTypeEnum;
 use App\Interfaces\DirectLink;
 use App\Interfaces\ImageLink;
 use App\Traits\IsTransactionable;
+use Illuminate\Database\Eloquent\Attributes\RouteKey;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -32,6 +33,7 @@ use Str;
  *
  * @mixin \Eloquent
  */
+#[RouteKey('slug')]
 class Consumable extends Model implements DirectLink, ImageLink
 {
     use IsTransactionable;
@@ -59,6 +61,7 @@ class Consumable extends Model implements DirectLink, ImageLink
         return $this->hasMany(Creature::class);
     }
 
+    #[\Override]
     public function directLink(): Attribute
     {
         return Attribute::make(
@@ -66,6 +69,7 @@ class Consumable extends Model implements DirectLink, ImageLink
         );
     }
 
+    #[\Override]
     public function imageLink(): Attribute
     {
         return Attribute::make(

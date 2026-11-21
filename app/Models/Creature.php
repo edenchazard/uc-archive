@@ -6,6 +6,7 @@ use App\Interfaces\DirectLink;
 use App\Interfaces\ImageLink;
 use App\Traits\IsTransactionable;
 use File;
+use Illuminate\Database\Eloquent\Attributes\RouteKey;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -70,6 +71,7 @@ use Str;
  *
  * @mixin \Eloquent
  */
+#[RouteKey('slug')]
 class Creature extends Model implements DirectLink, ImageLink
 {
     use IsTransactionable;
@@ -139,6 +141,7 @@ class Creature extends Model implements DirectLink, ImageLink
         return $collection;
     }
 
+    #[\Override]
     public function imageLink(): Attribute
     {
         return Attribute::make(
@@ -161,6 +164,7 @@ class Creature extends Model implements DirectLink, ImageLink
         );
     }
 
+    #[\Override]
     public function directLink(): Attribute
     {
         return Attribute::make(

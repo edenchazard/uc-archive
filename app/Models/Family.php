@@ -6,6 +6,7 @@ use App\Enums\ElementTypeEnum;
 use App\Enums\RarityCategoryEnum;
 use App\Enums\UniqueRatingEnum;
 use App\Interfaces\DirectLink;
+use Illuminate\Database\Eloquent\Attributes\RouteKey;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
@@ -76,6 +77,7 @@ use Illuminate\Support\Carbon;
  *
  * @mixin \Eloquent
  */
+#[RouteKey('slug')]
 class Family extends Model implements DirectLink
 {
     /**
@@ -121,6 +123,7 @@ class Family extends Model implements DirectLink
         return $this->hasMany(Alt::class);
     }
 
+    #[\Override]
     public function directLink(): Attribute
     {
         return Attribute::make(

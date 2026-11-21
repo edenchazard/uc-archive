@@ -24,7 +24,7 @@ Route::prefix('creatures')->name('creatures.')->group(function () {
     /**
      * Specific family
      */
-    Route::prefix('{family:slug}')->name('family.')->group(function () {
+    Route::prefix('{family}')->name('family.')->group(function () {
         Route::get('/', [FamilyController::class, 'show'])
             ->name('show')
             ->missing(fn (Request $request, ModelNotFoundException $exception) => to_route('creatures.search', [
@@ -33,7 +33,7 @@ Route::prefix('creatures')->name('creatures.')->group(function () {
         /**
          * Show an individual creature.
          */
-        Route::get('/{creature:slug}', [CreatureController::class, 'show'])
+        Route::get('/{creature}', [CreatureController::class, 'show'])
             ->name('creature.show')
             ->scopeBindings()
             ->missing(fn (Request $request, ModelNotFoundException $exception) => to_route('creatures.search', [
@@ -44,24 +44,24 @@ Route::prefix('creatures')->name('creatures.')->group(function () {
 
 Route::prefix('/components')->name('components.')->group(function () {
     Route::get('/', [ComponentController::class, 'index'])->name('index');
-    Route::get('/{consumable:slug}', [ComponentController::class, 'show'])->name('show');
+    Route::get('/{consumable}', [ComponentController::class, 'show'])->name('show');
 });
 
 Route::prefix('/exploration')->name('exploration.')->group(function () {
     Route::get('/', [ExplorationController::class, 'index'])->name('index');
 
-    Route::prefix('/{explorationArea:slug}')->name('area.')->group(function () {
+    Route::prefix('/{explorationArea}')->name('area.')->group(function () {
         Route::get('/', [ExplorationController::class, 'show'])->name('show');
-        Route::get('/{explorationStory:slug}', [ExplorationStoryController::class, 'show'])->name('story.show');
+        Route::get('/{explorationStory}', [ExplorationStoryController::class, 'show'])->name('story.show');
     });
 });
 
 Route::prefix('/shop')->name('shop.')->group(function () {
     Route::get('/', [ShopController::class, 'index'])->name('index');
-    Route::get('/{shopCategory:slug}', [ShopController::class, 'show'])->name('category.show');
+    Route::get('/{shopCategory}', [ShopController::class, 'show'])->name('category.show');
 });
 
 Route::prefix('/items')->name('items.')->group(function () {
     Route::get('/', [ItemController::class, 'index'])->name('index');
-    Route::get('/{item:slug}', [ItemController::class, 'show'])->name('show');
+    Route::get('/{item}', [ItemController::class, 'show'])->name('show');
 });
